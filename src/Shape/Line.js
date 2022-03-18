@@ -91,7 +91,7 @@ class Line {
 		let lineId;
 		let lineData
 		if (data.uuid) {
-			lineId = lineData.uuid;
+			lineId = data.uuid;
 			lineData = data;
 		} else {
 			lineId = data;
