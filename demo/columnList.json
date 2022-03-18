@@ -1,0 +1,32 @@
+[
+	{
+		"id": 53217,
+		"name": "id",
+		"dataType": "string",
+		"detail": "id"
+	},
+	{
+		"id": 53217,
+		"name": "name",
+		"dataType": "string",
+		"detail": "names"
+	},
+	{
+		"id": 53217,
+		"name": "school",
+		"dataType": "string",
+		"detail": "school name"
+	},
+	{
+		"id": 53217,
+		"name": "class",
+		"dataType": "string",
+		"detail": "class degree"
+	},
+	{
+		"id": 53217,
+		"name": "age",
+		"dataType": "string",
+		"detail": "ages"
+	}
+]

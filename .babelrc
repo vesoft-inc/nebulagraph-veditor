@@ -1,0 +1,45 @@
+// .babelrc or babel-loader option
+{
+	"presets": [
+		[
+			"@babel/preset-env",
+			{
+				"useBuiltIns": "usage",
+				"corejs":3
+			}
+		],
+		"@babel/preset-react"
+	],
+	"plugins": [
+		// [
+		// 	"transform-remove-console",
+		// 	{
+		// 		// 设置排除项
+		// 		"exclude": [
+		// 			"error",
+		// 			"warn"
+		// 		]
+		// 	}
+		// ],
+		[
+			"@babel/plugin-proposal-decorators",
+			{
+				"legacy": true
+			}
+		],
+		"@babel/plugin-syntax-dynamic-import",
+		"@babel/plugin-syntax-import-meta",
+		[
+			"@babel/plugin-proposal-class-properties"
+		],
+		"@babel/plugin-transform-runtime",
+		[
+			"import",
+			{
+				"libraryName": "antd",
+				"libraryDirectory": "es",
+				"style": "css"
+			}
+		]
+	]
+}

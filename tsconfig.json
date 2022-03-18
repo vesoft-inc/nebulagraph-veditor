@@ -1,0 +1,15 @@
+{
+  // 更改此项以匹配您的项目
+  "include": ["src/**/*.js",],
+  "exclude": ["src/Snap/*","node_modules/**/*"],
+  "compilerOptions": {
+    "allowJs": true,
+    "declaration": true,
+    "noResolve":true,
+    "module":"ESNext",
+    "target": "ESNext",
+    "skipLibCheck": true,
+    "emitDeclarationOnly": true,
+    "outDir": "types",
+  }
+}

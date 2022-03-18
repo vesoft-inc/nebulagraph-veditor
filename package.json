@@ -1,0 +1,67 @@
+{
+    "name": "@vesoft-inc/veditor",
+    "version": "3.1.2",
+    "description": "svg flow editor",
+    "main": "./dist/MMEditor.js",
+    "types": "./types/MMEditor.d.ts",
+    "scripts": {
+        "start": "webpack-dev-server",
+        "demo:build": "webpack -p --config webpack.config.js",
+        "build": "webpack --config webpack.config.build.js",
+        "doc": "jsdoc -c jsdoc.json",
+        "makeDts": "npx -p typescript tsc -p ./tsconfig.json"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mizy/MMEditor.git"
+    },
+    "keywords": [
+        "svg",
+        "flow",
+        "editor"
+    ],
+    "files": [
+        "dist"
+    ],
+    "td": {
+        "type": "block",
+        "preview": true
+    },
+    "dependencies": {
+        "canvg": "^3.0.6",
+        "dagre": "^0.8.4",
+        "eve": "^0.5.4",
+        "uuid": "^8.3.2"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.0.1",
+        "@babel/plugin-proposal-class-properties": "^7.0.0",
+        "@babel/plugin-proposal-decorators": "^7.0.0",
+        "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+        "@babel/plugin-syntax-import-meta": "^7.0.0",
+        "@babel/plugin-transform-runtime": "^7.0.0",
+        "@babel/preset-env": "^7.0.0",
+        "@babel/preset-react": "^7.0.0",
+        "antd": "^3.22.0",
+        "babel-loader": "^8.0.2",
+        "babel-plugin-import": "^1.12.0",
+        "core-js": "^3.18.3",
+        "css-loader": "^1.0.0",
+        "jsdoc": "^3.6.3",
+        "less": "^3.8.1",
+        "less-loader": "^4.1.0",
+        "react": "^16.0.0",
+        "react-dom": "^16.0.0",
+        "style-loader": "^0.21.0",
+        "url-loader": "^1.0.1",
+        "webpack": "^4.34.0",
+        "webpack-cli": "^3.1.0",
+        "webpack-dev-server": "^3.11.2"
+    },
+    "author": "mizy",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/mizy/MMEditor/issues"
+    },
+    "homepage": "https://github.com/mizy/MMEditor#readme"
+}

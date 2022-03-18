@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Shape/Lines/Line.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Shape/Lines/Line.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * graph.line.shapes
+ * @interface DefaultLine
+ */
+import { Snap } from "../../MMEditor";
+
+const DefaultLine = {
+	arcRatio: 4,
+	/**
+	 * @param  {} data
+	 * @param  {} allNodesMap
+	 * @param  {} line
+	 */
+	render(data, allNodesMap, line) {
+		const { from, to, fromPoint = 0, toPoint = 0 } = data;
+		const fromNode = allNodesMap[from];
+		const toNode = allNodesMap[to];
+		const fromPointNode = fromNode.linkPoints[fromPoint];
+		const toPointNode = toNode.linkPoints[toPoint];
+		let fromX = fromPointNode.x;
+		let fromY = fromPointNode.y;
+		let toX = toPointNode.x;
+		let toY = toPointNode.y;
+		const pathString = this.makePath(fromX, fromY, toX, toY, fromPointNode, toPointNode);
+		const path = line ? line.path : this.paper.path();
+		path.attr({
+			d: pathString,
+			strokeDasharray: "10",
+			fill: "transparent",
+			stroke:"rgba(178,190,205,0.7)",
+			...(data.style||{})
+		});
+		path.animate(
+			{
+				strokeDasharray: "0"
+			},
+			300
+		);
+		const labelGroup = this.renderLabel(data,allNodesMap,path,line?line.labelGroup:null);
+		if(!line){
+			line = this.paper.group();
+			line.append(path);
+		}
+		labelGroup&amp;&amp;line.append(labelGroup)
+		line.labelGroup = labelGroup;
+		line.path = path;
+		return {
+			path:line,
+			data: {
+				fromX,
+				fromY,
+				toX,
+				toY
+			}
+		};
+	},
+
+
+	/**
+	 * @param  {} fromX
+	 * @param  {} fromY
+	 * @param  {} toX
+	 * @param  {} toY
+	 * @param  {} fromPointNode
+	 * @param  {} toPointNode
+	 */
+	makePath(fromX, fromY, toX, toY, fromPointNode, toPointNode) {
+		let edgeX = fromX;
+		let edgeY = fromY;
+		let endX = toX;
+		let endY = toY;
+		const arrowStartSpace = 0; // 顶部距离node节点的距离
+		const arrEndSpace = 8; // 底部距离node节点的距离
+		const arrowEndSpace = 5;// 箭头占用的空间
+		// 根据连接点位置生成控制点
+		// 上右下左的控制点分别为 (x,上偏移) (右偏移,y)  (x,下偏移) (左偏移,y)
+		let startControlPoint = [edgeX, edgeY];
+		let endControlPoint = [endX, endY];
+		const startAngel = this.getPointDirect(fromPointNode);
+		const endAngel = this.getPointDirect(toPointNode);
+		const offsetLength = Math.sqrt(Math.pow(edgeX - endX, 2) + Math.pow(edgeY - endY, 2)) / this.arcRatio; // 连接点的距离的一半作为控制点的长度
+		startControlPoint[0] += (1 / startAngel &lt; 0 ? -1 : 1) * Math.cos(startAngel) * offsetLength;
+		startControlPoint[1] += -Math.sin(startAngel) * offsetLength;// svg坐标系倒置需要给y坐标加负号
+		endControlPoint[0] += (1 / endAngel &lt; 0 ? -1 : 1) * Math.cos(endAngel) * offsetLength;
+		endControlPoint[1] += -Math.sin(endAngel) * offsetLength;// svg坐标系倒置需要给y坐标加负号
+		if (fromPointNode.data.y === 1) {
+			edgeY += arrowStartSpace;
+		} else if (fromPointNode.data.y === 0) {
+			edgeY -= arrowStartSpace;
+		} else if (fromPointNode.data.x === 0) {
+			edgeX -= arrowStartSpace;
+		} else if (fromPointNode.data.x === 1) {
+			edgeX += arrowStartSpace;
+		}
+		if (toPointNode.data.y === 1) {
+			endY += arrEndSpace;
+			toY += arrowEndSpace;
+		} else if (toPointNode.data.y === 0) {
+			endY -= arrEndSpace;
+			toY -= arrowEndSpace;
+		} else if (toPointNode.data.x === 0) {
+			endX -= arrEndSpace;
+			toX -= arrowEndSpace;
+		} else if (toPointNode.data.x === 1) {
+			endX += arrEndSpace;
+			toX += arrowEndSpace;
+		}
+		let pathString = `M${fromX} ${fromY} T ${edgeX} ${edgeY}`;
+
+
+		let toPointString = `${endX} ${endY} T ${toX} ${toY} `;
+		const path = `${pathString}C${startControlPoint[0]} ${startControlPoint[1]} ${endControlPoint[0]} ${endControlPoint[1]} ${toPointString}`;
+		return path;
+	},
+
+	//没用了
+	getPointDirect(pointNode) {
+		const point2center = [pointNode.data.x , pointNode.data.y ];
+		let angel = 0;
+		if(point2center[1] === 0){
+			angel = Math.PI/2;
+		}else if(point2center[1] === 1){
+			angel = -Math.PI/2;
+		}else if(point2center[0] === 0){
+			angel = Math.PI;
+		}else if(point2center[0] === 1){
+			angel = -Math.PI;
+		} else{
+			// arctan求角度
+			angel = Math.atan((point2center[1]-0.5) / (point2center[0]-0.5)) + ((point2center[0]-0.5)&lt;0?Math.PI:0);
+		}
+		return angel||0;
+	},
+
+	/**
+	 * @param  {} data
+	 * @param  {} allNodesMap
+	 * @param  {} arrow
+	 */
+	renderArrow(data, allNodesMap, arrow) {
+		const { to, toPoint = 0 } = data;
+		const toNode = allNodesMap[to];
+		const toPointNode = toNode.linkPoints[toPoint];
+		const toLinkPoint = toNode.linkPointsTypes[toPoint];
+		let angle = 0;
+		if (toLinkPoint.y &lt;= 0) {
+			angle = 180;
+		} else if (toLinkPoint.x >= 1) {
+			angle = 270;
+		} else if (toLinkPoint.x &lt;= 0) {
+			angle = 90;
+		}
+		const toX = toPointNode.x;
+		const toY = toPointNode.y;
+		const pathString = `M${-5} ${10}L${0} ${0}L${5} ${10}Z`;
+		const path = arrow ? arrow : this.paper.path();
+		// 进行角度的中心变换
+		const matrix = new Snap.Matrix();
+		matrix.translate(toX, toY);
+		matrix.rotate(angle, 0, 0);
+		path.attr({
+			class: "mm-line-arrow",
+			d: pathString,
+			fill: "rgba(178,190,205,0.7)",
+			transform: matrix.toString(),
+            ...data.arrowStyle
+		});
+		path.angle = angle;
+		return path;
+	},
+
+	/** 是否渲染文字
+	 * @param  {} data
+	 * @param  {} allNodesMap
+	 * @param  {} lineShapePath
+	 * @param  {} labelGroup 是否已有文字对象
+	 */
+	renderLabel(data, allNodesMap, lineShapePath, labelGroup) {
+		const { fromX, toX, labelCfg } = data;
+		let { label } = data;
+		if (!label) {
+			labelGroup&amp;&amp;labelGroup.remove();
+			return null
+		};
+        const totalLabel = label;
+		// label 样式
+		const {
+			refX = 0,
+			refY = 0,
+			autoRotate,
+			showNum = 20,
+			style = {
+				fill: "#333",
+				stroke: "#fff",
+				fontSize: "12px",
+			}
+		} = labelCfg || {};
+		// 获取旋转角度 暂时不支持
+		const totalLen = lineShapePath.getTotalLength();
+		const pointLen = lineShapePath.getPointAtLength(totalLen / 2);
+		let { alpha, x: xPoint, y: yPoint } = pointLen || {};
+		if (label &amp;&amp; label.length > showNum &amp;&amp; showNum) {
+			label = label.slice(0, showNum) + "..."
+		}
+		if (!labelGroup) {
+			let textCreate = this.paper.text(0, 0, label);
+			let rectCreate = this.paper.rect();
+			labelGroup = this.paper.group(rectCreate, textCreate);
+		}
+		let rect = labelGroup[0];
+		let text = labelGroup[1];
+		const x = xPoint + (refX || 0);
+		const y = yPoint + (refY || 0);
+		text.attr({
+			text: label || "",
+			fill: style.fill,
+			fontSize: style.fontSize,
+			textAnchor: "middle",
+			dominantBaseline: "middle",
+			x,
+			y,
+		})
+		if (!text.bbox || text.oldText !== label) {
+			text.oldText = label;
+			text.bbox = text.getBBox();
+		}
+		// 性能优化
+		const { width, height } = text.bbox;
+		rect.attr({
+			fill: style.stroke,
+			width,
+			height,
+			stroke: "transparent",
+			x: x - width * 0.5,
+			y: y - height * 0.5
+		});
+		labelGroup.attr({
+			class: "mm-line-label",
+            'data-label': encodeURI(totalLabel)
+		})
+		if (autoRotate) {
+			// 文字顺序方向
+			if (fromX &lt; toX || fromX === toX) {
+				alpha += 180;
+			}
+			labelGroup.attr({
+				transform: `rotate(${alpha},${xPoint + (refX || 0)},${yPoint + (refY || 0)})`
+			})
+		}
+		return labelGroup;
+	},
+
+	/**
+	 * @param  {} data
+	 */
+	checkNewLine(data) {
+		const { from, to } = data;
+		if (from === to) {
+			return false;
+		}
+		return true;
+	}
+};
+export default DefaultLine
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Aniamtion.html">Aniamtion</a></li><li><a href="module-Utils.html">Utils</a></li></ul><h3>Classes</h3><ul><li><a href="AchorLine.html">AchorLine</a></li><li><a href="Controller.html">Controller</a></li><li><a href="Event.html">Event</a></li><li><a href="Graph.html">Graph</a></li><li><a href="History.html">History</a></li><li><a href="Line.html">Line</a></li><li><a href="MiniMap.html">MiniMap</a></li><li><a href="MMEditor.html">MMEditor</a></li><li><a href="Node.html">Node</a></li><li><a href="Schema.html">Schema</a></li></ul><h3>Interfaces</h3><ul><li><a href="DefaultLine.html">DefaultLine</a></li><li><a href="DefaultNode.html">DefaultNode</a></li><li><a href="DomNode.html">DomNode</a></li><li><a href="IconNode.html">IconNode</a></li><li><a href="PolyLine.html">PolyLine</a></li></ul><h3>Events</h3><ul><li><a href="Graph.html#event:beforeRender%25E6%25B8%25B2%25E6%259F%2593%25E4%25B9%258B%25E5%2589%258D%25E8%25A7%25A6%25E5%258F%2591">beforeRender 渲染之前触发</a></li><li><a href="Graph.html#event:copy">copy</a></li><li><a href="Graph.html#event:delete">delete</a></li><li><a href="Graph.html#event:paste">paste</a></li><li><a href="Graph.html#event:render%25E6%25B8%25B2%25E6%259F%2593%25E5%2590%258E%25E8%25A7%25A6%25E5%258F%2591">render  渲染后触发</a></li><li><a href="Graph.html#event:line:add">line:add</a></li><li><a href="Graph.html#event:line:beforeadd">line:beforeadd</a></li><li><a href="Graph.html#event:line:change">line:change</a></li><li><a href="Graph.html#event:line:click">line:click</a></li><li><a href="Graph.html#event:line:drag">line:drag</a></li><li><a href="Graph.html#event:line:drop">line:drop</a></li><li><a href="Graph.html#event:line:mouseenter">line:mouseenter</a></li><li><a href="Graph.html#event:line:mouseleave">line:mouseleave</a></li><li><a href="Graph.html#event:line:remove">line:remove</a></li><li><a href="Graph.html#event:node:change-%25E8%258A%2582%25E7%2582%25B9%25E5%258F%2598%25E5%258C%2596%25E4%25BA%258B%25E4%25BB%25B6">node:change - 节点变化事件</a></li><li><a href="Graph.html#event:node:click-%25E8%258A%2582%25E7%2582%25B9%25E7%2582%25B9%25E5%2587%25BB%25E4%25BA%258B%25E4%25BB%25B6">node:click - 节点点击事件</a></li><li><a href="Graph.html#event:node:mouseenter-%25E8%258A%2582%25E7%2582%25B9%25E8%25BF%259B%25E5%2585%25A5%25E4%25BA%258B%25E4%25BB%25B6">node:mouseenter - 节点进入事件</a></li><li><a href="Graph.html#event:node:mouseleave">node:mouseleave</a></li><li><a href="Graph.html#event:node:move%25E8%258A%2582%25E7%2582%25B9%25E7%25A7%25BB%25E5%258A%25A8%25E4%25BA%258B%25E4%25BB%25B6">node:move 节点移动事件</a></li><li><a href="Graph.html#event:node:remove-%25E7%25A7%25BB%25E9%2599%25A4%25E8%258A%2582%25E7%2582%25B9%25E4%25BA%258B%25E4%25BB%25B6">node:remove - 移除节点事件</a></li><li><a href="Graph.html#event:node:unactive">node:unactive</a></li><li><a href="MMEditor.html#event:format">format</a></li><li><a href="MMEditor.html#event:load">load</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Tue Nov 23 2021 17:39:35 GMT+0800 (中国标准时间)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

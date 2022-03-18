@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Shape/AnchorLine.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Shape/AnchorLine.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @class
+ */
+class AchorLine {
+	constructor(graph) {
+		this.graph = graph;
+		this.anchorLines = {};
+		this.paper = graph.editor.paper;
+		this.anchorDistance = graph.editor.config.anchorDistance || 5;
+		this.anchorXLength = graph.editor.config.anchorXLength || 10;
+		this.anchorYLength = graph.editor.config.anchorYLength || 10;
+		this.hideAchorLine = graph.editor.config.hideAchorLine;
+		this.hideAchor = graph.editor.config.hideAchor;
+		this.anchors = [];
+		this.path = this.paper.path();
+		this.path.attr({
+			class: 'anchor-line'
+		});
+	}
+
+	/**
+	 * 生成所有的吸附线位置
+	 */
+	makeAllAnchors(origin) {
+		if (this.hideAchorLine) return;
+		this.node = origin;
+		const anchors = [];
+		const { nodes } = this.graph.node;
+		for (let key in nodes) {
+			if (origin.data.uuid === key) continue;
+			const node = nodes[key];
+			const bbox = node.getBBox();// 缓存bbox
+			node.bbox = bbox;
+			const { x, y, width, height } = bbox;
+			anchors.push({
+				x, y
+			}, {
+				x: x + width, y
+			}, {
+				x: x + width, y: y + height
+			}, {
+				x: x, y: y + height
+			}, {
+				x: x + width / 2, y: y + height / 2
+			});
+		}
+
+		this.anchors = anchors;
+	}
+
+	checkAchor(x, y) {
+		const { anchorXLength, anchorYLength } = this;
+		const x5 = x % anchorXLength;
+		const y5 = y % anchorYLength;
+		if (x5 &lt; anchorXLength / 2) {
+			x = Math.floor(x / anchorXLength) * anchorXLength;
+		} else {
+			x = Math.ceil(x / anchorXLength) * anchorXLength;
+		}
+		if (y5 &lt; anchorYLength / 2) {
+			y = Math.floor(y / anchorYLength) * anchorYLength;
+		} else {
+			y = Math.ceil(y / anchorYLength) * anchorYLength;
+		}
+		return { x, y };
+	}
+
+	/**
+	 * 画节点
+	 * @param {*} node
+	 */
+	check(x, y) {
+		if (!this.hideAchorLine) {
+			const { bbox } = this.node;
+			const { width, height } = bbox;
+			const tl = { x, y };
+			const tr = { x: x + width, y };
+			const br = { x: x + width, y: y + height };
+			const bl = { x, y: y + height };
+			const cc = { x: x + width / 2, y: y + height / 2 };
+			const nowPoints = [tl, tr, br, bl, cc];
+			let final = {}; let newXY = { x, y }; let coordFlag = '';
+			const anchor = this.anchors.find(anchor => {
+				return nowPoints.find((point, index) => {
+					const deltaY = anchor.y - point.y;
+					const deltaX = anchor.x - point.x;
+					if (Math.abs(deltaX) &lt; this.anchorDistance) {
+						final.x = anchor.x;
+						newXY.x += deltaX;
+						coordFlag = 'x';
+						return true;
+					}
+					if (Math.abs(deltaY) &lt; this.anchorDistance) {
+						final.y = anchor.y;
+						newXY.y += deltaY;
+						coordFlag = 'y';
+						return true;
+					}
+				});
+			});
+			if (!anchor) {
+				this.path.node.style.display = 'none';
+				if (!this.hideAchor) return this.checkAchor(x, y);
+				return { x, y };
+			}
+			// 中心点坐标补齐
+			if(final.x===undefined){
+				final.x = cc.x;
+			}else{
+				final.y = cc.y;
+			}
+			const path = `M${final.x},${final.y} L${anchor.x},${anchor.y}`;
+			this.path.node.setAttribute('d', path);
+			this.path.node.style.display = 'block';
+			if (!this.hideAchor) {
+				const anchorXY = this.checkAchor(newXY.x, newXY.y);
+				anchorXY[coordFlag] = newXY[coordFlag];
+				return anchorXY;
+			}
+			return newXY;
+		}
+		if (!this.hideAchor) return this.checkAchor(x, y);
+		return { x, y };
+	}
+
+    /**
+     * 隐藏线
+     */
+	hidePath() {
+		this.path.attr({
+			style: 'display: none'
+		});
+	}
+}
+export default AchorLine;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Aniamtion.html">Aniamtion</a></li><li><a href="module-Utils.html">Utils</a></li></ul><h3>Classes</h3><ul><li><a href="AchorLine.html">AchorLine</a></li><li><a href="Controller.html">Controller</a></li><li><a href="Event.html">Event</a></li><li><a href="Graph.html">Graph</a></li><li><a href="History.html">History</a></li><li><a href="Line.html">Line</a></li><li><a href="MiniMap.html">MiniMap</a></li><li><a href="MMEditor.html">MMEditor</a></li><li><a href="Node.html">Node</a></li><li><a href="Schema.html">Schema</a></li></ul><h3>Interfaces</h3><ul><li><a href="DefaultLine.html">DefaultLine</a></li><li><a href="DefaultNode.html">DefaultNode</a></li><li><a href="DomNode.html">DomNode</a></li><li><a href="IconNode.html">IconNode</a></li><li><a href="PolyLine.html">PolyLine</a></li></ul><h3>Events</h3><ul><li><a href="Graph.html#event:beforeRender%25E6%25B8%25B2%25E6%259F%2593%25E4%25B9%258B%25E5%2589%258D%25E8%25A7%25A6%25E5%258F%2591">beforeRender 渲染之前触发</a></li><li><a href="Graph.html#event:copy">copy</a></li><li><a href="Graph.html#event:delete">delete</a></li><li><a href="Graph.html#event:paste">paste</a></li><li><a href="Graph.html#event:render%25E6%25B8%25B2%25E6%259F%2593%25E5%2590%258E%25E8%25A7%25A6%25E5%258F%2591">render  渲染后触发</a></li><li><a href="Graph.html#event:line:add">line:add</a></li><li><a href="Graph.html#event:line:beforeadd">line:beforeadd</a></li><li><a href="Graph.html#event:line:change">line:change</a></li><li><a href="Graph.html#event:line:click">line:click</a></li><li><a href="Graph.html#event:line:drag">line:drag</a></li><li><a href="Graph.html#event:line:drop">line:drop</a></li><li><a href="Graph.html#event:line:mouseenter">line:mouseenter</a></li><li><a href="Graph.html#event:line:mouseleave">line:mouseleave</a></li><li><a href="Graph.html#event:line:remove">line:remove</a></li><li><a href="Graph.html#event:node:change-%25E8%258A%2582%25E7%2582%25B9%25E5%258F%2598%25E5%258C%2596%25E4%25BA%258B%25E4%25BB%25B6">node:change - 节点变化事件</a></li><li><a href="Graph.html#event:node:click-%25E8%258A%2582%25E7%2582%25B9%25E7%2582%25B9%25E5%2587%25BB%25E4%25BA%258B%25E4%25BB%25B6">node:click - 节点点击事件</a></li><li><a href="Graph.html#event:node:mouseenter-%25E8%258A%2582%25E7%2582%25B9%25E8%25BF%259B%25E5%2585%25A5%25E4%25BA%258B%25E4%25BB%25B6">node:mouseenter - 节点进入事件</a></li><li><a href="Graph.html#event:node:mouseleave">node:mouseleave</a></li><li><a href="Graph.html#event:node:move%25E8%258A%2582%25E7%2582%25B9%25E7%25A7%25BB%25E5%258A%25A8%25E4%25BA%258B%25E4%25BB%25B6">node:move 节点移动事件</a></li><li><a href="Graph.html#event:node:remove-%25E7%25A7%25BB%25E9%2599%25A4%25E8%258A%2582%25E7%2582%25B9%25E4%25BA%258B%25E4%25BB%25B6">node:remove - 移除节点事件</a></li><li><a href="Graph.html#event:node:unactive">node:unactive</a></li><li><a href="MMEditor.html#event:format">format</a></li><li><a href="MMEditor.html#event:load">load</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Tue Nov 23 2021 17:39:35 GMT+0800 (中国标准时间)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
