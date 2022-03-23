@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Plugins/Minimap.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Plugins/Minimap.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Canvg from 'canvg';
+import { Snap } from "../MMEditor";
+// 使用html
+/**
+ * @class
+ */
+class MiniMap {
+	constructor(editor) {
+		this.editor = editor;
+		const {minimap=[]} = editor.config
+		this.width = minimap.width||160;
+		this.height =  minimap.height||160;
+		this.padding =  minimap.padding||20;
+		this.scale = minimap.scale||10;
+	}
+
+	init() {
+		const dom = `&lt;div class="mm-minimap" >
+			&lt;canvas width="100%" height="100%">&lt;/canvas>
+			&lt;div class="drag-rect" style="left:${this.padding}px;top:${this.padding}px">
+				&lt;div class="drag-point">&lt;/div>
+			&lt;/div>
+		&lt;/div>`;
+		const can = document.createElement("div");
+		can.innerHTML = dom;
+		this.container = can.querySelector(".mm-minimap");
+		this.editor.container.append(this.container);
+		this.canvas = this.container.querySelector("canvas");
+		this.ctx = this.canvas.getContext("2d");
+		this.drag = Snap(this.container.querySelector(".drag-rect"));
+		this.dragPoint = Snap(this.container.querySelector(".drag-point"));
+        const bbox = this.container.getBoundingClientRect();
+        this.width = bbox.width;
+        this.height = bbox.height;
+        this.canvas.width = this.width;
+		this.canvas.height = this.height;
+		this.initEvent();
+	}
+
+	initEvent() {
+		const {controller} = this.editor;
+        this.canvas.addEventListener('click',(e)=>{
+			const left = e.offsetX - this.dragBBox.width/2;
+			const top = e.offsetY - this.dragBBox.height/2;
+			this.drag.node.style.left = left + "px";
+			this.drag.node.style.top = top + "px";
+			controller.moveTo(
+                -(left - this.padding)*this.scale*controller.scale,
+                -(top - this.padding)*this.scale*controller.scale
+            );
+            this.resetDrag();
+        })
+		this.drag.drag((dx, dy) => {
+			const dleft = dx + this.dragStart.x;
+			const dtop = dy + this.dragStart.y;
+			const left = Math.min(Math.max(dleft, 0),this.width - this.dragBBox.width + this.padding*2);
+			const top = Math.min(Math.max(dtop, 0),this.height - this.dragBBox.height + this.padding*2);
+			this.drag.node.style.left = left + "px";
+			this.drag.node.style.top = top + "px";
+			controller.moveTo(
+                -(left - this.padding)*this.scale*controller.scale,
+                -(top - this.padding)*this.scale*controller.scale
+            )
+		}, () => {
+			const { style } = this.drag.node;
+			this.dragStart = {
+				x: style.left ? parseInt(style.left.split("px")[0]) : 0,
+				y: style.top ? parseInt(style.top.split("px")[0]) : 0
+			};
+		});
+
+		this.dragPoint.drag((dx, dy) => {
+			const ratio = this.svgBBox.width/this.svgBBox.height;
+            let height = Math.max(dy + this.dragStartBBox.height, 10);
+            let width = height*ratio;
+			this.drag.node.style.width = width+'px';
+			this.drag.node.style.height = height+'px';
+			controller.scale = this.svgBBox.width/(width* this.scale);
+			controller.update(); 
+		}, (x, y, e) => {
+			e.preventDefault();
+			e.stopPropagation()
+			this.dragStartBBox = this.drag.node.getBoundingClientRect();
+			return false;
+		});
+		this.editor.on("change", this.render);
+        this.editor.on("format", this.render);
+        this.editor.on("autofit", this.resetDrag);
+		this.editor.on("panning",this.resetDrag);
+		this.editor.on("zoom",this.resetDrag);
+	}
+
+    /**
+     * 重新计算拖拽框位置
+     */
+	resetDrag=()=>{
+		const {x,y,scale} = this.editor.controller; 
+        const {padding} = this;
+        if(!this.svgBBox)return;
+		/**
+		 * 这里虽然坐标整体都缩小了10倍，但是用户画布放大的scale倍，在这个坐标系下永远都是1倍，不会随着用户放大而放大，
+		 * 所以这里求得的左上角便宜坐标实际上还是标准倍率吸下的，需要再放大用户的倍率才能得到最终的效果，
+		 * 用户画布=》缩小10倍画布到用户scale*this.sclae=》还原回基准this.scale
+		 */
+		this.drag.node.style.left = -x/scale/this.scale + padding +'px';
+		this.drag.node.style.top = -y/scale/this.scale + padding +'px';
+		this.dragBBox = {
+			width:this.svgBBox.width / this.scale /scale,
+			height:this.svgBBox.height/ this.scale /scale
+		}
+		this.drag.node.style.width = this.dragBBox.width+'px';
+		this.drag.node.style.height = this.dragBBox.height+'px';
+	}
+
+    /**
+     * 重新渲染小地图
+     */
+	render = () => {
+		clearTimeout(this.timeout);
+		this.timeout = setTimeout(async () => {
+			const node = this.editor.svg.node;
+			const svgBBox = node.getBoundingClientRect();
+			const images = node.querySelectorAll("image")||[];
+			images.forEach(img=>{
+				img.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
+			})
+			const svg = node.innerHTML.replace(/\"mm-editor-paper\" transform=\"matrix\([-\d\,]+\)\"/i,`"mm-editor-paper" `).replace(
+                /transform=\"matrix\([-\d\,]+\)\" class=\"mm-editor-paper\"/i,`class="mm-editor-paper" `
+            );
+            const paperBBox = this.editor.paper.node.getBBox();  
+            this.scale = Math.max((paperBBox.width)/(this.width-this.padding*2),paperBBox.height/(this.height-this.padding*2),10);
+            const x = this.padding;
+            const y = this.padding;
+			const m = new Snap.Matrix();
+			m.translate(x,y);
+			m.scale(1 / this.scale);
+			this.svgBBox = svgBBox;
+			this.resetDrag();
+			this.converting = await Canvg.fromString(this.ctx, `&lt;g transform="${m.toString()}" class="minimap-graph">${svg}&lt;/g>`,{
+                ignoreMouse:true,
+                ignoreDimensions:true,
+                ignoreAnimation:true
+			});
+			this.converting.render();
+		}, 200)
+	}
+
+	destroy() {
+		clearTimeout(this.timeout);
+        this.editor.off("change", this.render);
+        this.editor.off("format", this.render);
+        this.editor.off("autofit", this.resetDrag);
+		this.editor.off("panning",this.resetDrag);
+		this.editor.off("zoom",this.resetDrag); 
+		this.drag.undrag();
+		this.dragPoint.undrag();
+		this.drag.remove();
+		this.dragPoint.remove();
+	}
+}
+export default MiniMap;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Aniamtion.html">Aniamtion</a></li><li><a href="module-Utils.html">Utils</a></li></ul><h3>Classes</h3><ul><li><a href="AchorLine.html">AchorLine</a></li><li><a href="Controller.html">Controller</a></li><li><a href="Event.html">Event</a></li><li><a href="Graph.html">Graph</a></li><li><a href="History.html">History</a></li><li><a href="Line.html">Line</a></li><li><a href="MiniMap.html">MiniMap</a></li><li><a href="MMEditor.html">MMEditor</a></li><li><a href="Node.html">Node</a></li><li><a href="Schema.html">Schema</a></li></ul><h3>Interfaces</h3><ul><li><a href="DefaultLine.html">DefaultLine</a></li><li><a href="DefaultNode.html">DefaultNode</a></li><li><a href="DomNode.html">DomNode</a></li><li><a href="IconNode.html">IconNode</a></li><li><a href="PolyLine.html">PolyLine</a></li></ul><h3>Events</h3><ul><li><a href="Graph.html#event:beforeRender%25E6%25B8%25B2%25E6%259F%2593%25E4%25B9%258B%25E5%2589%258D%25E8%25A7%25A6%25E5%258F%2591">beforeRender 渲染之前触发</a></li><li><a href="Graph.html#event:copy">copy</a></li><li><a href="Graph.html#event:delete">delete</a></li><li><a href="Graph.html#event:paste">paste</a></li><li><a href="Graph.html#event:render%25E6%25B8%25B2%25E6%259F%2593%25E5%2590%258E%25E8%25A7%25A6%25E5%258F%2591">render  渲染后触发</a></li><li><a href="Graph.html#event:line:add">line:add</a></li><li><a href="Graph.html#event:line:beforeadd">line:beforeadd</a></li><li><a href="Graph.html#event:line:change">line:change</a></li><li><a href="Graph.html#event:line:click">line:click</a></li><li><a href="Graph.html#event:line:drag">line:drag</a></li><li><a href="Graph.html#event:line:drop">line:drop</a></li><li><a href="Graph.html#event:line:mouseenter">line:mouseenter</a></li><li><a href="Graph.html#event:line:mouseleave">line:mouseleave</a></li><li><a href="Graph.html#event:line:remove">line:remove</a></li><li><a href="Graph.html#event:node:change-%25E8%258A%2582%25E7%2582%25B9%25E5%258F%2598%25E5%258C%2596%25E4%25BA%258B%25E4%25BB%25B6">node:change - 节点变化事件</a></li><li><a href="Graph.html#event:node:click-%25E8%258A%2582%25E7%2582%25B9%25E7%2582%25B9%25E5%2587%25BB%25E4%25BA%258B%25E4%25BB%25B6">node:click - 节点点击事件</a></li><li><a href="Graph.html#event:node:mouseenter-%25E8%258A%2582%25E7%2582%25B9%25E8%25BF%259B%25E5%2585%25A5%25E4%25BA%258B%25E4%25BB%25B6">node:mouseenter - 节点进入事件</a></li><li><a href="Graph.html#event:node:mouseleave">node:mouseleave</a></li><li><a href="Graph.html#event:node:move%25E8%258A%2582%25E7%2582%25B9%25E7%25A7%25BB%25E5%258A%25A8%25E4%25BA%258B%25E4%25BB%25B6">node:move 节点移动事件</a></li><li><a href="Graph.html#event:node:remove-%25E7%25A7%25BB%25E9%2599%25A4%25E8%258A%2582%25E7%2582%25B9%25E4%25BA%258B%25E4%25BB%25B6">node:remove - 移除节点事件</a></li><li><a href="Graph.html#event:node:unactive">node:unactive</a></li><li><a href="MMEditor.html#event:format">format</a></li><li><a href="MMEditor.html#event:load">load</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Tue Nov 23 2021 17:39:35 GMT+0800 (中国标准时间)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

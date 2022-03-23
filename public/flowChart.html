@@ -1,0 +1,93 @@
+<html>
+	<body>
+		<div id="root" style="width:100%;height:400px;box-shadow:  0 0 10px 1px #123"></div>
+	</body>
+	<script src="../dist/MMEditor.js"></script>
+	<script>
+        // 生成基于DOM的节点
+		const editor =  new MMEditor({ 
+            dom: document.getElementById("root"),
+            mode:"view"
+        });
+        const data  = {
+		"nodes": [
+			{
+				"type": "domNode",
+				"iconPath": "/images/favicon.png",
+				"name": "<span style='color:red'>组件-1</span>",
+				"uuid": "0",
+				x: 0, y: 0
+			},
+			{
+				"type": "domNode",
+				"name": "组件-长一点的",
+				"iconPath": "/images/favicon.png",
+				"uuid": "1",
+				x: 0, y: 0
+			},
+			{
+				"type": "domNode",
+				"name": "组件-3",
+				"iconPath": "/images/favicon.png",
+				"uuid": "2",
+				x: 0, y: 0
+			},
+			{
+				"type": "domNode",
+				"name": "组件-4（宽度自适应）",
+				"iconPath": "/images/favicon.png",
+				"uuid": "3",
+				x: 0, y: 0
+			},
+			{
+				"type": "domNode",
+				"name": "组件-5",
+				"iconPath": "/images/favicon.png",
+				"uuid": "4",
+				x: 0, y: 0
+			}
+		],
+		"lines": [
+			{
+				"to": "1",
+				"toPoint": 2,
+				"from": "0",
+				"fromPoint": 3
+			},
+			{
+				"to": "2",
+				"toPoint": 2,
+				"from": "1",
+				"fromPoint": 3
+			},
+			{
+				"to": "3",
+				"toPoint": 2,
+				"from": "2",
+				"fromPoint": 3
+			},
+			{
+				"to": "4",
+				"toPoint": 2,
+				"from": "2",
+				"fromPoint": 3
+			}
+		]
+	};
+    
+    data.nodes.forEach(item=>{
+        const rect = MMEditor.Util.getDOMRect(`<div style="padding:10px">${item.name}</div>`);
+        item.width = rect.width;
+        item.height = rect.height;
+    })
+    // dagre配置
+    editor.config.dagreOption = {
+        rankdir: 'TB',
+    }
+    editor.schema.setData(data).then(()=>{
+        editor.schema.format();
+        editor.controller.autoFit();
+    });
+    
+	</script>
+</html>
