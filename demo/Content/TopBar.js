@@ -1,8 +1,7 @@
 import React, { Fragment, PureComponent } from "react";
 import { Icon, Tooltip, message, Modal, Input } from "antd";
-import { validates } from "../Components/index";
-import dagre from "dagre";
-
+import { SVGHelper, BezierLine } from "@";
+import { mat2d } from 'gl-matrix'
 class TopBar extends PureComponent {
 	componentWillReceiveProps(props) {
 		if (props.editor && !this.props.editor) {
@@ -54,7 +53,7 @@ class TopBar extends PureComponent {
 		} = this.props;
 		schema.format();
 		this.props.editor.controller.autoFit();
- 
+
 	};
 
 	run = () => {
@@ -103,9 +102,9 @@ class TopBar extends PureComponent {
 			}
 		} = this.props;
 		node.nodes[id].fromLines.forEach(lineId => {
-			line.lines[lineId].removeClass("success error running");
+			line.lines[lineId].dom.setAttribute('class', 'mm-line');
 		});
-		node.nodes[id].shape.removeClass("success error running");
+		node.nodes[id].shape.setAttribute("class", 'mm-node-shape')
 	};
 
 	// 更新节点状态
@@ -122,69 +121,67 @@ class TopBar extends PureComponent {
 				const obj = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
 				obj.innerHTML =
 					'<span xmlns="http://www.w3.org/1999/xhtml" class="iconfont etl-success" style="font-size:24px">&radic;</span>';
-				const icon = Snap(obj);
-				icon.attr({
+				SVGHelper.setAttrs(obj, {
 					width: 26,
 					height: 30,
 					x: 150,
 					y: -2
 				});
-				node.nodes[id].shape.add(icon);
-				node.nodes[id].shape.successIcon = icon;
+				node.nodes[id].shape.appendChild(obj);
+				node.nodes[id].shape.successIcon = obj;
 			}
 			node.nodes[id].fromLines.forEach(lineId => {
-				line.lines[lineId].addClass("success");
+				line.lines[lineId].dom.classList.add("success");
+				line.lines[lineId].data.className = ("success");
 			});
-			node.nodes[id].shape.addClass("success");
+			node.nodes[id].shape.classList.add("success");
 		} else if (status === "error") {
 			if (!node.nodes[id].shape.errorIcon) {
 				const obj = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
 				obj.innerHTML =
 					'<span xmlns="http://www.w3.org/1999/xhtml" class="iconfont etl-baocuo" style="font-size:24px">X</span>';
-				const icon = Snap(obj);
-				icon.attr({
+				SVGHelper.setAttrs(obj, {
 					width: 26,
 					height: 30,
 					x: 150,
 					y: -2
 				});
-				node.nodes[id].shape.add(icon);
-				node.nodes[id].shape.errorIcon = icon;
+				node.nodes[id].shape.appendChild(obj);
+				node.nodes[id].shape.errorIcon = obj;
 			}
 			node.nodes[id].fromLines.forEach(lineId => {
-				line.lines[lineId].addClass("error");
+				line.lines[lineId].dom.classList.add("error");
 			});
-			node.nodes[id].shape.addClass("error");
+			node.nodes[id].shape.classList.add("error");
 		} else if (status === "running") {
 			node.nodes[id].fromLines.forEach(lineId => {
-				line.lines[lineId].addClass("running");
+				line.lines[lineId].dom.classList.add("running");
 				this.updateRunningLine(line.lines[lineId]);
 			});
-			node.nodes[id].shape.addClass("running");
+			node.nodes[id].shape.classList.add("running");
 		}
 	};
 
 	//更新线状态
+	/**
+	 * 
+	 * @param {import("@/Shape/Line").InstanceLine} line 
+	 * @returns 
+	 */
 	updateRunningLine(line) {
-		const path =  line.shape.path
-		let length = path.getTotalLength();
-		if (!line.hasClass("running")) {
+		if (!line.dom.classList.contains("running")) {
 			this.props.editor.graph.line.updateLine(line.data.uuid);
 			return;
 		}
-		Snap.animate(
+		const totalLength = line.pathData.getTotalLength();
+		SVGHelper.animate(
 			0,
-			length,
+			1,
 			val => {
-				const coord = path.getPointAtLength(val);
-				const matrix = new window.Snap.Matrix();
-				matrix.translate(coord.x, coord.y);
-				matrix.rotate(coord.alpha + line.arrow.angle + 90, 0, 0);
-				line.arrow.attr({
-					transform: matrix.toTransformString()
-				});
+				const { x, y, alpha } = line.pathData.getPointAtLength(val * totalLength);
+				line.arrow.setAttribute('transform', `translate(${x.toFixed(0)} ${y.toFixed(0)}) rotate(${alpha - 90})`);//同步箭头
 			},
-			length * 30,
+			totalLength * 30,
 			() => {
 				this.updateRunningLine(line);
 			}
@@ -211,7 +208,7 @@ class TopBar extends PureComponent {
 			}
 			if (node.indexDepth === 0) {
 				this.rankNodes.push(node);
-				deleteLines = [...deleteLines,...node.fromLines];
+				deleteLines = [...deleteLines, ...node.fromLines];
 			} else {
 				others.push(node);
 			}
@@ -244,21 +241,21 @@ class TopBar extends PureComponent {
 		} = this.props;
 		const { loading, running } = this.state;
 		const canRedo = history.index < history.schemaList.length - 1;
-		const canUndo =  history.index > 0;
+		const canUndo = history.index > 0;
 		return (
 			<div className="job-top-bar">
 				<Tooltip title="重做">
 					<Icon
 						type="redo"
 						onClick={canRedo && this.redo}
-						className={`${!canRedo && "disable"}`}
+						className={`${!canRedo && "disable"} `}
 					/>
 				</Tooltip>
 				<Tooltip title="撤销">
 					<Icon
 						type="undo"
 						onClick={canUndo && this.undo}
-						className={`${!canUndo && "disable"}`}
+						className={`${!canUndo && "disable"} `}
 					/>
 				</Tooltip>
 				<Tooltip title="保存">
@@ -269,10 +266,10 @@ class TopBar extends PureComponent {
 						<Icon onClick={this.run} type="play-circle" />
 					</Tooltip>
 				) : (
-						<Tooltip title="终止">
-							<Icon onClick={this.stop} type="poweroff" />
-						</Tooltip>
-					)}
+					<Tooltip title="终止">
+						<Icon onClick={this.stop} type="poweroff" />
+					</Tooltip>
+				)}
 				<Tooltip title="格式化">
 					<Icon onClick={this.format} type="smile" />
 				</Tooltip>

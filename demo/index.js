@@ -1,13 +1,12 @@
 import React, { Fragment, PureComponent } from 'react';
 import ReactDom from 'react-dom';
+import 'antd/dist/antd.css';
 import './index.less';
-// import MMEditor from "MMEditor";
-// import MMEditor from "../dist/MMEditor";
-import MMEditor from '../src/MMEditor';
+import VEditor, { SVGHelper } from '../src/index.ts';
 import LeftBar from './Content/LeftBar';
 import RightBar from './Content/RightBar';
 import TopBar from './Content/TopBar';
-import { message, Popover,Drawer,Modal } from 'antd';
+import { message, Popover, Drawer, Modal } from 'antd';
 import RightMenu from './Content/RightMenu';
 import testdata from './testdata';
 class Editor extends PureComponent {
@@ -60,16 +59,16 @@ class Editor extends PureComponent {
 
 	// 初始化editor
 	async componentDidMount() {
-		this.editor = new MMEditor({ dom: this.editorRef,showMiniMap:true }); // 只读模式设置 mode:"view"
+		this.editor = new VEditor({ dom: this.editorRef, showMiniMap: true }); // 只读模式设置 mode:"view"
 		this.initEditorShape();
 		this.editor.graph.line.shapes['default'].checkNewLine = this.checkNewLine;
 		await this.editor.schema.setInitData(testdata);
 		this.editor.schema.format();
 		this.editor.controller.autoFit();
-        
+
 		this.addEditorEvent();
 		window.mm = this.editor;
-        // for (let i = 0;i < 1000;i++) {
+		// for (let i = 0;i < 1000;i++) {
 		// 	    this.editor.graph.node.addNode(
 		// 	        Object.assign({}, {
 		// 	            type: 'iconNode',
@@ -130,7 +129,7 @@ class Editor extends PureComponent {
 			});
 		});
 		// 右键
-		this.editor.graph.node.nodeG.node.addEventListener('contextmenu', e => {
+		this.editor.graph.node.nodeG.addEventListener('contextmenu', e => {
 			const path = e.path || (e.composedPath && e.composedPath());
 			const node = path.find(each => each.getAttribute('class') === 'mm-node');
 			if (node) {
@@ -154,13 +153,17 @@ class Editor extends PureComponent {
 		this.editor.graph.node.registeNode(
 			'iconNodeInput',
 			{
-				linkPoints: [{ x: 0.5, y: 0 },{ x: 0.5, y: 1 }],
-				render: (data, snapPaper) => {
-					const node = snapPaper.rect(0, 0, 180, 32);
-					const text = snapPaper.text(40, 21, data.name);
-					const icon = snapPaper.image(data.iconPath, 5, 4, 24, 24);
-					icon.node.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
-					node.attr({
+				linkPoints: [{ x: 0.5, y: 0 }, { x: 0.5, y: 1 }],
+				render: (instance) => {
+					if (instance.shape) {
+						instance.shape.remove();
+					}
+					const { data } = instance
+					const node = SVGHelper.rect(0, 0, 180, 32);
+					const text = SVGHelper.text(40, 21, data.name);
+					const icon = SVGHelper.image(data.iconPath, 5, 4, 24, 24);
+					icon.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
+					SVGHelper.setAttrs(node, {
 						class: 'icon-node',
 						fill: '#EAEEFA',
 						stroke: '#CCD9FD',
@@ -177,19 +180,18 @@ class Editor extends PureComponent {
 							content={textInfo}
 							placement="bottom"
 						>
-							<div style={{'width': '24px', height: '24px'}}></div>
+							<div style={{ 'width': '24px', height: '24px' }}></div>
 						</Popover>
-					, obj);
-					const popOver = Snap(obj);
-					popOver.attr({
+						, obj);
+					SVGHelper.setAttrs(obj, {
 						width: 24,
 						height: 24,
 						x: 5,
 						y: 4
 					});
 
-					return snapPaper.group(node, text, icon, popOver);
-    			}
+					return SVGHelper.group(node, text, icon);
+				}
 			},
 			'iconNode'
 		);
@@ -204,13 +206,12 @@ class Editor extends PureComponent {
 
 	// 生成新节点
 	onDrop = (item, e) => {
-		const dom = this.editor.dom.node;
+		const dom = this.editor.dom;
 		const name = item.name + `-${++this.index}`;
-		const transform = this.editor.paper.transform();
-		const info = transform.globalMatrix.split();
+		const { scale, x: dx, y: dy } = this.editor.controller;
 		if (e.clientX - dom.offsetLeft < 0 || e.clientY - dom.offsetTop < 0) return;
-		const x = (e.clientX - dom.offsetLeft - info.dx) / info.scalex - 70 * info.scalex;
-		const y = (e.clientY - dom.offsetTop - info.dy) / info.scalex - 15 * info.scalex;
+		const x = (e.clientX - dom.offsetLeft - dx) / scale - 70 * scale;
+		const y = (e.clientY - dom.offsetTop - dy) / scale - 15 * scale;
 		const node = this.editor.graph.node.addNode(
 			Object.assign({}, item, {
 				iconPath: item.iconPath,

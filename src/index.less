@@ -35,7 +35,7 @@
 			top:0px;
 			border:2px solid #08c;
 			cursor: pointer;
-            transition: all 200ms ease;
+			transition: all 200ms ease;
 		}
 		.drag-point{
 			width:10px;
@@ -55,6 +55,9 @@
 		height: 100%;
 		position: absolute;
 		svg {
+			position: absolute;
+			left: 0;
+			top: 0;
 			outline: none;
 		}
 		* {
@@ -96,18 +99,16 @@
 			}
 		}
 		.mm-line {
-			&.active {
-				.mm-line-shape {
-					stroke-width: 5px;
-					opacity: 0.5;
-				}
-				.mm-line-arrow {
-					opacity: 0.5;
-				}
+			.mm-line-path{
+				transition: stroke-dasharray 300ms ease-out;
 			}
-			&:hover {
+			.mm-shdow-path{
+				stroke: transparent; 
+				stroke-width: 10;
+				fill:none;
+			}
+			&.active,&:hover {
 				.mm-line-shape {
-					stroke-width: 5px;
 					opacity: 0.5;
 				}
 				.mm-line-arrow {
@@ -115,12 +116,13 @@
 				}
 			}
 			&.running {
-				.mm-line-shape path{
+				.mm-line-path{
 					stroke-dasharray: 5 !important;
 					animation: dashing 5s linear infinite;
 				}
 			}
 			.mm-line-shape {
+				
 				cursor: pointer;
 			}
 			.mm-line-arrow {
@@ -140,6 +142,7 @@
 				&:hover,&.hover {
 					fill: #4c79ff;
 					cursor: crosshair;
+					display: block;
 				}
 			}
 		}

@@ -192,14 +192,18 @@
 					}
 				}
 				.mm-line {
-					&.success path {
-						stroke: green !important;
+					&.success {
+						.mm-line-arrow,.mm-line-path{
+							stroke: green !important;
+						}
 					}
-					&.error path {
-						stroke: red !important;
+					&.error {
+						.mm-line-arrow,.mm-line-path{
+							stroke: red !important;
+						}
 					}
 					&.running {
-						path {
+						.mm-line-path ,	.mm-line-arrow{
 							stroke: #4c79ff !important;
 						}
 						.mm-line-arrow {

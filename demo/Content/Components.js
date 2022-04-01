@@ -37,7 +37,7 @@ export default [
 				type: "iconNode",
 				iconPath: "./jobTypes/数据转换@2x.png",
 				name: "过程组件",
-				help: `这是一个使用MMEditor的基础例子`
+				help: `这是一个使用VEditor的基础例子`
 			}
 		]
 	}

@@ -1,7 +1,5 @@
-const path = require("path");
-const webpack = require("webpack");
 const devMode = process.env.SYS_ENV !== "production";
-
+const path = require('path')
 module.exports = {
 	cache: true,
 	entry: {
@@ -10,23 +8,29 @@ module.exports = {
 	output: {
 		filename: "index.js"
 	},
-
+	mode: 'development',
 	devServer: {
 		host: "0.0.0.0",
-		port: "7799",
-		open: true,
-		openPage: "./public/index.html",
-		contentBase: "./",
+		port: "7798",
+		static: {
+			staticOptions: {
+				publicPath: '/',
+				serveIndex: true,
+			},
+		},
+		watchFiles: ['src/**/*', 'demo/**/*'],
+		open: "./index.html",
 		hot: true
 	},
 	devtool: "source-map",
 	module: {
+
 		rules: [
 			{
-				test: /\.js$/,
-				exclude: /(node_modules)|dist/,
+				test: /\.(js|ts)$/,
+				exclude: /node_modules|dist/,
 				use: {
-					loader: "babel-loader?cacheDirectory=true"
+					loader: "ts-loader"
 				}
 			},
 			{
@@ -54,5 +58,11 @@ module.exports = {
 				loader: "url-loader"
 			}
 		]
-	}
+	},
+	resolve: {
+		extensions: ['.ts', '.js', '.json', '.less', '.svg', '.css',],
+		alias: {
+			'@': path.join(__dirname, './src/'),
+		},
+	},
 };

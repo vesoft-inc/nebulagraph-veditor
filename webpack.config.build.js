@@ -1,18 +1,26 @@
+const path = require('path');
 module.exports = {
 	mode: "production",
 	entry: {
-		app: "./src/MMEditor.js"
+		app: "./src/index.ts"
 	},
 	output: {
-		library: "MMEditor",
+		library: "VEditor",
 		libraryTarget: "umd",
 		libraryExport: "default", // 默认导出
-		filename: "MMEditor.js"
+		filename: "VEditor.js"
+	},
+	resolve: {
+		extensions: ['.ts', '.js'],
+		alias: {
+			'@': path.join(__dirname, './src/'),
+		},
 	},
 	externals: {
+		dagre: "dagre",
+		glMatrix: 'gl-matrix',
 		canvg: "canvg",
-		uuid:"uuid",
-		classnames:"classnames"
+		uuid: "uuid",
 	},
 	optimization: {
 		minimize: false
@@ -20,10 +28,10 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.js$/,
+				test: /\.js|ts$/,
 				exclude: /(node_modules)/,
 				use: {
-					loader: "babel-loader?cacheDirectory=true"
+					loader: "ts-loader"
 				}
 			},
 
@@ -48,5 +56,6 @@ module.exports = {
 				loader: "url-loader"
 			}
 		]
-	}
+	},
+
 };

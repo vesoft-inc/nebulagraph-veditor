@@ -1,0 +1,17 @@
+{
+  "include": ["src/**/*"],
+  "compileOnSave": true,
+  "compilerOptions": {
+    "sourceMap": true,
+    "allowJs": true,
+    "emitDeclarationOnly": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "outDir": "types",
+    "module": "es6",
+    "target": "es5",
+    "declaration": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node"
+  }
+}
