@@ -1,6 +1,7 @@
 import React, { Fragment, PureComponent } from "react";
 import { Table, Select, Input } from "antd";
 import { Components, refreshs } from "../Components/index";
+import { SVGHelper } from "@";
 class RightBar extends PureComponent {
 	state = {};
 	componentDidMount() {
@@ -119,7 +120,7 @@ class RightBar extends PureComponent {
 		} = this.props;
 		const { data } = parentNode;
 		const refresh = refreshs[data.component];
-		if(!refresh)return false;
+		if (!refresh) return false;
 		const newData = refresh(
 			{
 				before
@@ -207,17 +208,17 @@ class RightBar extends PureComponent {
 		// 上游数据修改导致下属节点全部更新输入
 		let newData = refresh ? await refresh(data, toNode.data, schema.data) : toNode.data;
 		// 刷新动画
-		Snap.animate(
+		SVGHelper.animate(
 			0,
 			100,
 			val => {
 				const num = val < 50 ? 50 - val : val - 50;
-				toNode.shape[0].attr({
+				SVGHelper.setAttrs(toNode.shape, {
 					fillOpacity: num / 50
 				});
 			},
 			1500,
-			Snap.mina.easeinout
+			'ease-in-out'
 		);
 
 		toNode.data = newData;

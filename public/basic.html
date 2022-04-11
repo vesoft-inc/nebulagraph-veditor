@@ -3,10 +3,10 @@
 		<div id="root" style="width:100%;height:400px;box-shadow:  0 0 10px 1px #123"></div>
 		<button style="margin-top:20" onclick="add()">添加</button>
 	</body>
-	<script src="../dist/MMEditor.js"></script>
+	<script src="../dist/VEditor.js"></script>
 	<script>
 		let index = 0;
-		const editor =  new MMEditor({ dom: document.getElementById("root")});
+		const editor =  new VEditor({ dom: document.getElementById("root")});
 		function add(){
 			editor.graph.node.addNode({
 				uuid:index,

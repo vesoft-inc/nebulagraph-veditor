@@ -6,11 +6,11 @@
 		stroke-dashoffset: 0;
 	}
 }
-.mm-editor {
+.ve-editor {
 	width: 100%;
 	height: 100%;
 	position: relative;
-	.mm-editor-back{
+	.ve-editor-back{
 		width:100%;
 		height:100%;
 		position: absolute;
@@ -18,7 +18,7 @@
 		left:0;
 		top:0;
 	}
-	.mm-minimap{
+	.ve-minimap{
 		position: absolute;
 		top:10px;
 		right:10px;
@@ -35,7 +35,7 @@
 			top:0px;
 			border:2px solid #08c;
 			cursor: pointer;
-            transition: all 200ms ease;
+			transition: all 200ms ease;
 		}
 		.drag-point{
 			width:10px;
@@ -49,22 +49,25 @@
 			cursor: nwse-resize;
 		}
 	}
-	> .mm-editor-svg {
+	> .ve-editor-svg {
 		cursor: grab;
 		width: 100%;
 		height: 100%;
 		position: absolute;
 		svg {
+			position: absolute;
+			left: 0;
+			top: 0;
 			outline: none;
 		}
 		* {
 			transition: x, y, transform, cx, cy, width, stroke, height, fill 400ms;
 			outline: none;
 		}
-		.mm-node {
+		.ve-node {
 			cursor: move;
 
-			.mm-node-shape {
+			.ve-node-shape {
 				&:hover {
 					> .icon-node {
 						stroke: #4c79ff;
@@ -95,38 +98,37 @@
 				}
 			}
 		}
-		.mm-line {
-			&.active {
-				.mm-line-shape {
-					stroke-width: 5px;
-					opacity: 0.5;
-				}
-				.mm-line-arrow {
-					opacity: 0.5;
-				}
+		.ve-line {
+			.ve-line-path{
+				transition: stroke-dasharray 300ms ease-out;
 			}
-			&:hover {
-				.mm-line-shape {
-					stroke-width: 5px;
+			.ve-shdow-path{
+				stroke: transparent; 
+				stroke-width: 10;
+				fill:none;
+			}
+			&.active,&:hover {
+				.ve-line-shape {
 					opacity: 0.5;
 				}
-				.mm-line-arrow {
+				.ve-line-arrow {
 					opacity: 0.5;
 				}
 			}
 			&.running {
-				.mm-line-shape path{
+				.ve-line-path{
 					stroke-dasharray: 5 !important;
 					animation: dashing 5s linear infinite;
 				}
 			}
-			.mm-line-shape {
+			.ve-line-shape {
+				
 				cursor: pointer;
 			}
-			.mm-line-arrow {
+			.ve-line-arrow {
 				cursor: crosshair;
 			}
-			.mm-line-label{
+			.ve-line-label{
 				text{
 					text-anchor: middle;
 				}
@@ -136,15 +138,16 @@
 			stroke: #4c79ff;
 		}
 		.link-points-g {
-			.mm-link-points {
+			.ve-link-points {
 				&:hover,&.hover {
 					fill: #4c79ff;
 					cursor: crosshair;
+					display: block;
 				}
 			}
 		}
 	}
-	> .mm-editor-html {
+	> .ve-editor-html {
 		width: 100%;
 		height: 100%;
 		position: absolute;
@@ -155,7 +158,7 @@
 		left:0;
 	}
 }
-.mm-node-wrapper{
+.ve-node-wrapper{
 	border:1px solid #08c;
 	border-radius: 8px;
 	box-sizing: border-box;

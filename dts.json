@@ -1,19 +1,16 @@
 {
-  // 更改此项以匹配您的项目
-  "include": ["src/**/*","demo/**/*"],
+  "include": ["src/**/*"],
   "compileOnSave": true,
   "compilerOptions": {
-    "pretty": true,
     "sourceMap": true,
     "allowJs": true,
-    "declaration": false,
-    "importHelpers": true,
+    "emitDeclarationOnly": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "jsx":"react",
-    "outDir": "dist",
+    "outDir": "types",
     "module": "es6",
     "target": "es5",
+    "declaration": true,
     "resolveJsonModule": true,
     "moduleResolution": "node"
   }

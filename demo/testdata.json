@@ -100,7 +100,7 @@
 		
 		{
 			"to": "04026110-c7df-11e9-8e77-b1834b6279dc",
-			"toPoint": "0",
+			"toPoint": 0,
 			"from": "0559b3b0-c7df-11e9-8e77-b1834b6279dc",
 			"fromPoint": 1,
 			"fromX": 344,
