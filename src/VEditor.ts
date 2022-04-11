@@ -57,11 +57,11 @@ class VEditor extends Utils.Event {
          * @property {Snap.Element} paper
          */
         this.paper = createSVGElement("g", this.svg) as SVGGElement;
-        this.paper.classList.add("mm-editor-paper");
+        this.paper.classList.add("ve-editor-paper");
         /**
          * @property {HTMLElement} container 实例dom
          */
-        this.container = this.dom.querySelector(".mm-editor");
+        this.container = this.dom.querySelector(".ve-editor");
         this.resize();
         /**
          * @property {Graph} graph 画布
@@ -85,9 +85,9 @@ class VEditor extends Utils.Event {
     }
 
     initDom(dom: HTMLDivElement): HTMLDivElement {
-        dom.innerHTML = `<div class="mm-editor ${this.config.mode || ""}" >
-				<div class="mm-editor-back" ></div>
-				<div class="mm-editor-svg" >
+        dom.innerHTML = `<div class="ve-editor ${this.config.mode || ""}" >
+				<div class="ve-editor-back" ></div>
+				<div class="ve-editor-svg" >
 					<svg  />
 				</div>
 			</div>`;

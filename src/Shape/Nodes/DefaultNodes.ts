@@ -65,7 +65,7 @@ const DefaultNode: NodeRender = {
             fill: "#fff",
             display: "none",
             stroke: "#08c",
-            class: "mm-link-points",
+            class: "ve-link-points",
         });
 
         if (!instance.data) {

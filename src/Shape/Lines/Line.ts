@@ -39,7 +39,7 @@ const DefaultLine: LineRender = {
             : (line.shadowPath = SVGHelper.path());
         setAttrs(path, {
             d: pathString,
-            class: "mm-line-path",
+            class: "ve-line-path",
             "stroke-dasharray": "10",
             fill: "transparent",
             "stroke-width": 2,
@@ -52,7 +52,7 @@ const DefaultLine: LineRender = {
             fill: "none",
         });
         line.pathData = new Path(pathString);
-        shadowPath.setAttribute("class", "mm-shdow-path");
+        shadowPath.setAttribute("class", "ve-shdow-path");
         animate(
             10,
             0,
@@ -174,7 +174,7 @@ const DefaultLine: LineRender = {
         mat2d.translate(matrix, matrix, [to.x, to.y]);
         mat2d.rotate(matrix, matrix, (angle * Math.PI) / 180);
         setAttrs(path, {
-            class: "mm-line-arrow",
+            class: "ve-line-arrow",
             d: pathString,
             fill: "rgba(178,190,205,0.7)",
             transform: `matrix(${matrix.join(",")})`,
@@ -258,7 +258,7 @@ const DefaultLine: LineRender = {
             y: y - height * 0.5,
         });
         setAttrs(labelGroup, {
-            class: "mm-line-label",
+            class: "ve-line-label",
             "data-label": encodeURI(totalLabel),
         });
         if (autoRotate) {

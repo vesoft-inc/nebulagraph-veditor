@@ -38,7 +38,7 @@ class MiniMap {
     }
 
     init() {
-        const dom = `<div class="mm-minimap" >
+        const dom = `<div class="ve-minimap" >
 			<canvas width="100%" height="100%"></canvas>
 			<div class="drag-rect" style="left:${this.padding}px;top:${this.padding}px">
 				<div class="drag-point"></div>
@@ -46,7 +46,7 @@ class MiniMap {
 		</div>`;
         const can = document.createElement("div");
         can.innerHTML = dom;
-        this.container = can.querySelector(".mm-minimap");
+        this.container = can.querySelector(".ve-minimap");
         this.editor.container.append(this.container);
         this.canvas = this.container.querySelector("canvas");
         this.ctx = this.canvas.getContext("2d");

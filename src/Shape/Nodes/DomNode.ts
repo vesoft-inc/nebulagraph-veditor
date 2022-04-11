@@ -21,7 +21,7 @@ const DomNode: NodeRender = {
         } height=${data.height} >
 		<div style="width:${data.width}px;height:${
             data.height
-        }" class="mm-node-wrapper">
+        }" class="ve-node-wrapper">
 			<div class="node-text">${data.name}</div>
 		</div>
 		</foreignObject>`) as SVGForeignObjectElement;

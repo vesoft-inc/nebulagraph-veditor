@@ -68,7 +68,7 @@ class Line {
         this.paper = graph.editor.paper;
         this.lines = [];
         this.lineG = createSVGElement("g", this.paper) as SVGGElement;
-        this.lineG.classList.add("mm-lines");
+        this.lineG.classList.add("ve-lines");
         this.allLinkPointsXY = [];
         this.shapes = {
             default: DefaultLine,
@@ -143,7 +143,7 @@ class Line {
         const arrow = shape.renderArrow(instanceLine);
         const g = SVGHelper.group(lineShape, arrow);
         setAttrs(lineShape, {
-            class: "mm-line-shape",
+            class: "ve-line-shape",
         });
         instanceLine.dom = g;
         instanceLine.shape = lineShape;
@@ -152,7 +152,7 @@ class Line {
             ? (instanceLine.arrow2 = shape.renderArrow2(instanceLine))
             : undefined;
         setAttrs(g, {
-            class: `mm-line ${lineData.className || ""}`,
+            class: `ve-line ${lineData.className || ""}`,
         });
         this.addToNodes(instanceLine);
         this.addLineEvents(instanceLine);
@@ -193,7 +193,7 @@ class Line {
         if (rerenderShape) {
             this.shapes[type || "default"].render(line);
             line.arrow = this.shapes[type || "default"].renderArrow(line);
-            line.dom.setAttribute("class", `mm-line ${className || ""}`);
+            line.dom.setAttribute("class", `ve-line ${className || ""}`);
             line.data = Object.assign(
                 line.data,
                 lineData ? lineData : {},

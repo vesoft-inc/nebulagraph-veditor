@@ -68,7 +68,7 @@ export default class Node {
         this.nodes = {};
         this.paper = graph.editor.paper;
         this.nodeG = createSVGElement("g", this.paper) as SVGGElement;
-        this.nodeG.classList.add("mm-nodes");
+        this.nodeG.classList.add("ve-nodes");
         this.linkPointsG = createSVGElement("g", this.paper) as SVGGElement;
         this.linkPointsG.classList.add("link-points-g");
         this.initDefs();
@@ -84,7 +84,7 @@ export default class Node {
     initDefs() {
         this.shadow = svgWrapper(
             `<defs>
-			<filter id="mm-black-shadow" filterUnits="userSpaceOnUse">
+			<filter id="ve-black-shadow" filterUnits="userSpaceOnUse">
                 <feGaussianBlur in="SourceAlpha" stdDeviation="4"></feGaussianBlur>
                 <feGaussianBlur stdDeviation="3" />
                 <feOffset dx="3" dy="1" result="offsetblur"></feOffset>
@@ -222,8 +222,8 @@ export default class Node {
         const dom = SVGHelper.group(nodeShape);
         node.shape = nodeShape;
         node.dom = dom;
-        nodeShape.classList.add("mm-node-shape");
-        dom.setAttribute("class", `mm-node ${item.className || ""}`);
+        nodeShape.classList.add("ve-node-shape");
+        dom.setAttribute("class", `ve-node ${item.className || ""}`);
         dom.setAttribute("data-id", key);
         dom.setAttribute(
             "transform",
@@ -259,7 +259,7 @@ export default class Node {
             shape.render(node);
         }
         setAttrs(node.dom, {
-            class: `mm-node ${nodeData.className || ""}`,
+            class: `ve-node ${nodeData.className || ""}`,
         });
         node.dom.style.transform = `translate(${nodeData.x} ,${nodeData.y})`;
         node.data = nodeData;
@@ -453,7 +453,7 @@ export default class Node {
             node = nodes[key];
             node.shape.classList.add("active");
             setAttrs(node.shape, {
-                filter: "url(#mm-black-shadow)",
+                filter: "url(#ve-black-shadow)",
             });
             this.actives[node.data.uuid] = node;
             node.linkPoints.forEach((point) => {

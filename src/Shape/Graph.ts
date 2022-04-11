@@ -35,7 +35,7 @@ class Graph extends Utils.Event {
     addBack() {
         (
             this.editor.container.querySelector(
-                ".mm-editor-back"
+                ".ve-editor-back"
             ) as HTMLDivElement
         ).style.backgroundImage = `url(${backSvg})`;
     }
