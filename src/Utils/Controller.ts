@@ -54,9 +54,7 @@ class Controller extends Utils.Event {
         this.svg.addEventListener("mousedown", this.panStart);
         this.svg.addEventListener("mouseup", this.panStop);
         this.svg.addEventListener("mouseleave", this.panStop);
-        this.svg.addEventListener("wheel", this.onWheel, {
-            passive: true,
-        });
+        this.svg.addEventListener("wheel", this.onWheel);
     }
 
     clear() {
