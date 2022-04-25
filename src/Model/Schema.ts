@@ -150,7 +150,7 @@ class Schema {
             this.editor.graph.on(
                 event,
                 () => {
-                    this.history.push(this.getNowDataMap());
+                    this.history.push(this.makeNowDataMap());
                 },
                 9999
             );
@@ -161,7 +161,7 @@ class Schema {
      * 历史入栈最新数据
      */
     pushHistory() {
-        this.history.push(this.getNowDataMap());
+        this.history.push(this.makeNowDataMap());
     }
 
     /**
@@ -174,7 +174,7 @@ class Schema {
     /**
      * 获取当前最新的map
      */
-    getNowDataMap() {
+    makeNowDataMap() {
         const nodes = this.editor.graph.node.nodes;
         const lines = this.editor.graph.line.lines;
         let nodesMap = {};
@@ -256,6 +256,7 @@ class Schema {
      * 获取数据
      */
     getData() {
+        this.makeNowDataMap();
         const { nodesMap, linesMap } = this.data;
         return {
             nodes: Object.keys(nodesMap).map((key) => nodesMap[key]),

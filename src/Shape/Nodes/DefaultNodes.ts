@@ -19,6 +19,8 @@ export type NodeRender = {
         node: InstanceNode,
         point: InstanceNodePoint
     ) => InstanceNodePoint;
+
+    destroy?: (node: InstanceNode) => void;
 } & AnyMap;
 const DefaultNode: NodeRender = {
     adsorb: [20, 20], //磁吸的范围
@@ -80,6 +82,9 @@ const DefaultNode: NodeRender = {
             y: linkPoint.y * box.height,
         };
         return instance;
+    },
+    destroy: (node: InstanceNode) => {
+        node.shape?.remove();
     },
 };
 export default DefaultNode;

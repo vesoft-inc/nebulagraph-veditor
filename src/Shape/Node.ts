@@ -184,7 +184,9 @@ export default class Node {
      */
     deleteNode = (input: VEditorNode | string) => {
         const uuid = typeof input === "string" ? input : input.uuid;
-        const deleteNode = this.nodes[uuid];
+        const deleteNode = this.nodes[uuid] as InstanceNode;
+        const nodeRender = this.shapes[deleteNode.data.type || "default"];
+        nodeRender.destroy && nodeRender.destroy(deleteNode);
         delete this.nodes[uuid];
         /**
          * @event Graph#node:remove - 移除节点事件
