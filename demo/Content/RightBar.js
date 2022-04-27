@@ -168,7 +168,7 @@ class RightBar extends PureComponent {
 			node.data.config = data.config;
 			node.data.name = data.config.name;
 			editor.graph.fire("node:change", { node });
-			node.select("text").node.innerHTML = data.config.name;
+			node.dom.querySelector("text").innerHTML = data.config.name;
 		}, 300);
 	};
 
