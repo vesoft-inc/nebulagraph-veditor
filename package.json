@@ -1,59 +1,59 @@
 {
-    "name": "@vesoft-inc/veditor",
-    "version": "4.0.7",
-    "description": "svg flow editor",
-    "main": "./dist/VEditor.js",
-    "types": "./types/index.d.ts",
-    "scripts": {
-        "start": "webpack serve ",
-        "demo:build": "webpack --mode production --config webpack.config.js",
-        "build": "webpack --config webpack.config.build.js",
-        "doc": "jsdoc -c jsdoc.json",
-        "makeDts": "npx -p typescript tsc -p ./dts.json"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/mizy/VEditor.git"
-    },
-    "keywords": [
-        "svg",
-        "flow",
-        "editor"
-    ],
-    "files": [
-        "dist",
-        "types"
-    ], 
-    "dependencies": {
-        "canvg": "^4.0.0",
-        "dagre": "^0.8.4",
-        "gl-matrix": "^3.4.3",
-        "uuid": "^8.3.2"
-    },
-    "devDependencies": {
-        "antd": "^3.22.0",
-        "babel-loader": "^8.0.2",
-        "babel-plugin-import": "^1.12.0",
-        "core-js": "^3.18.3",
-        "css-loader": "^1.0.0",
-        "jsdoc": "^3.6.3",
-        "less": "^3.8.1",
-        "less-loader": "^4.1.0",
-        "react": "^16.0.0",
-        "react-dom": "^16.0.0",
-        "style-loader": "^0.21.0",
-        "ts-loader": "^9.2.8",
-        "tslib": "^2.3.1",
-        "typescript": "^4.6.3",
-        "url-loader": "^1.0.1",
-        "webpack": "^5.71.0",
-        "webpack-cli": "^4.9.2",
-        "webpack-dev-server": "^4.7.4"
-    },
-    "author": "mizy",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/vesoft-inc/nebula-VEditor/issues"
-    },
-    "homepage": "https://github.com/vesoft-inc/nebula-VEditor#readme"
+  "name": "@vesoft-inc/veditor",
+  "version": "4.1.0",
+  "description": "svg flow editor",
+  "main": "./dist/VEditor.js",
+  "types": "./types/index.d.ts",
+  "scripts": {
+    "start": "webpack serve ",
+    "demo:build": "webpack --mode production --config webpack.config.js",
+    "build": "webpack --config webpack.config.build.js",
+    "doc": "jsdoc -c jsdoc.json",
+    "makeDts": "npx -p typescript tsc -p ./dts.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mizy/VEditor.git"
+  },
+  "keywords": [
+    "svg",
+    "flow",
+    "editor"
+  ],
+  "files": [
+    "dist",
+    "types"
+  ],
+  "dependencies": {
+    "canvg": "^4.0.0",
+    "dagre": "^0.8.4",
+    "gl-matrix": "^3.4.3",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "antd": "^3.22.0",
+    "babel-loader": "^8.0.2",
+    "babel-plugin-import": "^1.12.0",
+    "core-js": "^3.18.3",
+    "css-loader": "^1.0.0",
+    "jsdoc": "^3.6.3",
+    "less": "^3.8.1",
+    "less-loader": "^4.1.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "style-loader": "^0.21.0",
+    "ts-loader": "^9.2.8",
+    "tslib": "^2.3.1",
+    "typescript": "^4.6.3",
+    "url-loader": "^1.0.1",
+    "webpack": "^5.71.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  },
+  "author": "mizy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vesoft-inc/nebula-VEditor/issues"
+  },
+  "homepage": "https://github.com/vesoft-inc/nebula-VEditor#readme"
 }
