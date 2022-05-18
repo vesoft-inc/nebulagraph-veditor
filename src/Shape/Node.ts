@@ -15,7 +15,7 @@ import { AnyMap, Position } from "../Utils/types";
 export interface InstanceNode {
   dom: SVGGElement;
   shape?: SVGGElement;
-  bbox?: DOMRect;
+  shapeBBox?: DOMRect;
   data: VEditorNode;
   toLines: Set<string>;
   fromLines: Set<string>;
@@ -37,11 +37,9 @@ export interface InstanceNodePoint {
     y: number;
   };
   dom?: SVGGElement;
-  bbox?: DOMRect;
   data?: {
     x: number;
     y: number;
-    box?: DOMRect;
     [key: number | string]: unknown;
   };
 }
@@ -53,7 +51,6 @@ export default class Node {
   nodes: Record<string, InstanceNode>;
   paper: SVGGElement;
   nodeG: SVGGElement;
-  linkPointsG: SVGGElement;
   actives: {};
   shadow: SVGElement;
   shapes: {
@@ -69,8 +66,6 @@ export default class Node {
     this.paper = graph.editor.paper;
     this.nodeG = createSVGElement("g", this.paper) as SVGGElement;
     this.nodeG.classList.add("ve-nodes");
-    this.linkPointsG = createSVGElement("g", this.paper) as SVGGElement;
-    this.linkPointsG.classList.add("link-points-g");
     this.initDefs();
     this.listenEvent();
     this.actives = {};
@@ -87,7 +82,7 @@ export default class Node {
 			<filter id="ve-black-shadow" filterUnits="userSpaceOnUse">
                 <feGaussianBlur in="SourceAlpha" stdDeviation="4"></feGaussianBlur>
                 <feGaussianBlur stdDeviation="3" />
-                <feOffset dx="3" dy="1" result="offsetblur"></feOffset>
+                <feOffset dx="0" dy="0" result="offsetblur"></feOffset>
                 <feFlood flood-color="#333333"></feFlood>
                 <feComposite in2="offsetblur" operator="in"></feComposite>
                 <feComponentTransfer>
@@ -165,6 +160,7 @@ export default class Node {
   addNode = (data: VEditorNode) => {
     if (!data.uuid) {
       data.uuid = uuid();
+      this.graph.editor.fire("node:makeuuid", data);
     }
     if (data.uuid.indexOf && data.uuid.indexOf("-") > -1) {
       data.uuid = data.uuid.replace(/-/g, "");
@@ -219,11 +215,13 @@ export default class Node {
       fromLines: new Set<string>(),
       _destroys: [],
       data: item,
+      linkPoints: []
     };
     const nodeShape = shape.render(node);
     const dom = SVGHelper.group(nodeShape);
     node.shape = nodeShape;
     node.dom = dom;
+    node.linkPointsTypes = item.linkPointsTypes;
     nodeShape.classList.add("ve-node-shape");
     dom.setAttribute("class", `ve-node ${item.className || ""}`);
     dom.setAttribute("data-id", key);
@@ -246,7 +244,7 @@ export default class Node {
    */
   updateNode(input: VEditorNode | string, rerenderShape = false) {
     let nodeData: VEditorNode;
-    if (typeof input === "string") {
+    if (typeof input !== "object") {
       nodeData = this.nodes[input].data;
     } else {
       nodeData = input;
@@ -258,16 +256,19 @@ export default class Node {
     if (rerenderShape) {
       const nodeShape = shape.render(node);
       node.shape = nodeShape;
-      node.dom.appendChild(nodeShape);
+      node.dom.prepend(nodeShape);
     }
     setAttrs(node.dom, {
       class: `ve-node ${nodeData.className || ""}`,
     });
     node.dom.style.transform = `translate(${nodeData.x} ,${nodeData.y})`;
     node.data = nodeData;
-    node.linkPoints.forEach((linkPoint) => {
-      shape.renderLinkPoint(node, linkPoint);
-    });
+    if (rerenderShape) {
+      node.linkPoints.forEach((linkPoint) => {
+        shape.renderLinkPoint(node, linkPoint);
+      });
+    }
+
   }
 
   /**
@@ -277,8 +278,7 @@ export default class Node {
   addNodeLinkPoints(node: InstanceNode) {
     node.linkPoints = [];
     const shape = this.shapes[node.data.type || "default"];
-    node.linkPointsTypes =
-      node.linkPointsTypes || this.shapes[node.data.type].linkPoints;
+    node.linkPointsTypes = node.linkPointsTypes || this.shapes[node.data.type].linkPoints;
     if (!node.linkPointsTypes) {
       return false;
     }
@@ -298,7 +298,7 @@ export default class Node {
           "data-node-id": node.data.uuid,
           "data-index": index,
         });
-        this.linkPointsG.append(instancePoint.dom);
+        node.dom.append(instancePoint.dom);
         this.graph.line.addLinkPointEvent(instancePoint);
         this.addLinkHoverEvent(instancePoint, node);
       }
@@ -425,7 +425,7 @@ export default class Node {
         this.graph.fire("node:click", { node, event });
       }
     });
-    node.dom.addEventListener("mouseenter", (event) => {
+    node.shape.addEventListener("mouseenter", (event) => {
       /**
        * @event Graph#node:mouseenter - 节点进入事件
        */
@@ -437,7 +437,7 @@ export default class Node {
       });
     });
 
-    node.dom.addEventListener("mouseleave", (event) => {
+    node.shape.addEventListener("mouseleave", (event) => {
       /**
        * @event Graph#node:mouseleave
        */
