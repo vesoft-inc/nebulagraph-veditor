@@ -65,9 +65,22 @@
 			outline: none;
 		}
 		.ve-node {
-			cursor: move;
-
+      &:hover{
+        .ve-link-points{
+          display: block;
+        }
+      }
+      .ve-link-points {
+        cursor:crosshair;
+        display: none;
+				&:hover,&.hover {
+					fill: #4c79ff;
+					cursor: crosshair;
+					display: block;
+				}
+			}
 			.ve-node-shape {
+		  	cursor: move;
 				&:hover {
 					> .icon-node {
 						stroke: #4c79ff;
@@ -136,16 +149,7 @@
 		}
 		.anchor-line{
 			stroke: #4c79ff;
-		}
-		.link-points-g {
-			.ve-link-points {
-				&:hover,&.hover {
-					fill: #4c79ff;
-					cursor: crosshair;
-					display: block;
-				}
-			}
-		}
+		} 
 	}
 	> .ve-editor-html {
 		width: 100%;
