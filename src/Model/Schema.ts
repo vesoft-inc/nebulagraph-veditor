@@ -72,7 +72,7 @@ class Schema {
   /**
    * 格式化有向图
    */
-  format() {
+  async format() {
     const nodes = this.editor.graph.node.nodes;
     const lines = this.editor.graph.line.lines;
     const res = {
@@ -129,7 +129,7 @@ class Schema {
       res.nodes.push(nodeData);
     });
     // 触发format事件，保存历史
-    this.setData(res);
+    await this.setData(res);
     /**
      * @event VEditor#format
      * @type {Object}
