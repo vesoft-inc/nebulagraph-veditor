@@ -52,10 +52,7 @@ class Graph extends Utils.Event {
       }
     });
 
-    // 查看模式不能删除节点、线条；如果存在部分可操作则自己在业务中监听处理相关逻辑
-    if (this.mode !== "view") {
-      document.addEventListener("keydown", this.onKeyDown);
-    }
+    document.addEventListener("keydown", this.onKeyDown);
 
     this.on("line:drag", () => {
       this.linkStatus = "lineing";
@@ -78,6 +75,11 @@ class Graph extends Utils.Event {
   }
 
   onKeyDown = (e: KeyboardEvent) => {
+
+    // 查看模式不能删除节点、线条；如果存在部分可操作则自己在业务中监听处理相关逻辑
+    if (this.mode === "view") {
+      return
+    }
     if (
       ["TEXTAREA", "INPUT"].indexOf(document.activeElement.tagName) >
       -1 &&
