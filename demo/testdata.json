@@ -1,125 +1,121 @@
 {
-	"nodes": [
-		{
-			"component": "write",
-			"type": "iconNodeOutput",
-			"iconPath": "./jobTypes/数据存储@2x.png",
-			"name": "输出-1",
-			"help": "基于Snap.svg可以方便的进行动画操作",
-			"operatorGroup": "load",
-			"popOverData":{
-				"title":"审批人",
-				"text":"张三 | 李四"
-			},
-			"config": {
-				"name": "输出-1",
-				"srcDbName": "test",
-				"tableName": "user",
-				"isPartition": 0,
-				"dstFields": []
-			},
-			"output": [],
-			"x": 265,
-			"y": 176,
-			"uuid": "04026110-c7df-11e9-8e77-b1834b6279dc",
-			"indexDepth": 0
-		},
-		{
-			"component": "read",
-			"popOverData":{
-				"title":"审批人",
-				"text":"泽飞 | 王老是"
-			},
-			"type": "iconNodeInput",
-			"iconPath": "./jobTypes/数据引入@2x.png",
-			"name": "输入-2",
-			"help": "支持对节点的形状大小完全自定义",
-			"operatorGroup": "extract",
-			"config": {
-				"name": "输入-2",
-				"srcDbName": "test",
-				"isPartition": 0,
-				"dstFields": [
-					{
-						"id": 53217,
-						"name": "id",
-						"dataType": "string",
-						"detail": "id",
-						"srcField": "id"
-					},
-					{
-						"id": 53217,
-						"name": "name",
-						"dataType": "string",
-						"detail": "names",
-						"srcField": "name"
-					},
-					{
-						"id": 53217,
-						"name": "school",
-						"dataType": "string",
-						"detail": "school name",
-						"srcField": "school"
-					}
-				]
-			},
-			"output": [
-				{
-					"id": 53217,
-					"name": "id",
-					"dataType": "string",
-					"detail": "id",
-					"srcField": "id",
-					"dstField": "id"
-				},
-				{
-					"id": 53217,
-					"name": "name",
-					"dataType": "string",
-					"detail": "names",
-					"srcField": "name",
-					"dstField": "name"
-				},
-				{
-					"id": 53217,
-					"name": "school",
-					"dataType": "string",
-					"detail": "school name",
-					"srcField": "school"
-				}
-			],
-			"x": 254,
-			"y": 37,
-			"uuid": "0559b3b0-c7df-11e9-8e77-b1834b6279dc",
-			"indexDepth": 0
-			 
-		}
-		 
-	],
-	"lines": [
-		
-		{
-			"to": "04026110-c7df-11e9-8e77-b1834b6279dc",
-			"toPoint": 0,
-			"from": "0559b3b0-c7df-11e9-8e77-b1834b6279dc",
-			"fromPoint": 1,
-			"fromX": 344,
-			"fromY": 69,
-			"toX": 355,
-			"toY": 176,
-			"label":"测试",
-			"labelCfg":{
-				"refX": 0,
-				"refY": 0,
-				"showNum":10,
-				"autoRotate":false,
-				"style":{
-				  "fontSize":"12px",
-				  "fill":"#333",
-				  "stroke":"#fff"
-				}
-			}
-		}
-		
-	]
+  "nodes": [
+    {
+      "component": "write",
+      "type": "iconNodeOutput",
+      "iconPath": "./jobTypes/数据存储@2x.png",
+      "name": "输出-1",
+      "help": "基于Snap.svg可以方便的进行动画操作",
+      "operatorGroup": "load",
+      "popOverData": {
+        "title": "审批人",
+        "text": "张三 | 李四"
+      },
+      "config": {
+        "name": "输出-1",
+        "srcDbName": "test",
+        "tableName": "user",
+        "isPartition": 0,
+        "dstFields": []
+      },
+      "output": [],
+      "x": 265,
+      "y": 176,
+      "uuid": "04026110-c7df-11e9-8e77-b1834b6279dc",
+      "indexDepth": 0
+    },
+    {
+      "component": "read",
+      "popOverData": {
+        "title": "审批人",
+        "text": "泽飞 | 王老是"
+      },
+      "type": "iconNodeInput",
+      "iconPath": "./jobTypes/数据引入@2x.png",
+      "name": "输入-2",
+      "help": "支持对节点的形状大小完全自定义",
+      "operatorGroup": "extract",
+      "config": {
+        "name": "输入-2",
+        "srcDbName": "test",
+        "isPartition": 0,
+        "dstFields": [
+          {
+            "id": 53217,
+            "name": "id",
+            "dataType": "string",
+            "detail": "id",
+            "srcField": "id"
+          },
+          {
+            "id": 53217,
+            "name": "name",
+            "dataType": "string",
+            "detail": "names",
+            "srcField": "name"
+          },
+          {
+            "id": 53217,
+            "name": "school",
+            "dataType": "string",
+            "detail": "school name",
+            "srcField": "school"
+          }
+        ]
+      },
+      "output": [
+        {
+          "id": 53217,
+          "name": "id",
+          "dataType": "string",
+          "detail": "id",
+          "srcField": "id",
+          "dstField": "id"
+        },
+        {
+          "id": 53217,
+          "name": "name",
+          "dataType": "string",
+          "detail": "names",
+          "srcField": "name",
+          "dstField": "name"
+        },
+        {
+          "id": 53217,
+          "name": "school",
+          "dataType": "string",
+          "detail": "school name",
+          "srcField": "school"
+        }
+      ],
+      "x": 254,
+      "y": 37,
+      "uuid": "0559b3b0-c7df-11e9-8e77-b1834b6279dc",
+      "indexDepth": 0
+    }
+  ],
+  "lines": [
+    {
+      "to": "04026110-c7df-11e9-8e77-b1834b6279dc",
+      "toPoint": 0,
+      "from": "0559b3b0-c7df-11e9-8e77-b1834b6279dc",
+      "fromPoint": 1,
+      "fromX": 344,
+      "fromY": 69,
+      "toX": 355,
+      "toY": 176,
+      "label": "测试",
+      "labelCfg": {
+        "refX": 0,
+        "refY": 0,
+        "showNum": 10,
+        "autoRotate": false,
+        "style": {
+          "fontSize": "12px",
+          "fill": "#333",
+          "stroke": "#fff"
+        }
+      }
+    }
+  ]
 }
