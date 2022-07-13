@@ -30,19 +30,21 @@ class Controller extends Utils.Event {
    */
   async autoFit(center = true, vertical = true) {
     const data = this.editor.schema.getData();
-    this.x = 0;
-    this.y = 0;
     setAttrs(this.paper, {
       transform: setTransform(this.scale, 0, 0),
+      transition: "all 0.2s",
     });
     const { width, height } = this.editor.dom.getBoundingClientRect();
     const bbox = this.paper.getBBox();
-    const dx = ((width - bbox.width) / 2 - bbox.x) / this.scale;
-    const dy = ((height - bbox.height) / 2 - bbox.y) / this.scale;
+    const dx = ((width - bbox.width) / 2 - bbox.x);
+    const dy = ((height - bbox.height) / 2 - bbox.y);
     data.nodes.forEach((node) => {
       if (center) node.x += dx;
       if (vertical) node.y += dy;
     });
+    this.x = (width - width * this.scale) / 2;
+    this.y = (height - height * this.scale) / 2;
+    this.update();
     await this.editor.schema.setData(data);
     this.editor.fire("autofit", { data });
     setTimeout(() => {
