@@ -4,15 +4,11 @@
       "component": "write",
       "type": "iconNodeOutput",
       "iconPath": "./jobTypes/数据存储@2x.png",
-      "name": "输出-1",
-      "help": "基于Snap.svg可以方便的进行动画操作",
+      "name": "output-1",
+      "help": "use svg to make animation",
       "operatorGroup": "load",
-      "popOverData": {
-        "title": "审批人",
-        "text": "张三 | 李四"
-      },
       "config": {
-        "name": "输出-1",
+        "name": "output-1",
         "srcDbName": "test",
         "tableName": "user",
         "isPartition": 0,
@@ -32,11 +28,11 @@
       },
       "type": "iconNodeInput",
       "iconPath": "./jobTypes/数据引入@2x.png",
-      "name": "输入-2",
-      "help": "支持对节点的形状大小完全自定义",
+      "name": "output-2",
+      "help": "highly customizable node&line shape ",
       "operatorGroup": "extract",
       "config": {
-        "name": "输入-2",
+        "name": "input-2",
         "srcDbName": "test",
         "isPartition": 0,
         "dstFields": [
@@ -104,7 +100,7 @@
       "fromY": 69,
       "toX": 355,
       "toY": 176,
-      "label": "测试",
+      "label": "test",
       "labelCfg": {
         "refX": 0,
         "refY": 0,

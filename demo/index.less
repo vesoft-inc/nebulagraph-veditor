@@ -153,12 +153,12 @@
 					}
 				}
 			}
-			.job-mm-editor {
+			.job-ve-editor {
 				width: 100%;
 				flex-grow: 1;
 				height: ~"calc(100vh - 55px)";
 
-				.mm-node-shape {
+				.ve-node-shape {
 					span.iconfont {
 						display: none;
 					}
@@ -191,22 +191,22 @@
 						}
 					}
 				}
-				.mm-line {
+        .ve-line {
 					&.success {
-						.mm-line-arrow,.mm-line-path{
+						.ve-line-arrow,.ve-line-path{
 							stroke: green !important;
 						}
 					}
 					&.error {
-						.mm-line-arrow,.mm-line-path{
+						.ve-line-arrow,.ve-line-path{
 							stroke: red !important;
 						}
 					}
 					&.running {
-						.mm-line-path ,	.mm-line-arrow{
+						.ve-line-path ,	.ve-line-arrow{
 							stroke: #4c79ff !important;
 						}
-						.mm-line-arrow {
+						.ve-line-arrow {
 							animation: shink 1s ease-in-out infinite alternate;
 						}
 					}

@@ -98,9 +98,9 @@ class TopBar extends PureComponent {
       }
     } = this.props;
     node.nodes[id].fromLines.forEach(lineId => {
-      line.lines[lineId].dom.setAttribute('class', 'mm-line');
+      line.lines[lineId].dom.setAttribute('class', 've-line');
     });
-    node.nodes[id].shape.setAttribute("class", 'mm-node-shape')
+    node.nodes[id].shape.setAttribute("class", 've-node-shape')
   };
 
   // 更新节点状态
