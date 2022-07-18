@@ -249,7 +249,7 @@ class Editor extends PureComponent {
           <div
             onDragOver={this.onDragOver}
             onDrop={this.onDrop}
-            className="job-mm-editor"
+            className="job-ve-editor"
             ref={ref => {
               this.editorRef = ref;
             }}

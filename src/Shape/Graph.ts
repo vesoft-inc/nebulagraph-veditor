@@ -109,6 +109,7 @@ class Graph extends Utils.Event {
        * @type {Object}
        */
       this.fire("copy", { event: e });
+      return;
     }
     if (e.keyCode === "V".charCodeAt(0) && (e.metaKey || e.ctrlKey)) {
       /**
@@ -116,6 +117,7 @@ class Graph extends Utils.Event {
        * @type {Object}
        */
       this.fire("paste", { event: e });
+      return;
     }
     if (
       e.keyCode === "Z".charCodeAt(0) &&

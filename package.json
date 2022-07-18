@@ -1,6 +1,6 @@
 {
   "name": "@vesoft-inc/veditor",
-  "version": "4.1.13",
+  "version": "4.1.15",
   "description": "svg flow editor",
   "main": "./dist/VEditor.js",
   "types": "./types/index.d.ts",
@@ -8,7 +8,7 @@
     "start": "webpack serve ",
     "demo:build": "webpack --mode production --config webpack.config.js",
     "build": "webpack --config webpack.config.build.js",
-    "doc": "jsdoc -c jsdoc.json",
+    "doc": "typedoc src --out doc ",
     "makeDts": "npx -p typescript tsc -p ./dts.json"
   },
   "repository": {
@@ -44,6 +44,7 @@
     "style-loader": "^0.21.0",
     "ts-loader": "^9.2.8",
     "tslib": "^2.3.1",
+    "typedoc": "^0.23.8",
     "typescript": "^4.6.3",
     "url-loader": "^1.0.1",
     "webpack": "^5.71.0",
