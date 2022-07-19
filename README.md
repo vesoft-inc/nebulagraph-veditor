@@ -1,5 +1,5 @@
-# Nebula-veditor
-Nebula VEditor is a highly customizable flow chart library,That you can use to create flow charts, sequence diagrams,workflow, and more.
+# NebulaGraph veditor
+NebulaGraph VEditor is a highly customizable flow chart library,That you can use to create flow charts, sequence diagrams,workflow, and more.
 
 ![](./snapshot2.png)
 ![](./snapshot1.png)
@@ -115,6 +115,9 @@ add()
 // result data
 console.log(editor.schema.getData())
 ```
+
+# API 
+see declaration file for more details.
 
 # License
 MIT

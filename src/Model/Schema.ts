@@ -12,6 +12,7 @@ export interface VEditorNode extends AnyMap {
   data?: AnyMap;
   iconPath?: string;
   style?: AnyMap;
+  className?: string;
   linkPointsTypes?: Position[]
 }
 export type VEditorLine = {
@@ -28,6 +29,7 @@ export type VEditorLine = {
   name?: string;
   data?: AnyMap;
   label?: string;
+  className?: string;
   labelCfg?: {
     refX?: number;
     refY?: number;

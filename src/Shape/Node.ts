@@ -261,7 +261,7 @@ export default class Node {
     setAttrs(node.dom, {
       class: `ve-node ${nodeData.className || ""}`,
     });
-    node.dom.style.transform = `translate(${nodeData.x} ,${nodeData.y})`;
+    node.dom.setAttribute("transform", `translate(${nodeData.x} ,${nodeData.y})`);
     node.data = nodeData;
     if (rerenderShape) {
       node.linkPoints.forEach((linkPoint) => {
