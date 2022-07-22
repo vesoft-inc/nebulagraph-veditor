@@ -33,6 +33,7 @@ const DefaultLine: LineRender = {
     const { from, to, data } = line;
     const pathString = this.makePath(from, to, line);
     const shape = line.shape ? line.shape : SVGHelper.group();
+    line.shape = shape;
     const path = line.path ? line.path : (line.path = SVGHelper.path());
     const shadowPath = line.shadowPath
       ? line.shadowPath

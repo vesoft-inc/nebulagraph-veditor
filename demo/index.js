@@ -9,6 +9,8 @@ import TopBar from './Content/TopBar';
 import { message, Popover, Drawer, Modal } from 'antd';
 import RightMenu from './Content/RightMenu';
 import testdata from './testdata';
+window.VEditor = VEditor;
+
 class Editor extends PureComponent {
   state = {};
   // 编辑器实例

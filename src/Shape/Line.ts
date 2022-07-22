@@ -108,10 +108,10 @@ class Line {
    */
   updateByNode(node: InstanceNode) {
     node.fromLines.forEach((lineId) => {
-      this.updateLine(lineId);
+      this.updateLine(lineId, true);
     });
     node.toLines.forEach((lineId) => {
-      this.updateLine(lineId);
+      this.updateLine(lineId, true);
     });
   }
 
