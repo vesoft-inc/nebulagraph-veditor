@@ -13,21 +13,20 @@ NebulaGraph VEditor is a highly customizable flow chart library,That you can use
 - Performance: use async/await to improve graph loading performance
  
 # Installation
-```
+```bash
 npm install @vesoft-inc/veditor
-
 ```
 
 # demo
-```
+```bash
 npm run start
 ```
 
 # Build
-```
+```bash
 npm run build
 
-// make declaration
+# make declaration
 npm run makeDts
 ```
 
@@ -65,8 +64,8 @@ for(let x = 0;x<10;x++){
 console.log(editor.schema.getData())
 ```
 
-## Registe Shape
-you can refer to src/Shape/Nodes,src/Shape/Lines to registe your own shape.
+## Register Shape
+You can refer to src/Shape/Nodes,src/Shape/Lines to register your own shape.
 
 ```javascript
 import VEditor from "@vesoft-inc/veditor";
@@ -117,7 +116,8 @@ console.log(editor.schema.getData())
 ```
 
 # API 
-see declaration file for more details.
+See the declaration file for more details.
 
 # License
+
 MIT
