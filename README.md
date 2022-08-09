@@ -1,33 +1,33 @@
 # NebulaGraph veditor
-NebulaGraph VEditor is a highly customizable flow chart library,That you can use to create flow charts, sequence diagrams,workflow, and more.
+
+NebulaGraph VEditor is a highly customizable flow chart library, with which you create flow charts, sequence diagrams, workflow, and more.
 
 ![](./snapshot2.png)
 ![](./snapshot1.png)
 ![](./snapshot.png)
 
 # Features
-- Typescript: quick and easy to use
-- Customizable: use SVG , HTML , CSS , Canvas, React/Vue and more to custome node/line shapes
-- Minimap: show the current viewport in the diagram
-- Short Keys: undo,redo,copy,paste,select,zoom,pan and more
-- Performance: use async/await to improve graph loading performance
+- Typescript: Natively TS support
+- Customizable: Support SVG, HTML, CSS, Canvas, React/Vue and more to custome node/line shapes
+- Minimap: Birdview of given viewport in the diagram
+- Shortcuts Keys: undo, redo, copy, paste, select, zoom, pan and more
+- Performant: Async/Await pattern enabled high performance of graph loading
  
 # Installation
-```
+```bash
 npm install @vesoft-inc/veditor
-
 ```
 
 # demo
-```
+```bash
 npm run start
 ```
 
 # Build
-```
+```bash
 npm run build
 
-// make declaration
+# make declaration
 npm run makeDts
 ```
 
@@ -65,8 +65,8 @@ for(let x = 0;x<10;x++){
 console.log(editor.schema.getData())
 ```
 
-## Registe Shape
-you can refer to src/Shape/Nodes,src/Shape/Lines to registe your own shape.
+## Register Shape
+You can refer to src/Shape/Nodes, src/Shape/Lines to register your own shape.
 
 ```javascript
 import VEditor from "@vesoft-inc/veditor";
@@ -117,7 +117,8 @@ console.log(editor.schema.getData())
 ```
 
 # API 
-see declaration file for more details.
+See the declaration file for more details.
 
 # License
+
 MIT
