@@ -121,4 +121,4 @@ See the declaration file for more details.
 
 # License
 
-MIT
+Apache 2.0
