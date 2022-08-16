@@ -3,10 +3,7 @@ import VEditor from "../VEditor";
 import { Canvg } from "canvg";
 import { mat2d } from "gl-matrix";
 import { Position } from "../Utils/types";
-// 使用html
-/**
- * @class
- */
+
 class MiniMap {
   editor: VEditor;
   width: number;

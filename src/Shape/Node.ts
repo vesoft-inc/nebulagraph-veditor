@@ -44,9 +44,9 @@ export interface InstanceNodePoint {
   };
 }
 /**
- * @class
+ * @class Node
  */
-export default class Node {
+class Node {
   graph: Graph;
   nodes: Record<string, InstanceNode>;
   paper: SVGGElement;
@@ -509,3 +509,4 @@ export default class Node {
     }
   }
 }
+export default Node;

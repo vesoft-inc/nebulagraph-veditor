@@ -1,6 +1,7 @@
 import React, { Fragment, PureComponent } from "react";
 import { Icon, Tooltip, message, Modal, Input } from "antd";
-import { SVGHelper, BezierLine } from "@";
+import { Utils } from "@";
+const { SVGHelper } = Utils;
 class TopBar extends PureComponent {
   componentWillReceiveProps(props) {
     if (props.editor && !this.props.editor) {

@@ -3,6 +3,9 @@ import dagre from "dagre";
 import { v1 as getUuid } from "uuid";
 import VEditor from "../VEditor";
 import { AnyMap, Position } from "../Utils/types";
+/**
+ * @module
+ */
 export interface VEditorNode extends AnyMap {
   uuid?: string;
   type: string;
@@ -47,6 +50,7 @@ export interface VEditorSchema {
   linesMap: Record<string, VEditorLine>;
 }
 /**
+ * Schema
  * @class
  */
 class Schema {
