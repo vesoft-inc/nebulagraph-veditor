@@ -64,5 +64,6 @@ const Path: DefaultLine.LineRender = {
     return true;
   },
 };
-
+editor.graph.line.registeLine('simple-label-line', Path);
+```
 ```
