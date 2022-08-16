@@ -2,7 +2,7 @@ import React, { Fragment, PureComponent } from 'react';
 import ReactDom from 'react-dom';
 import 'antd/dist/antd.css';
 import './index.less';
-import VEditor, { SVGHelper } from '../src/index.ts';
+import VEditor, { Utils } from '../src/index.ts';
 import LeftBar from './Content/LeftBar';
 import RightBar from './Content/RightBar';
 import TopBar from './Content/TopBar';
@@ -10,7 +10,7 @@ import { message, Popover, Drawer, Modal } from 'antd';
 import RightMenu from './Content/RightMenu';
 import testdata from './testdata';
 window.VEditor = VEditor;
-
+const { SVGHelper } = Utils;
 class Editor extends PureComponent {
   state = {};
   // 编辑器实例

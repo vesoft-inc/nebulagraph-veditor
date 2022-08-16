@@ -6,7 +6,7 @@ import { SVGHelper } from "../Utils/svg";
 import Node, { InstanceNode, InstanceNodePoint } from "./Node";
 import { createSVGElement, setAttrs } from "../Utils/dom";
 import { VEditorLine } from "../Model/Schema";
-import { Path } from "..";
+import Path from "../Utils/path";
 import { AnyMap, Position } from "../Utils/types";
 export interface InstanceLine extends AnyMap {
   dom: SVGElement; //wrapperDOM

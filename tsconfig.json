@@ -1,6 +1,5 @@
 {
-  // 更改此项以匹配您的项目
-  "include": ["src/**/*","demo/**/*"],
+  "include": ["src/**/*"],
   "compileOnSave": true,
   "compilerOptions": {
     "pretty": true,
