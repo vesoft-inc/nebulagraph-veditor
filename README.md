@@ -68,8 +68,9 @@ console.log(editor.schema.getData())
 ```
 
 # API
-- [Get Start](./docs/start.md)
-- [API](./api/_index.md)
+- [Get Start](./start.md)
+- [Custom Shape](./custom.md)
+- [API](./docs)
 
 # License
 

@@ -1,3 +1,4 @@
+import DefaultLine from './Shape/Lines/Line';
 
 export * as Utils from "./Utils";
 export * as Schema from "./Model/Schema";

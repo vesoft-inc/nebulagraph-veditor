@@ -36,3 +36,33 @@ editor.graph.node.registeNode("react-svg-node", {
 });
 // result data
 ```
+
+## Registe Line
+```ts
+import { DefaultLine } from '@vesoft-inc/veditor';
+const Path: DefaultLine.LineRender = {
+  type: 'path',
+  arcRatio: 4,
+  ...DefaultLine,
+
+  renderLabel(line: InstanceLine): SVGGElement {
+    const { label, startStep = 1, endStep = 1, stepType, filter = [] } = line.data as VisualQueryLine;
+    if(!line.label){
+      line.label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    }
+    line.shape?.appendChild(line.label);
+    // do some thing to render label
+    line.label.text = label;
+    return line.label.labelGroup;
+  },
+
+  checkNewLine(data: VisualQueryLine) {
+    const { from, to } = data;
+    if (from === to) {
+      return false;
+    }
+    return true;
+  },
+};
+
+```
