@@ -67,7 +67,7 @@ for(let x = 0;x<10;x++){
 console.log(editor.schema.getData())
 ```
 
-# API
+# Documents
 - [Get Started](./start.md)
 - [Custom Shape](./custom.md)
 - [API](./docs)
