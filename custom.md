@@ -1,12 +1,14 @@
 
 # Register Shape
+
 You can refer to src/Shape/Nodes, src/Shape/Lines to register your own shape.
 
 
 ## Registe React Node
-extend VEditor.Default.Node
+
+extend `VEditor.Default.Node`
+
 ```javascript
- 
 editor.graph.node.registeNode("react-svg-node", {
   linkPoints: [{ x: 0, y: 0.5 }, { x: 1, y: 0.5 }],
   adsorb: [20, 12],
@@ -38,6 +40,7 @@ editor.graph.node.registeNode("react-svg-node", {
 ```
 
 ## Registe Line
+
 ```ts
 import { DefaultLine } from '@vesoft-inc/veditor';
 const Path: DefaultLine.LineRender = {
@@ -65,5 +68,4 @@ const Path: DefaultLine.LineRender = {
   },
 };
 editor.graph.line.registeLine('simple-label-line', Path);
-```
 ```
