@@ -68,7 +68,7 @@ console.log(editor.schema.getData())
 ```
 
 # API
-- [Get Start](./start.md)
+- [Get Started](./start.md)
 - [Custom Shape](./custom.md)
 - [API](./docs)
 
