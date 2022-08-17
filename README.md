@@ -1,4 +1,4 @@
-# NebulaGraph veditor
+# [NebulaGraph veditor](https://vesoft-inc.github.io/nebulagraph-veditor/)
 
 NebulaGraph VEditor is a highly customizable flow chart library, with which you create flow charts, sequence diagrams, workflow, and more.
 
