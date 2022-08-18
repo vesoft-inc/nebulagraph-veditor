@@ -138,8 +138,7 @@ class Schema {
     await this.setData(res);
     /**
      * @event VEditor#format
-     * @type {Object}
-     * @property {Object} data
+     * @property {{data:VEditorData}} data
      */
     this.editor.fire("format", { data: res });
   }

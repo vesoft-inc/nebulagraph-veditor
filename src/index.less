@@ -64,12 +64,13 @@
 			transition: x, y, transform, cx, cy, width, stroke, height, fill 400ms;
 			outline: none;
 		}
+    
 		.ve-node {
-      // &:hover{
-      //   .ve-link-points{
-      //     display: block;
-      //   }
-      // }
+      &:hover,&.active {
+        .ve-link-points{
+          display: block;
+        }
+      }
       .ve-link-points {
         cursor:crosshair;
         display: none;
@@ -79,18 +80,18 @@
 					display: block;
 				}
 			}
+      &.active{
+        .icon-node {
+						transition: stroke 400ms;
+						stroke: rgba(76, 121, 255, 1);
+				}
+      }
 			.ve-node-shape {
 		  	cursor: move;
 				&:hover {
 					> .icon-node {
 						stroke: #4c79ff;
 						// fill-opacity: 0.2!important;
-					}
-				}
-				&.active {
-					> .icon-node {
-						transition: stroke 400ms;
-						stroke: rgba(76, 121, 255, 1);
 					}
 				}
 				&.success {
@@ -111,6 +112,7 @@
 				}
 			}
 		}
+    
 		.ve-line {
 			.ve-line-path{
 				transition: stroke-dasharray 300ms ease-out;
@@ -150,6 +152,11 @@
 		.anchor-line{
 			stroke: #4c79ff;
 		} 
+    .ve-paper-lineing{
+       .ve-link-points{
+          display: block;
+        }
+    }
 	}
 	> .ve-editor-html {
 		width: 100%;

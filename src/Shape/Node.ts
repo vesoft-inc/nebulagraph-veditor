@@ -239,6 +239,12 @@ class Node {
     return node;
   }
 
+  update() {
+    for (const nodeId in this.nodes) {
+      this.updateNode(nodeId, true);
+    }
+  }
+
   /**
    * 根据数据更新节点位置
    */
@@ -300,27 +306,7 @@ class Node {
         });
         node.dom.append(instancePoint.dom);
         this.graph.line.addLinkPointEvent(instancePoint);
-        this.addLinkHoverEvent(instancePoint, node);
       }
-    });
-  }
-
-  addLinkHoverEvent(point: InstanceNodePoint, node: InstanceNode) {
-    point.dom.addEventListener("mouseover", (e) => {
-      if (this.graph.linkStatus === "lineing") return false;
-      node.linkPoints.forEach((point) => {
-        point.dom.style.display = "block";
-      });
-    });
-
-    point.dom.addEventListener("mouseout", () => {
-      if (this.graph.linkStatus === "lineing") return false;
-      if (this.actives[node.data.uuid]) {
-        return false;
-      }
-      node.linkPoints.forEach((point) => {
-        point.dom.style.display = "none";
-      });
     });
   }
 
@@ -360,13 +346,16 @@ class Node {
   addNodeEvent(node: InstanceNode) {
     node._destroys.push(
       SVGHelper.drag(
-        node.shape,
+        node.dom,
         (e) => {
           const dx = e.clientX - node.clientX;
           const dy = e.clientY - node.clientY;
           if (this.actives[node.data.uuid]) {
             for (let key in this.actives) {
               this.panNode(this.actives[key], dx, dy);
+              /**
+               * @event Graph#node:move on node move event
+               */
               this.graph.fire("node:move", {
                 node: this.actives[key],
               });
@@ -374,7 +363,7 @@ class Node {
           } else {
             this.panNode(node, dx, dy);
             /**
-             * @event Graph#node:move 节点移动事件
+             * @event Graph#node:move
              */
             this.graph.fire("node:move", { node });
           }
@@ -391,6 +380,10 @@ class Node {
           // 提前获得bbox避免重绘
           node.startX = node.data.x;
           node.startY = node.data.y;
+          /**
+          * @event Graph#node:startmove start move
+          */
+          this.graph.fire("node:startmove", { node });
         },
         (e) => {
           this.graph.anchorLine.hidePath();
@@ -400,11 +393,15 @@ class Node {
           ) {
             return false;
           }
+          /**
+          * @event Graph#node:endmove end move
+          */
+          this.graph.fire("node:endmove", { node });
           this.graph.fire("node:change", { node });
         }
       )
     );
-    node.shape.addEventListener("click", (event) => {
+    node.dom.addEventListener("click", (event) => {
       if (
         Math.abs(event.clientX - node.clientX) < 2 &&
         Math.abs(event.clientY - node.clientY) < 2
@@ -425,31 +422,20 @@ class Node {
         this.graph.fire("node:click", { node, event });
       }
     });
-    node.shape.addEventListener("mouseenter", (event) => {
+    node.dom.addEventListener("mouseenter", (event) => {
       /**
        * @event Graph#node:mouseenter - 节点进入事件
        */
       this.graph.fire("node:mouseenter", { node, event });
-      if (this.graph.mode === "view") return;
-      if (this.graph.linkStatus === "lineing") return false;
-      node.linkPoints.forEach((point) => {
-        point.dom.style.display = "block";
-      });
+
     });
 
-    node.shape.addEventListener("mouseleave", (event) => {
+    node.dom.addEventListener("mouseleave", (event) => {
       /**
        * @event Graph#node:mouseleave
        */
       this.graph.fire("node:mouseleave", { node, event });
-      if (this.graph.mode === "view") return;
-      if (this.graph.linkStatus === "lineing") return false;
-      if (this.actives[node.data.uuid]) {
-        return false;
-      }
-      node.linkPoints.forEach((point) => {
-        point.dom.style.display = "none";
-      });
+
     });
   }
 
@@ -461,15 +447,17 @@ class Node {
       : this.nodes;
     for (let key in nodes) {
       node = nodes[key];
-      node.shape.classList.add("active");
+      node.dom.classList.add("active");
       setAttrs(node.shape, {
         filter: "url(#ve-black-shadow)",
       });
       this.actives[node.data.uuid] = node;
-      node.linkPoints.forEach((point) => {
-        point.dom.style.display = "block";
-      });
     }
+
+    /**
+     * @event Graph#node:unactive
+     */
+    this.graph.fire("node:active", { nodes });
   }
 
   unActive(node?: InstanceNode) {
@@ -489,12 +477,9 @@ class Node {
   }
 
   unActiveNode(node: InstanceNode) {
-    node.shape.classList.remove("active");
-    setAttrs(node.shape, {
+    node.dom.classList.remove("active");
+    setAttrs(node.dom, {
       filter: null,
-    });
-    node.linkPoints.forEach((point) => {
-      point.dom.style.display = "none";
     });
   }
 

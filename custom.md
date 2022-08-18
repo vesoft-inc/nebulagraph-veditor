@@ -59,6 +59,9 @@ const Path: DefaultLine.LineRender = {
     return line.label.labelGroup;
   },
 
+  //if you need custom line path,override this method
+  // render(line:InstanceLine){}
+  
   checkNewLine(data: VisualQueryLine) {
     const { from, to } = data;
     if (from === to) {
