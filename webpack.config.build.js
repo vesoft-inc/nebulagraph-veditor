@@ -1,13 +1,14 @@
 const path = require('path');
-module.exports = {
+module.exports = (env) => ({
   mode: "production",
   entry: {
     app: "./src/index.ts"
   },
   output: {
     library: "VEditor",
+    libraryExport: "default",
     libraryTarget: "umd",
-    filename: "VEditor.js"
+    filename: env.browser ? "VEditor.browser.js" : "VEditor.js"
   },
   resolve: {
     extensions: ['.ts', '.js'],
@@ -15,7 +16,7 @@ module.exports = {
       '@': path.join(__dirname, './src/'),
     },
   },
-  externals: {
+  externals: env.browser ? {} : {
     dagre: "dagre",
     glMatrix: 'gl-matrix',
     canvg: "canvg",
@@ -57,4 +58,4 @@ module.exports = {
     ]
   },
 
-};
+});

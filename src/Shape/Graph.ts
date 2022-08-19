@@ -40,6 +40,7 @@ class Graph extends Utils.Event {
   }
 
   listenEvents() {
+
     this.on("node:move", ({ node }) => {
       this.line.updateByNode(node);
     });
@@ -56,21 +57,11 @@ class Graph extends Utils.Event {
 
     this.on("line:drag", () => {
       this.linkStatus = "lineing";
-      for (let key in this.node.nodes) {
-        const node = this.node.nodes[key];
-        node.linkPoints.forEach((point) => {
-          point.dom.style.display = "block";
-        });
-      }
+      this.editor.paper.classList.add("ve-paper-lineing");
     });
     this.on("line:drop", () => {
       this.linkStatus = "none";
-      for (let key in this.node.nodes) {
-        const node = this.node.nodes[key];
-        node.linkPoints.forEach((point) => {
-          point.dom.style.display = "none";
-        });
-      }
+      this.editor.paper.classList.remove("ve-paper-lineing");
     });
   }
 
@@ -149,6 +140,15 @@ class Graph extends Utils.Event {
      * @event Graph#render  渲染后触发
      */
     this.fire("render");
+  }
+
+  update() {
+    this.node.update();
+    this.line.update();
+    /**
+    * @event Graph#update  渲染后触发
+    */
+    this.fire("update");
   }
 
   /**

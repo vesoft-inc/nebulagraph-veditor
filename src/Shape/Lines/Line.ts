@@ -222,13 +222,13 @@ const DefaultLine: LineRender = {
     }
     if (!line.label) {
       line.label = {
-        text: SVGHelper.text(0, 0, label),
         textRect: SVGHelper.rect(0, 0, 10, 10),
+        text: SVGHelper.text(0, 0, label),
         labelGroup: null,
       };
       line.label.labelGroup = SVGHelper.group(
+        line.label.textRect,
         line.label.text,
-        line.label.textRect
       );
       line.shape.appendChild(line.label.labelGroup);
     }

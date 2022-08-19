@@ -24,7 +24,7 @@ module.exports = {
     open: "./index.html",
     hot: true
   },
-  devtool: "source-map",
+  devtool: "eval-source-map",
   module: {
 
     rules: [

@@ -163,6 +163,15 @@ class Line {
   }
 
   /**
+   * redraw all lines
+   */
+  update() {
+    Object.values(this.lines).forEach((line) => {
+      this.updateLine(line.data.uuid);
+    });
+  }
+
+  /**
    * 重绘某个线
    */
   updateLine(data: VEditorLine | string, rerenderShape = true) {
@@ -173,9 +182,7 @@ class Line {
       lineData = data;
     } else {
       lineId = data;
-      lineData = {
-        uuid: lineId,
-      };
+      lineData = this.lines[lineId].data;
     }
     const { nodes } = this.graph.node;
     const line = this.lines[lineId];
@@ -195,12 +202,12 @@ class Line {
       this.shapes[type || "default"].render(line);
       line.arrow = this.shapes[type || "default"].renderArrow(line);
       line.dom.setAttribute("class", `ve-line ${className || ""}`);
-      line.data = Object.assign(
+      Object.assign(
         line.data,
         lineData ? lineData : {},
       );
     } else {
-      line.data = Object.assign(line.data, lineData ? lineData : {});
+      Object.assign(line.data, lineData ? lineData : {});
     }
     if (this.activeLine === line) {
       this.setActiveLine(line);
@@ -280,12 +287,11 @@ class Line {
           type: "change",
           before: beforeData,
         });
-      } else {
-        /**
-         * @event Graph#line:drop
-         */
-        this.graph.fire("line:drop", { line: instanceLine });
       }
+      /**
+        * @event Graph#line:dropfailed
+        */
+      this.graph.fire("line:drop", { line: instanceLine });
       hoverLinkPoint?.dom?.classList.remove("hover");
     }
     this.updateLine(uuid);
@@ -305,7 +311,7 @@ class Line {
         toPoint,
       });
       if (this.lines[data.uuid]) return;
-      this.graph.fire("line:beforeAdd", { line: data });
+      this.graph.fire("line:beforeadd", { data });
       if (
         this.shapes[data.type || "default"].checkNewLine(
           data,
@@ -534,6 +540,7 @@ class Line {
           },
           this.tempLine
         );
+        e.stopPropagation();
       },
       (e) => {
         startX = e.clientX;
@@ -550,10 +557,11 @@ class Line {
           },
         };
         this.graph.fire("line:drag");
+        e.stopPropagation();
       },
       (e) => {
         const { hoverLinkPoint } = this;
-        let toNode = null;
+        let toNode: InstanceNodePoint = null;
         if (hoverLinkPoint) {
           toNode = hoverLinkPoint;
         }
@@ -562,11 +570,12 @@ class Line {
         /**
          * @event Graph#line:drop
          */
-        this.graph.fire("line:drop", {
+        this.graph.fire("line:dragend", {
           fromNode: node,
-          toNode,
+          toNodePoint: toNode,
           event: e,
         });
+        e.stopPropagation();
       }
     );
   };

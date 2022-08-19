@@ -25,6 +25,7 @@ npm run start
 + [Basic Demo](https://vesoft-inc.github.io/nebulagraph-veditor/public/basic.html)
 + [FlowChart Demo](https://vesoft-inc.github.io/nebulagraph-veditor/public/flowChart.html)
 + [React Demo](https://vesoft-inc.github.io/nebulagraph-veditor/public/demo.html)
++ [Force-directed Graph](https://vesoft-inc.github.io/nebulagraph-veditor/public/graph.html)
 
 # Build
 ```bash
@@ -70,6 +71,7 @@ console.log(editor.schema.getData())
 # Documents
 - [Get Started](./start.md)
 - [Custom Shape](./custom.md)
+- [Event](./event.md)
 - [API](./docs)
 
 # License
