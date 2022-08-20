@@ -26,9 +26,6 @@ export interface InstanceLine extends AnyMap {
     to: Position;
   };
 }
-/**
- * @class
- */
 class Line {
   graph: Graph;
   node: Node;

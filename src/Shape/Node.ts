@@ -43,9 +43,6 @@ export interface InstanceNodePoint {
     [key: number | string]: unknown;
   };
 }
-/**
- * @class Node
- */
 class Node {
   graph: Graph;
   nodes: Record<string, InstanceNode>;

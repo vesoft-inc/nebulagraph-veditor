@@ -1,10 +1,9 @@
 import { AnyMap } from "../../Utils/types";
-import { VEditorNode } from "../../Model/Schema";
 import { setAttrs } from "../../Utils/dom";
 import { SVGHelper } from "../../Utils/svg";
 import { InstanceNode, InstanceNodePoint } from "../Node";
 
-export type NodeRender = {
+export interface NodeRender extends AnyMap {
   adsorb?: [number, number]; //磁吸的范围
   linkPoints?: { x: number; y: number, isPixel?: boolean }[];
   /**
@@ -21,7 +20,8 @@ export type NodeRender = {
   ) => InstanceNodePoint;
 
   destroy?: (node: InstanceNode) => void;
-} & AnyMap;
+}
+
 const DefaultNode: NodeRender = {
   adsorb: [20, 20], //磁吸的范围
   linkPoints: [
