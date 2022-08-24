@@ -1,6 +1,6 @@
 {
   "name": "@vesoft-inc/veditor",
-  "version": "4.2.5",
+  "version": "4.3.1",
   "description": "svg flow editor",
   "main": "./dist/VEditor.js",
   "types": "./types/index.d.ts",
@@ -10,6 +10,7 @@
     "build": "webpack --config webpack.config.build.js",
     "build:browser": "webpack --env browser=true --config webpack.config.build.js",
     "makeDts": "npx -p typescript tsc -p ./dts.json",
+    "build:all": "npm run build && npm run makeDts && npm run build:browser && npm run build:demo ",
     "doc": "typedoc "
   },
   "repository": {

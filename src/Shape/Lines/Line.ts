@@ -230,8 +230,8 @@ const DefaultLine: LineRender = {
         line.label.textRect,
         line.label.text,
       );
-      line.shape.appendChild(line.label.labelGroup);
     }
+    line.shape.appendChild(line.label.labelGroup);
     const { text, textRect, textBBox, oldText, labelGroup } = line.label;
     const x = xPoint + (refX || 0);
     const y = yPoint + (refY || 0);

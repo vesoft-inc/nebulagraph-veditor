@@ -285,10 +285,6 @@ class Line {
           before: beforeData,
         });
       }
-      /**
-        * @event Graph#line:dropfailed
-        */
-      this.graph.fire("line:drop", { line: instanceLine });
       hoverLinkPoint?.dom?.classList.remove("hover");
     }
     this.updateLine(uuid);
@@ -456,6 +452,7 @@ class Line {
           },
           this.tempLine
         );
+        this.graph.fire("line:dragging");
       },
       (e) => {
         const { data } = g;
@@ -493,6 +490,11 @@ class Line {
         g.dom.style.display = "block";
         this.tempLine.dom.remove();
         this.updateActiveLine(g);
+
+        /**
+         * @event Graph#line:drop
+         */
+        this.graph.fire("line:drop", { line: g });
       }
     );
   }
@@ -538,6 +540,7 @@ class Line {
           this.tempLine
         );
         e.stopPropagation();
+        this.graph.fire("line:dragging");
       },
       (e) => {
         startX = e.clientX;
@@ -567,7 +570,7 @@ class Line {
         /**
          * @event Graph#line:drop
          */
-        this.graph.fire("line:dragend", {
+        this.graph.fire("line:drop", {
           fromNode: node,
           toNodePoint: toNode,
           event: e,
