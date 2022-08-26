@@ -6,7 +6,6 @@ module.exports = (env) => ({
   },
   output: {
     library: "VEditor",
-    libraryExport: "default",
     libraryTarget: "umd",
     filename: env.browser ? "VEditor.browser.js" : "VEditor.js"
   },

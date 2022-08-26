@@ -19,7 +19,7 @@ exports = module.exports = __webpack_require__(9252)(false);
 
 
 // module
-exports.push([module.id, "@keyframes dashing {\n  from {\n    stroke-dashoffset: 200;\n  }\n  to {\n    stroke-dashoffset: 0;\n  }\n}\n.ve-editor {\n  width: 100%;\n  height: 100%;\n  position: relative;\n}\n.ve-editor .ve-editor-back {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 0;\n  left: 0;\n  top: 0;\n}\n.ve-editor .ve-minimap {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n  background: #fff;\n  border: 1px solid #cecece;\n  border-radius: 5px;\n  overflow: hidden;\n  width: 160px;\n  height: 127px;\n}\n.ve-editor .ve-minimap .drag-rect {\n  position: absolute;\n  left: 0px;\n  box-sizing: content-box;\n  top: 0px;\n  border: 2px solid #08c;\n  cursor: pointer;\n  transition: all 200ms ease;\n}\n.ve-editor .ve-minimap .drag-point {\n  width: 10px;\n  height: 10px;\n  border-radius: 5px;\n  border: 2px solid #08c;\n  background: #fff;\n  position: absolute;\n  right: -5px;\n  bottom: -5px;\n  cursor: nwse-resize;\n}\n.ve-editor > .ve-editor-svg {\n  cursor: grab;\n  width: 100%;\n  height: 100%;\n  position: absolute;\n}\n.ve-editor > .ve-editor-svg svg {\n  position: absolute;\n  left: 0;\n  top: 0;\n  outline: none;\n}\n.ve-editor > .ve-editor-svg * {\n  transition: x, y, transform, cx, cy, width, stroke, height, fill 400ms;\n  outline: none;\n}\n.ve-editor > .ve-editor-svg .ve-node:hover .ve-link-points,\n.ve-editor > .ve-editor-svg .ve-node.active .ve-link-points {\n  display: block;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-link-points {\n  cursor: crosshair;\n  display: none;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-link-points:hover,\n.ve-editor > .ve-editor-svg .ve-node .ve-link-points.hover {\n  fill: #4c79ff;\n  cursor: crosshair;\n  display: block;\n}\n.ve-editor > .ve-editor-svg .ve-node.active .icon-node {\n  transition: stroke 400ms;\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape {\n  cursor: move;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape:hover > .icon-node {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape.success .icon-node {\n  stroke: green;\n  fill: #fff;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape.error .icon-node {\n  stroke: red;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape.running .icon-node {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-path {\n  transition: stroke-dasharray 300ms ease-out;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-shdow-path {\n  stroke: transparent;\n  stroke-width: 3;\n  fill: none;\n}\n.ve-editor > .ve-editor-svg .ve-line.active .ve-line-shape,\n.ve-editor > .ve-editor-svg .ve-line:hover .ve-line-shape {\n  opacity: 0.5;\n}\n.ve-editor > .ve-editor-svg .ve-line.active .ve-line-arrow,\n.ve-editor > .ve-editor-svg .ve-line:hover .ve-line-arrow {\n  opacity: 0.5;\n}\n.ve-editor > .ve-editor-svg .ve-line.running .ve-line-path {\n  stroke-dasharray: 5 !important;\n  animation: dashing 5s linear infinite;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-shape {\n  cursor: pointer;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-arrow {\n  cursor: crosshair;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-label text {\n  text-anchor: middle;\n}\n.ve-editor > .ve-editor-svg .anchor-line {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-paper-lineing .ve-link-points {\n  display: block;\n}\n.ve-editor > .ve-editor-html {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n}\n.ve-editor .anchor-back {\n  position: absolute;\n  top: 0;\n  left: 0;\n}\n.ve-node-wrapper {\n  border: 1px solid #08c;\n  border-radius: 8px;\n  box-sizing: border-box;\n  display: flex;\n  justify-content: center;\n  background-color: #fff;\n  align-items: center;\n}\n", ""]);
+exports.push([module.id, "@keyframes dashing {\n  from {\n    stroke-dashoffset: 200;\n  }\n  to {\n    stroke-dashoffset: 0;\n  }\n}\n.ve-editor {\n  width: 100%;\n  height: 100%;\n  position: relative;\n}\n.ve-editor .ve-editor-back {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 0;\n  left: 0;\n  top: 0;\n}\n.ve-editor .ve-minimap {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n  background: #fff;\n  border: 1px solid #cecece;\n  border-radius: 5px;\n  overflow: hidden;\n  width: 160px;\n  height: 127px;\n}\n.ve-editor .ve-minimap .drag-rect {\n  position: absolute;\n  left: 0px;\n  box-sizing: content-box;\n  top: 0px;\n  border: 2px solid #08c;\n  cursor: pointer;\n  transition: all 200ms ease;\n}\n.ve-editor .ve-minimap .drag-point {\n  width: 10px;\n  height: 10px;\n  border-radius: 5px;\n  border: 2px solid #08c;\n  background: #fff;\n  position: absolute;\n  right: -5px;\n  bottom: -5px;\n  cursor: nwse-resize;\n}\n.ve-editor > .ve-editor-svg {\n  cursor: grab;\n  width: 100%;\n  height: 100%;\n  position: absolute;\n}\n.ve-editor > .ve-editor-svg svg {\n  position: absolute;\n  left: 0;\n  top: 0;\n  outline: none;\n}\n.ve-editor > .ve-editor-svg * {\n  transition: x, y, transform, cx, cy, width, stroke, height, fill 400ms;\n  outline: none;\n}\n.ve-editor > .ve-editor-svg .ve-node:hover .ve-link-points,\n.ve-editor > .ve-editor-svg .ve-node.active .ve-link-points {\n  display: block;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-link-points {\n  cursor: crosshair;\n  display: none;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-link-points:hover,\n.ve-editor > .ve-editor-svg .ve-node .ve-link-points.hover {\n  fill: #4c79ff;\n  cursor: crosshair;\n  display: block;\n}\n.ve-editor > .ve-editor-svg .ve-node.active .icon-node {\n  transition: stroke 400ms;\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape {\n  cursor: move;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape:hover > .icon-node {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape.success .icon-node {\n  stroke: green;\n  fill: #fff;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape.error .icon-node {\n  stroke: red;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape.running .icon-node {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-path {\n  transition: stroke-dasharray 300ms ease-out;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-shdow-path {\n  stroke: transparent;\n  stroke-width: 3;\n  fill: none;\n}\n.ve-editor > .ve-editor-svg .ve-line:hover .ve-line-shape {\n  opacity: 0.5;\n}\n.ve-editor > .ve-editor-svg .ve-line:hover .ve-line-arrow {\n  opacity: 0.5;\n}\n.ve-editor > .ve-editor-svg .ve-line.active .ve-line-arrow {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-line.active path {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-line.running .ve-line-path {\n  stroke-dasharray: 5 !important;\n  animation: dashing 5s linear infinite;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-shape {\n  cursor: pointer;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-arrow {\n  cursor: crosshair;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-label text {\n  text-anchor: middle;\n}\n.ve-editor > .ve-editor-svg .anchor-line {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-paper-lineing .ve-link-points {\n  display: block;\n}\n.ve-editor > .ve-editor-html {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n}\n.ve-editor .anchor-back {\n  position: absolute;\n  top: 0;\n  left: 0;\n}\n.ve-node-wrapper {\n  border: 1px solid #08c;\n  border-radius: 8px;\n  box-sizing: border-box;\n  display: flex;\n  justify-content: center;\n  background-color: #fff;\n  align-items: center;\n}\n", ""]);
 
 // exports
 
@@ -14172,13 +14172,37 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
+// ESM COMPAT FLAG
+__webpack_require__.r(__webpack_exports__);
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
+  "AnchorLine": () => (/* reexport */ AnchorLine_namespaceObject),
+  "Controller": () => (/* reexport */ Controller_namespaceObject),
+  "DefaultLine": () => (/* reexport */ Line_namespaceObject),
+  "DefaultNode": () => (/* reexport */ DefaultNodes_namespaceObject),
+  "Event": () => (/* reexport */ Event_namespaceObject),
+  "Graph": () => (/* reexport */ Graph_namespaceObject),
+  "History": () => (/* reexport */ History_namespaceObject),
+  "Line": () => (/* reexport */ Shape_Line_namespaceObject),
+  "Minimap": () => (/* reexport */ Minimap_namespaceObject),
+  "Node": () => (/* reexport */ Node_namespaceObject),
+  "Schema": () => (/* reexport */ Schema_namespaceObject),
+  "Utils": () => (/* reexport */ Utils_namespaceObject),
+  "VEditor": () => (/* reexport */ src_VEditor),
   "default": () => (/* binding */ src_0)
 });
 
-// UNUSED EXPORTS: AnchorLine, Controller, DefaultLine, DefaultNode, Event, Graph, History, Line, Minimap, Node, Schema, Utils, VEditor
+// NAMESPACE OBJECT: ./src/Utils/vector.ts
+var vector_namespaceObject = {};
+__webpack_require__.r(vector_namespaceObject);
+__webpack_require__.d(vector_namespaceObject, {
+  "addVector": () => (addVector),
+  "getVectorLength": () => (getVectorLength),
+  "multiple": () => (multiple),
+  "normalize": () => (normalize),
+  "subVector": () => (subVector)
+});
 
 // NAMESPACE OBJECT: ./src/Utils/dom.ts
 var dom_namespaceObject = {};
@@ -14193,6 +14217,95 @@ __webpack_require__.d(dom_namespaceObject, {
   "setAttrs": () => (setAttrs),
   "setTransform": () => (setTransform),
   "svgWrapper": () => (svgWrapper)
+});
+
+// NAMESPACE OBJECT: ./src/Shape/Nodes/DefaultNodes.ts
+var DefaultNodes_namespaceObject = {};
+__webpack_require__.r(DefaultNodes_namespaceObject);
+__webpack_require__.d(DefaultNodes_namespaceObject, {
+  "default": () => (DefaultNodes)
+});
+
+// NAMESPACE OBJECT: ./src/Shape/Node.ts
+var Node_namespaceObject = {};
+__webpack_require__.r(Node_namespaceObject);
+__webpack_require__.d(Node_namespaceObject, {
+  "default": () => (Shape_Node)
+});
+
+// NAMESPACE OBJECT: ./src/Utils/Event.ts
+var Event_namespaceObject = {};
+__webpack_require__.r(Event_namespaceObject);
+__webpack_require__.d(Event_namespaceObject, {
+  "default": () => (Utils_Event)
+});
+
+// NAMESPACE OBJECT: ./src/Utils/index.ts
+var Utils_namespaceObject = {};
+__webpack_require__.r(Utils_namespaceObject);
+__webpack_require__.d(Utils_namespaceObject, {
+  "BezierLine": () => (Utils_BezierLine),
+  "Event": () => (Utils_Event),
+  "Path": () => (Utils_path),
+  "SVGHelper": () => (SVGHelper),
+  "Vector2": () => (vector_namespaceObject),
+  "dom": () => (dom_namespaceObject)
+});
+
+// NAMESPACE OBJECT: ./src/Shape/Lines/Line.ts
+var Line_namespaceObject = {};
+__webpack_require__.r(Line_namespaceObject);
+__webpack_require__.d(Line_namespaceObject, {
+  "default": () => (Lines_Line)
+});
+
+// NAMESPACE OBJECT: ./src/Shape/Line.ts
+var Shape_Line_namespaceObject = {};
+__webpack_require__.r(Shape_Line_namespaceObject);
+__webpack_require__.d(Shape_Line_namespaceObject, {
+  "default": () => (Shape_Line)
+});
+
+// NAMESPACE OBJECT: ./src/Shape/AnchorLine.ts
+var AnchorLine_namespaceObject = {};
+__webpack_require__.r(AnchorLine_namespaceObject);
+__webpack_require__.d(AnchorLine_namespaceObject, {
+  "default": () => (AnchorLine)
+});
+
+// NAMESPACE OBJECT: ./src/Shape/Graph.ts
+var Graph_namespaceObject = {};
+__webpack_require__.r(Graph_namespaceObject);
+__webpack_require__.d(Graph_namespaceObject, {
+  "default": () => (Shape_Graph)
+});
+
+// NAMESPACE OBJECT: ./src/Utils/Controller.ts
+var Controller_namespaceObject = {};
+__webpack_require__.r(Controller_namespaceObject);
+__webpack_require__.d(Controller_namespaceObject, {
+  "default": () => (Utils_Controller)
+});
+
+// NAMESPACE OBJECT: ./src/Model/History.ts
+var History_namespaceObject = {};
+__webpack_require__.r(History_namespaceObject);
+__webpack_require__.d(History_namespaceObject, {
+  "default": () => (Model_History)
+});
+
+// NAMESPACE OBJECT: ./src/Model/Schema.ts
+var Schema_namespaceObject = {};
+__webpack_require__.r(Schema_namespaceObject);
+__webpack_require__.d(Schema_namespaceObject, {
+  "default": () => (Model_Schema)
+});
+
+// NAMESPACE OBJECT: ./src/Plugins/Minimap.ts
+var Minimap_namespaceObject = {};
+__webpack_require__.r(Minimap_namespaceObject);
+__webpack_require__.d(Minimap_namespaceObject, {
+  "default": () => (Minimap)
 });
 
 ;// CONCATENATED MODULE: ./node_modules/tslib/tslib.es6.js
@@ -15015,9 +15128,6 @@ var DomNode = {
 
 
 
-/**
- * @class Node
- */
 var Node = /** @class */ (function () {
     function Node(graph) {
         var _this = this;
@@ -15370,6 +15480,10 @@ var Node = /** @class */ (function () {
             });
             this.actives[node.data.uuid] = node;
         }
+        /**
+         * @event Graph#node:unactive
+         */
+        this.graph.fire("node:active", { nodes: nodes });
     };
     Node.prototype.unActive = function (node) {
         if (node) {
@@ -16609,8 +16723,8 @@ var DefaultLine = {
                 labelGroup: null,
             };
             line.label.labelGroup = SVGHelper.group(line.label.textRect, line.label.text);
-            line.shape.appendChild(line.label.labelGroup);
         }
+        line.shape.appendChild(line.label.labelGroup);
         var _k = line.label, text = _k.text, textRect = _k.textRect, textBBox = _k.textBBox, oldText = _k.oldText, labelGroup = _k.labelGroup;
         var x = xPoint + (refX || 0);
         var y = yPoint + (refY || 0);
@@ -16788,9 +16902,6 @@ var PolyLine = __assign(__assign({}, Lines_Line), { gapDistance: 30, rankDir: "t
 
 
 
-/**
- * @class
- */
 var Line = /** @class */ (function () {
     function Line(graph) {
         var _this = this;
@@ -16840,12 +16951,6 @@ var Line = /** @class */ (function () {
                         before: beforeData,
                     });
                 }
-                else {
-                    /**
-                     * @event Graph#line:drop
-                     */
-                    _this.graph.fire("line:drop", { line: instanceLine });
-                }
                 (_a = hoverLinkPoint === null || hoverLinkPoint === void 0 ? void 0 : hoverLinkPoint.dom) === null || _a === void 0 ? void 0 : _a.classList.remove("hover");
             }
             _this.updateLine(uuid);
@@ -16865,7 +16970,7 @@ var Line = /** @class */ (function () {
                 });
                 if (_this.lines[data.uuid])
                     return;
-                _this.graph.fire("line:beforeAdd", { line: data });
+                _this.graph.fire("line:beforeadd", { data: data });
                 if (_this.shapes[data.type || "default"].checkNewLine(data, _this.graph.editor)) {
                     _this.addLine(data);
                 }
@@ -16936,6 +17041,7 @@ var Line = /** @class */ (function () {
                     y: y,
                 }, _this.tempLine);
                 e.stopPropagation();
+                _this.graph.fire("line:dragging");
             }, function (e) {
                 startX = e.clientX;
                 startY = e.clientY;
@@ -16965,7 +17071,7 @@ var Line = /** @class */ (function () {
                  */
                 _this.graph.fire("line:drop", {
                     fromNode: node,
-                    toNode: toNode,
+                    toNodePoint: toNode,
                     event: e,
                 });
                 e.stopPropagation();
@@ -17239,6 +17345,7 @@ var Line = /** @class */ (function () {
                 x: x,
                 y: y,
             }, _this.tempLine);
+            _this.graph.fire("line:dragging");
         }, function (e) {
             var data = g.data;
             var _a = data.fromX, fromX = _a === void 0 ? 0 : _a, _b = data.fromY, fromY = _b === void 0 ? 0 : _b, toX = data.toX, toY = data.toY, from = data.from, fromPoint = data.fromPoint;
@@ -17267,6 +17374,10 @@ var Line = /** @class */ (function () {
             g.dom.style.display = "block";
             _this.tempLine.dom.remove();
             _this.updateActiveLine(g);
+            /**
+             * @event Graph#line:drop
+             */
+            _this.graph.fire("line:drop", { line: g });
         });
     };
     /**
@@ -17838,10 +17949,6 @@ var dagre_default = /*#__PURE__*/__webpack_require__.n(dagre);
 
 
 
-/**
- * Schema
- * @class
- */
 var Schema = /** @class */ (function () {
     /**
      *
@@ -17924,8 +18031,7 @@ var Schema = /** @class */ (function () {
                         _b.sent();
                         /**
                          * @event VEditor#format
-                         * @type {Object}
-                         * @property {Object} data
+                         * @property {{data:VEditorData}} data
                          */
                         this.editor.fire("format", { data: res });
                         return [2 /*return*/];
@@ -24311,11 +24417,16 @@ var VEditor = /** @class */ (function (_super) {
 
 
 
+
+
+
+
+
+
 /* harmony default export */ const src_0 = (src_VEditor);
 
 })();
 
-__webpack_exports__ = __webpack_exports__["default"];
 /******/ 	return __webpack_exports__;
 /******/ })()
 ;

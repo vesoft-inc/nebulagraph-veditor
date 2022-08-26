@@ -61,16 +61,16 @@ graph.on("line:change",({
   line:InstanceLine,
   before: VEditorLine,
 }))
-// on line arrow drop to add new line but failed
-graph.on("line:drop",({line:InstanceLine}))
+// on line drag
+graph.on("line:drag")
+graph.on("line:dragging",({line:InstanceLine}))
+graph.on("line:drop",({line:InstanceLine})) 
 // on line mouseenter
 graph.on("line:mouseenter",({line:InstanceLine,event:MouseEvent}))
 // on line mouseleave
 graph.on("line:mouseleave",({line:InstanceLine,event:MouseEvent}))
 // on line click
 graph.on("line:click",({line:InstanceLine,event:MouseEvent}))
-// on line drag
-graph.on("line:drag")
 // on line dragend
 graph.on("line:dragend",{
   fromNode:InstanceNode,
