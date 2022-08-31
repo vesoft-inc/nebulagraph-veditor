@@ -13,6 +13,7 @@
   }
 </style>
 <script type="module">
+  const { VEditor } = window.VEditor;
   import { forceSimulation, forceLink, forceManyBody, forceCenter, forceCollide } from "https://cdn.skypack.dev/d3-force@3";
   let index = 0;
   const editor = new VEditor({ dom: document.getElementById("demo") });

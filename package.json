@@ -11,7 +11,8 @@
     "build:browser": "webpack --env browser=true --config webpack.config.build.js",
     "makeDts": "npx -p typescript tsc -p ./dts.json",
     "build:all": "npm run build && npm run makeDts && npm run build:browser && npm run build:demo ",
-    "doc": "typedoc "
+    "doc": "typedoc ",
+    "watch": "webpack --watch --env browser=true --config webpack.config.build.js"
   },
   "repository": {
     "type": "git",
