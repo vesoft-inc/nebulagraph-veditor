@@ -6,8 +6,10 @@
 </body>
 <script src="../dist/VEditor.browser.js"></script>
 <script type="module">
+  const { VEditor } = window.VEditor;
   let index = 0;
   const editor = new VEditor({ dom: document.getElementById("demo") });
+  editor.graph.line.shapes['default'].checkNewLine = () => true
   function add() {
     editor.graph.node.addNode({
       uuid: index,
@@ -17,10 +19,11 @@
       y: 300 * Math.random()
     })
   }
-  for (let x = 0; x < 1000; x++) {
+  const number = 10;
+  for (let x = 0; x < number; x++) {
     add();
   }
-  for (let x = 0; x < 1000; x++) {
+  for (let x = 0; x < number; x++) {
     editor.graph.line.addLine({
       from: Math.floor(50 * Math.random()),
       to: Math.floor(50 * Math.random()),
