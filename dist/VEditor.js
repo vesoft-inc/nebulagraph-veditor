@@ -1702,7 +1702,7 @@ var Node = /** @class */ (function () {
             node.dom.prepend(nodeShape);
         }
         setAttrs(node.dom, {
-            class: "ve-node ".concat(nodeData.className || ""),
+            class: "ve-node ".concat(nodeData.className || "", " ").concat(this.actives[uuid] ? "active" : ""),
         });
         node.dom.setAttribute("transform", "translate(".concat(nodeData.x, " ,").concat(nodeData.y, ")"));
         node.data = nodeData;
@@ -3122,6 +3122,7 @@ var DefaultLine = {
         var _k = line.label, text = _k.text, textRect = _k.textRect, textBBox = _k.textBBox, oldText = _k.oldText, labelGroup = _k.labelGroup;
         var x = xPoint + (refX || 0);
         var y = yPoint + (refY || 0);
+        text.textContent = label;
         setAttrs(text, {
             text: label || "",
             fill: style.fill,
