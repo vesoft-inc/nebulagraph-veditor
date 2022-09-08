@@ -262,7 +262,7 @@ class Node {
       node.dom.prepend(nodeShape);
     }
     setAttrs(node.dom, {
-      class: `ve-node ${nodeData.className || ""}`,
+      class: `ve-node ${nodeData.className || ""} ${this.actives[uuid] ? "active" : ""}`,
     });
     node.dom.setAttribute("transform", `translate(${nodeData.x} ,${nodeData.y})`);
     node.data = nodeData;
