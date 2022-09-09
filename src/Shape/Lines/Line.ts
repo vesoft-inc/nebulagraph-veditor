@@ -26,9 +26,14 @@ export interface LabelInstance {
   oldText?: string;
   labelGroup: SVGGElement;
 }
+
+export type Direction = "left" | "right" | "top" | "bottom";
 const DefaultLine: LineRender = {
   arcRatio: 4,
+  selfLoopRadius: 30,
   adsorb: [20, 20],
+  startSpace: 8,
+  endSpace: 8,
   render(line: InstanceLine) {
     const { from, to, data } = line;
     const pathString = this.makePath(from, to, line);
@@ -42,8 +47,9 @@ const DefaultLine: LineRender = {
       d: pathString,
       class: "ve-line-path",
       "stroke-dasharray": "10",
-      fill: "transparent",
+      fill: "none",
       "stroke-width": 2,
+      "pointer-events": "visiblepainted",
       stroke: "rgba(178,190,205,0.7)",
       ...((data.style as AnyMap) || {}),
     });
@@ -51,6 +57,7 @@ const DefaultLine: LineRender = {
       d: pathString,
       stroke: "transparent",
       fill: "none",
+      "pointer-events": "visiblestroke",
     });
     line.pathData = new Path(pathString);
     shadowPath.setAttribute("class", "ve-shdow-path");
@@ -74,59 +81,49 @@ const DefaultLine: LineRender = {
     to: InstanceNodePoint,
     line: InstanceLine
   ) {
-    let edgeX = from.x;
-    let edgeY = from.y;
-    let endX = to.x;
-    let endY = to.y;
-    let toX = to.x;
-    let toY = to.y;
-    const arrowStartSpace = 0; // 顶部距离node节点的距离
-    const arrEndSpace = 8; // 底部距离node节点的距离
-    // 根据连接点位置生成控制点
-    // 上右下左的控制点分别为 (x,上偏移) (右偏移,y)  (x,下偏移) (左偏移,y)
-    let startControlPoint = { x: edgeX, y: edgeY };
-    let endControlPoint = { x: endX, y: endY };
-    const startAngel = this.getPointDirect(from);
-    const endAngel = this.getPointDirect(to);
-    const offsetLength =
-      Math.sqrt(Math.pow(edgeX - endX, 2) + Math.pow(edgeY - endY, 2)) /
-      this.arcRatio; // 连接点的距离的一半作为控制点的长度
-    startControlPoint.x +=
-      (1 / startAngel < 0 ? -1 : 1) * Math.cos(startAngel) * offsetLength;
-    startControlPoint.y += -Math.sin(startAngel) * offsetLength; // svg坐标系倒置需要给y坐标加负号
-    endControlPoint.x +=
-      (1 / endAngel < 0 ? -1 : 1) * Math.cos(endAngel) * offsetLength;
-    endControlPoint.y += -Math.sin(endAngel) * offsetLength; // svg坐标系倒置需要给y坐标加负号
-    if (from.data.y === 1) {
-      edgeY += arrowStartSpace;
-    } else if (from.data.y === 0) {
-      edgeY -= arrowStartSpace;
-    } else if (from.data.x === 0) {
-      edgeX -= arrowStartSpace;
-    } else if (from.data.x === 1) {
-      edgeX += arrowStartSpace;
+    const start = { x: from.x, y: from.y, };
+    const end = { x: to.x, y: to.y, }
+    let startControlPoint = { x: start.x, y: start.y };
+    let endControlPoint = { x: end.x, y: end.y };
+    const startSpace = this.startSpace; // 顶部距离node节点的距离
+    const endSpace = this.endSpace; // 底部距离node节点的距离
+    const startAngle = this.getPointAngle(from);
+    const endAngle = this.getPointAngle(to);
+    start.x += startSpace * Math.cos(startAngle);
+    start.y += startSpace * Math.sin(startAngle);
+    end.x += endSpace * Math.cos(endAngle);
+    end.y += endSpace * Math.sin(endAngle);
+    let path = '';
+    const pathString = `M${from.x} ${from.y} T ${start.x} ${start.y}`;
+    const toPointString = `${end.x} ${end.y} T ${to.x} ${to.y} `;
+    if (from.nodeId === to.nodeId) {
+      const selfLoopIndex = this.getSelfLoopLineIndex(line);
+      const angle = (from.index === to.index) ? 0 : (Math.PI / (this.selfLoopRadius / 10 + selfLoopIndex));
+      const dis = Math.sqrt(Math.pow(from.x - to.x, 2) + Math.pow(from.y - to.y, 2));
+      let radius = (dis / 2) / Math.sin(angle / 2);
+      if (!radius) {// when from point and to point are the same
+        radius = (selfLoopIndex / this.arcRatio + 1) * this.selfLoopRadius
+        const topPos = {
+          x: start.x + radius * 2 * Math.cos(startAngle),
+          y: start.y + radius * 2 * Math.sin(startAngle),
+        }
+        path = `M${from.x} ${from.y} L${start.x} ${start.y} M${start.x} ${start.y} A ${radius} ${radius} 0 1 0 ${topPos.x} ${topPos.y}`;
+        path += ` M${topPos.x} ${topPos.y} A ${radius} ${radius} 0 1 0 ${end.x} ${end.y} L${to.x} ${to.y}`;
+      } else {
+        path = `M${from.x} ${from.y} A ${radius} ${radius} 0 1 0 ${end.x} ${end.y} L${to.x} ${to.y}`;
+      }
+
+    } else {
+      const offsetLength = Math.sqrt(Math.pow(start.x - end.y, 2) + Math.pow(start.x - end.y, 2)) / this.arcRatio; // 连接点的距离的一半作为控制点的长度
+      startControlPoint.x += Math.cos(startAngle) * offsetLength;
+      startControlPoint.y += Math.sin(startAngle) * offsetLength; // svg坐标系倒置需要给y坐标加负号
+      endControlPoint.x += Math.cos(endAngle) * offsetLength;
+      endControlPoint.y += Math.sin(endAngle) * offsetLength; // svg坐标系倒置需要给y坐标加负号
+      path = `${pathString}C${startControlPoint.x} ${startControlPoint.y} ${endControlPoint.x} ${endControlPoint.y} ${toPointString}`;
     }
-    if (to.data.y === 1) {
-      endY += arrEndSpace;
-    } else if (to.data.y === 0) {
-      endY -= arrEndSpace;
-    } else if (to.data.x === 0) {
-      endX -= arrEndSpace;
-    } else if (to.data.x === 1) {
-      endX += arrEndSpace;
-    }
-    let pathString = `M${from.x} ${from.y} T ${edgeX} ${edgeY}`;
-    let toPointString = `${endX} ${endY} T ${toX} ${toY} `;
-    const path = `${pathString}C${startControlPoint.x} ${startControlPoint.y} ${endControlPoint.x} ${endControlPoint.y} ${toPointString}`;
     line.bezierData = {
-      from: {
-        x: edgeX,
-        y: edgeY,
-      },
-      to: {
-        x: endX,
-        y: endY,
-      },
+      from: start,
+      to: end,
       startControlPoint,
       endControlPoint,
     };
@@ -137,43 +134,55 @@ const DefaultLine: LineRender = {
     return path;
   },
 
-  //没用了
-  getPointDirect(pointNode: InstanceNodePoint) {
-    const point2center = [pointNode.data.x, pointNode.data.y];
-    let angel = 0;
-    if (point2center[1] === 0) {
-      angel = Math.PI / 2;
-    } else if (point2center[1] === 1) {
-      angel = -Math.PI / 2;
-    } else if (point2center[0] === 0) {
-      angel = Math.PI;
-    } else if (point2center[0] === 1) {
-      angel = -Math.PI;
-    } else {
-      // arctan求角度
-      angel =
-        Math.atan((point2center[1] - 0.5) / (point2center[0] - 0.5)) +
-        (point2center[0] - 0.5 < 0 ? Math.PI : 0);
+  getSelfLoopLineIndex(line: InstanceLine) {
+    const { from, to } = line;
+    const graph = this.graph as Graph;
+    let index = 0;
+    for (const lineId in graph.line.lines) {
+      const each = graph.line.lines[lineId].data;
+      if (each.from === each.to && each.from === from.nodeId && each.fromPoint === from.index && each.toPoint === to.index) {
+        if (lineId === line.data.uuid) {
+          break;
+        }
+        index++;
+      }
     }
-    return angel || 0;
+    return index;
+  },
+
+  // get Angle for point in svg coordinate system 
+  getPointAngle(pointNode: InstanceNodePoint): number {
+    const graph = this.graph as Graph;
+    const node = graph.node.nodes[pointNode.nodeId];
+    const p = [pointNode.data.x, pointNode.data.y];
+    let c = [0.5, 0.5];
+    if (pointNode.data.isPixel) {
+      c = [node.shapeBBox.width / 2, node.shapeBBox.height / 2];
+    }
+    const a = [p[0] - c[0], p[1] - c[1]];
+    let angle = Math.atan(a[1] / a[0]) + (a[0] < 0 ? Math.PI : 0);
+    angle %= Math.PI * 2;
+
+    if (angle > -Math.PI / 4 && angle < Math.PI / 4) {
+      return 0;
+    } else if (angle > Math.PI / 4 && angle < Math.PI * 3 / 4) {
+      return Math.PI / 2;
+    } else if (angle > Math.PI * 5 / 4 && angle < Math.PI * 7 / 4 || (angle < -Math.PI / 4)) {
+      return -Math.PI / 2;
+    } else {
+      return Math.PI;
+    }
   },
 
   renderArrow(line: InstanceLine) {
     const { to } = line;
-    let angle = 0;
-    if (to.data.y <= 0) {
-      angle = 180;
-    } else if (to.data.x >= 1) {
-      angle = 270;
-    } else if (to.data.x <= 0) {
-      angle = 90;
-    }
-    const pathString = `M${-5} ${10}L${0} ${0}L${5} ${10}Z`;
+    const angle = this.getPointAngle(to);
+    const pathString = `M${0} ${0}L${10} ${5}L${10} ${-5}Z`;
     const path = line.arrow ? line.arrow : SVGHelper.path();
     // 进行角度的中心变换
     const matrix = mat2d.create();
     mat2d.translate(matrix, matrix, [to.x, to.y]);
-    mat2d.rotate(matrix, matrix, (angle * Math.PI) / 180);
+    mat2d.rotate(matrix, matrix, angle);
     setAttrs(path, {
       class: "ve-line-arrow",
       d: pathString,
@@ -188,8 +197,7 @@ const DefaultLine: LineRender = {
    */
   renderLabel(line: InstanceLine) {
     let {
-      from,
-      to,
+      from, to,
       bezierData: { startControlPoint, endControlPoint },
       data: { label, labelCfg = {} },
     } = line;

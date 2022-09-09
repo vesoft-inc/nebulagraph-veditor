@@ -94,8 +94,8 @@ class AchorLine {
    */
   check(x: number, y: number) {
     if (!this.hideAchorLine) {
-      const { shapeBBox } = this.node;
-      const { width, height } = shapeBBox;
+      this.node.shapeBBox = this.node.shapeBBox || this.node.shape.getBBox();
+      const { width, height } = this.node.shapeBBox;
       const tl = { x, y };
       const tr = { x: x + width, y };
       const br = { x: x + width, y: y + height };

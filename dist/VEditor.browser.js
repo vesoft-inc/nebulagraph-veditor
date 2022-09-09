@@ -19,7 +19,7 @@ exports = module.exports = __webpack_require__(9252)(false);
 
 
 // module
-exports.push([module.id, "@keyframes dashing {\n  from {\n    stroke-dashoffset: 200;\n  }\n  to {\n    stroke-dashoffset: 0;\n  }\n}\n.ve-editor {\n  width: 100%;\n  height: 100%;\n  position: relative;\n}\n.ve-editor .ve-editor-back {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 0;\n  left: 0;\n  top: 0;\n}\n.ve-editor .ve-minimap {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n  background: #fff;\n  border: 1px solid #cecece;\n  border-radius: 5px;\n  overflow: hidden;\n  width: 160px;\n  height: 127px;\n}\n.ve-editor .ve-minimap .drag-rect {\n  position: absolute;\n  left: 0px;\n  box-sizing: content-box;\n  top: 0px;\n  border: 2px solid #08c;\n  cursor: pointer;\n  transition: all 200ms ease;\n}\n.ve-editor .ve-minimap .drag-point {\n  width: 10px;\n  height: 10px;\n  border-radius: 5px;\n  border: 2px solid #08c;\n  background: #fff;\n  position: absolute;\n  right: -5px;\n  bottom: -5px;\n  cursor: nwse-resize;\n}\n.ve-editor > .ve-editor-svg {\n  cursor: grab;\n  width: 100%;\n  height: 100%;\n  position: absolute;\n}\n.ve-editor > .ve-editor-svg svg {\n  position: absolute;\n  left: 0;\n  top: 0;\n  outline: none;\n}\n.ve-editor > .ve-editor-svg * {\n  transition: x, y, transform, cx, cy, width, stroke, height, fill 400ms;\n  outline: none;\n}\n.ve-editor > .ve-editor-svg .ve-node:hover .ve-link-points,\n.ve-editor > .ve-editor-svg .ve-node.active .ve-link-points {\n  display: block;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-link-points {\n  cursor: crosshair;\n  display: none;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-link-points:hover,\n.ve-editor > .ve-editor-svg .ve-node .ve-link-points.hover {\n  fill: #4c79ff;\n  cursor: crosshair;\n  display: block;\n}\n.ve-editor > .ve-editor-svg .ve-node.active .icon-node {\n  transition: stroke 400ms;\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape {\n  cursor: move;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape:hover > .icon-node {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape.success .icon-node {\n  stroke: green;\n  fill: #fff;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape.error .icon-node {\n  stroke: red;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape.running .icon-node {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-path {\n  transition: stroke-dasharray 300ms ease-out;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-shdow-path {\n  stroke: transparent;\n  stroke-width: 3;\n  fill: none;\n}\n.ve-editor > .ve-editor-svg .ve-line:hover .ve-line-shape {\n  opacity: 0.5;\n}\n.ve-editor > .ve-editor-svg .ve-line:hover .ve-line-arrow {\n  opacity: 0.5;\n}\n.ve-editor > .ve-editor-svg .ve-line.active .ve-line-arrow {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-line.active path {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-line.running .ve-line-path {\n  stroke-dasharray: 5 !important;\n  animation: dashing 5s linear infinite;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-shape {\n  cursor: pointer;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-arrow {\n  cursor: crosshair;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-label text {\n  text-anchor: middle;\n}\n.ve-editor > .ve-editor-svg .anchor-line {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-paper-lineing .ve-link-points {\n  display: block;\n}\n.ve-editor > .ve-editor-html {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n}\n.ve-editor .anchor-back {\n  position: absolute;\n  top: 0;\n  left: 0;\n}\n.ve-node-wrapper {\n  border: 1px solid #08c;\n  border-radius: 8px;\n  box-sizing: border-box;\n  display: flex;\n  justify-content: center;\n  background-color: #fff;\n  align-items: center;\n}\n", ""]);
+exports.push([module.id, "@keyframes dashing {\n  from {\n    stroke-dashoffset: 200;\n  }\n  to {\n    stroke-dashoffset: 0;\n  }\n}\n.ve-editor {\n  width: 100%;\n  height: 100%;\n  position: relative;\n}\n.ve-editor .ve-editor-back {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 0;\n  left: 0;\n  top: 0;\n}\n.ve-editor .ve-minimap {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n  background: #fff;\n  border: 1px solid #cecece;\n  border-radius: 5px;\n  overflow: hidden;\n  width: 160px;\n  height: 127px;\n}\n.ve-editor .ve-minimap .drag-rect {\n  position: absolute;\n  left: 0px;\n  box-sizing: content-box;\n  top: 0px;\n  border: 2px solid #08c;\n  cursor: pointer;\n  transition: all 200ms ease;\n}\n.ve-editor .ve-minimap .drag-point {\n  width: 10px;\n  height: 10px;\n  border-radius: 5px;\n  border: 2px solid #08c;\n  background: #fff;\n  position: absolute;\n  right: -5px;\n  bottom: -5px;\n  cursor: nwse-resize;\n}\n.ve-editor > .ve-editor-svg {\n  cursor: grab;\n  width: 100%;\n  height: 100%;\n  position: absolute;\n}\n.ve-editor > .ve-editor-svg svg {\n  position: absolute;\n  left: 0;\n  top: 0;\n  outline: none;\n}\n.ve-editor > .ve-editor-svg * {\n  transition: x, y, transform, cx, cy, width, stroke, height, fill 400ms;\n  outline: none;\n}\n.ve-editor > .ve-editor-svg .ve-node:hover .ve-link-points,\n.ve-editor > .ve-editor-svg .ve-node.active .ve-link-points {\n  display: block;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-link-points {\n  cursor: crosshair;\n  display: none;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-link-points:hover,\n.ve-editor > .ve-editor-svg .ve-node .ve-link-points.hover {\n  fill: #4c79ff;\n  cursor: crosshair;\n  display: block;\n}\n.ve-editor > .ve-editor-svg .ve-node.active .icon-node {\n  transition: stroke 400ms;\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape {\n  cursor: move;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape:hover > .icon-node {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape.success .icon-node {\n  stroke: green;\n  fill: #fff;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape.error .icon-node {\n  stroke: red;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape.running .icon-node {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-path {\n  transition: stroke-dasharray 300ms ease-out;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-shdow-path {\n  stroke: transparent;\n  stroke-width: 5px;\n  fill: none;\n}\n.ve-editor > .ve-editor-svg .ve-line:hover .ve-line-shape {\n  opacity: 0.5;\n}\n.ve-editor > .ve-editor-svg .ve-line:hover .ve-line-arrow {\n  opacity: 0.5;\n}\n.ve-editor > .ve-editor-svg .ve-line.active .ve-line-arrow {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-line.active path {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-line.running .ve-line-path {\n  stroke-dasharray: 5 !important;\n  animation: dashing 5s linear infinite;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-shape {\n  cursor: pointer;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-arrow {\n  cursor: crosshair;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-label text {\n  text-anchor: middle;\n}\n.ve-editor > .ve-editor-svg .anchor-line {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-paper-lineing .ve-link-points {\n  display: block;\n}\n.ve-editor > .ve-editor-html {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n}\n.ve-editor .anchor-back {\n  position: absolute;\n  top: 0;\n  left: 0;\n}\n.ve-node-wrapper {\n  border: 1px solid #08c;\n  border-radius: 8px;\n  box-sizing: border-box;\n  display: flex;\n  justify-content: center;\n  background-color: #fff;\n  align-items: center;\n}\n", ""]);
 
 // exports
 
@@ -15308,11 +15308,12 @@ var Node = /** @class */ (function () {
             node.dom.prepend(nodeShape);
         }
         setAttrs(node.dom, {
-            class: "ve-node ".concat(nodeData.className || ""),
+            class: "ve-node ".concat(nodeData.className || "", " ").concat(this.actives[uuid] ? "active" : ""),
         });
         node.dom.setAttribute("transform", "translate(".concat(nodeData.x, " ,").concat(nodeData.y, ")"));
         node.data = nodeData;
         if (rerenderShape) {
+            node.shapeBBox = undefined;
             node.linkPoints.forEach(function (linkPoint) {
                 shape.renderLinkPoint(node, linkPoint);
             });
@@ -15337,10 +15338,10 @@ var Node = /** @class */ (function () {
                     dom: undefined,
                     x: 0,
                     y: 0,
+                    nodeId: node.data.uuid,
+                    index: index
                 };
                 shape.renderLinkPoint(node, instancePoint);
-                instancePoint.index = index;
-                instancePoint.nodeId = node.data.uuid;
                 node.linkPoints.push(instancePoint);
                 setAttrs(instancePoint.dom, {
                     "data-node-id": node.data.uuid,
@@ -16550,7 +16551,10 @@ function O(val) {
 
 var DefaultLine = {
     arcRatio: 4,
+    selfLoopRadius: 30,
     adsorb: [20, 20],
+    startSpace: 8,
+    endSpace: 8,
     render: function (line) {
         var from = line.from, to = line.to, data = line.data;
         var pathString = this.makePath(from, to, line);
@@ -16560,11 +16564,12 @@ var DefaultLine = {
         var shadowPath = line.shadowPath
             ? line.shadowPath
             : (line.shadowPath = SVGHelper.path());
-        setAttrs(path, __assign({ d: pathString, class: "ve-line-path", "stroke-dasharray": "10", fill: "transparent", "stroke-width": 2, stroke: "rgba(178,190,205,0.7)" }, (data.style || {})));
+        setAttrs(path, __assign({ d: pathString, class: "ve-line-path", "stroke-dasharray": "10", fill: "none", "stroke-width": 2, "pointer-events": "visiblepainted", stroke: "rgba(178,190,205,0.7)" }, (data.style || {})));
         setAttrs(shadowPath, {
             d: pathString,
             stroke: "transparent",
             fill: "none",
+            "pointer-events": "visiblestroke",
         });
         line.pathData = new Utils_path(pathString);
         shadowPath.setAttribute("class", "ve-shdow-path");
@@ -16579,64 +16584,50 @@ var DefaultLine = {
         return shape;
     },
     makePath: function (from, to, line) {
-        var edgeX = from.x;
-        var edgeY = from.y;
-        var endX = to.x;
-        var endY = to.y;
-        var toX = to.x;
-        var toY = to.y;
-        var arrowStartSpace = 0; // 顶部距离node节点的距离
-        var arrEndSpace = 8; // 底部距离node节点的距离
-        // 根据连接点位置生成控制点
-        // 上右下左的控制点分别为 (x,上偏移) (右偏移,y)  (x,下偏移) (左偏移,y)
-        var startControlPoint = { x: edgeX, y: edgeY };
-        var endControlPoint = { x: endX, y: endY };
-        var startAngel = this.getPointDirect(from);
-        var endAngel = this.getPointDirect(to);
-        var offsetLength = Math.sqrt(Math.pow(edgeX - endX, 2) + Math.pow(edgeY - endY, 2)) /
-            this.arcRatio; // 连接点的距离的一半作为控制点的长度
-        startControlPoint.x +=
-            (1 / startAngel < 0 ? -1 : 1) * Math.cos(startAngel) * offsetLength;
-        startControlPoint.y += -Math.sin(startAngel) * offsetLength; // svg坐标系倒置需要给y坐标加负号
-        endControlPoint.x +=
-            (1 / endAngel < 0 ? -1 : 1) * Math.cos(endAngel) * offsetLength;
-        endControlPoint.y += -Math.sin(endAngel) * offsetLength; // svg坐标系倒置需要给y坐标加负号
-        if (from.data.y === 1) {
-            edgeY += arrowStartSpace;
+        var start = { x: from.x, y: from.y, };
+        var end = { x: to.x, y: to.y, };
+        var startControlPoint = { x: start.x, y: start.y };
+        var endControlPoint = { x: end.x, y: end.y };
+        var startSpace = this.startSpace; // 顶部距离node节点的距离
+        var endSpace = this.endSpace; // 底部距离node节点的距离
+        var startAngle = this.getPointAngle(from);
+        var endAngle = this.getPointAngle(to);
+        start.x += startSpace * Math.cos(startAngle);
+        start.y += startSpace * Math.sin(startAngle);
+        end.x += endSpace * Math.cos(endAngle);
+        end.y += endSpace * Math.sin(endAngle);
+        var path = '';
+        var pathString = "M".concat(from.x, " ").concat(from.y, " T ").concat(start.x, " ").concat(start.y);
+        var toPointString = "".concat(end.x, " ").concat(end.y, " T ").concat(to.x, " ").concat(to.y, " ");
+        if (from.nodeId === to.nodeId) {
+            var selfLoopIndex = this.getSelfLoopLineIndex(line);
+            var angle = (from.index === to.index) ? 0 : (Math.PI / (this.selfLoopRadius / 10 + selfLoopIndex));
+            var dis = Math.sqrt(Math.pow(from.x - to.x, 2) + Math.pow(from.y - to.y, 2));
+            var radius = (dis / 2) / Math.sin(angle / 2);
+            if (!radius) { // when from point and to point are the same
+                radius = (selfLoopIndex / this.arcRatio + 1) * this.selfLoopRadius;
+                var topPos = {
+                    x: start.x + radius * 2 * Math.cos(startAngle),
+                    y: start.y + radius * 2 * Math.sin(startAngle),
+                };
+                path = "M".concat(from.x, " ").concat(from.y, " L").concat(start.x, " ").concat(start.y, " M").concat(start.x, " ").concat(start.y, " A ").concat(radius, " ").concat(radius, " 0 1 0 ").concat(topPos.x, " ").concat(topPos.y);
+                path += " M".concat(topPos.x, " ").concat(topPos.y, " A ").concat(radius, " ").concat(radius, " 0 1 0 ").concat(end.x, " ").concat(end.y, " L").concat(to.x, " ").concat(to.y);
+            }
+            else {
+                path = "M".concat(from.x, " ").concat(from.y, " A ").concat(radius, " ").concat(radius, " 0 1 0 ").concat(end.x, " ").concat(end.y, " L").concat(to.x, " ").concat(to.y);
+            }
         }
-        else if (from.data.y === 0) {
-            edgeY -= arrowStartSpace;
+        else {
+            var offsetLength = Math.sqrt(Math.pow(start.x - end.y, 2) + Math.pow(start.x - end.y, 2)) / this.arcRatio; // 连接点的距离的一半作为控制点的长度
+            startControlPoint.x += Math.cos(startAngle) * offsetLength;
+            startControlPoint.y += Math.sin(startAngle) * offsetLength; // svg坐标系倒置需要给y坐标加负号
+            endControlPoint.x += Math.cos(endAngle) * offsetLength;
+            endControlPoint.y += Math.sin(endAngle) * offsetLength; // svg坐标系倒置需要给y坐标加负号
+            path = "".concat(pathString, "C").concat(startControlPoint.x, " ").concat(startControlPoint.y, " ").concat(endControlPoint.x, " ").concat(endControlPoint.y, " ").concat(toPointString);
         }
-        else if (from.data.x === 0) {
-            edgeX -= arrowStartSpace;
-        }
-        else if (from.data.x === 1) {
-            edgeX += arrowStartSpace;
-        }
-        if (to.data.y === 1) {
-            endY += arrEndSpace;
-        }
-        else if (to.data.y === 0) {
-            endY -= arrEndSpace;
-        }
-        else if (to.data.x === 0) {
-            endX -= arrEndSpace;
-        }
-        else if (to.data.x === 1) {
-            endX += arrEndSpace;
-        }
-        var pathString = "M".concat(from.x, " ").concat(from.y, " T ").concat(edgeX, " ").concat(edgeY);
-        var toPointString = "".concat(endX, " ").concat(endY, " T ").concat(toX, " ").concat(toY, " ");
-        var path = "".concat(pathString, "C").concat(startControlPoint.x, " ").concat(startControlPoint.y, " ").concat(endControlPoint.x, " ").concat(endControlPoint.y, " ").concat(toPointString);
         line.bezierData = {
-            from: {
-                x: edgeX,
-                y: edgeY,
-            },
-            to: {
-                x: endX,
-                y: endY,
-            },
+            from: start,
+            to: end,
             startControlPoint: startControlPoint,
             endControlPoint: endControlPoint,
         };
@@ -16646,48 +16637,55 @@ var DefaultLine = {
         line.data.toY = to.y;
         return path;
     },
-    //没用了
-    getPointDirect: function (pointNode) {
-        var point2center = [pointNode.data.x, pointNode.data.y];
-        var angel = 0;
-        if (point2center[1] === 0) {
-            angel = Math.PI / 2;
+    getSelfLoopLineIndex: function (line) {
+        var from = line.from, to = line.to;
+        var graph = this.graph;
+        var index = 0;
+        for (var lineId in graph.line.lines) {
+            var each = graph.line.lines[lineId].data;
+            if (each.from === each.to && each.from === from.nodeId && each.fromPoint === from.index && each.toPoint === to.index) {
+                if (lineId === line.data.uuid) {
+                    break;
+                }
+                index++;
+            }
         }
-        else if (point2center[1] === 1) {
-            angel = -Math.PI / 2;
+        return index;
+    },
+    // get Angle for point in svg coordinate system 
+    getPointAngle: function (pointNode) {
+        var graph = this.graph;
+        var node = graph.node.nodes[pointNode.nodeId];
+        var p = [pointNode.data.x, pointNode.data.y];
+        var c = [0.5, 0.5];
+        if (pointNode.data.isPixel) {
+            c = [node.shapeBBox.width / 2, node.shapeBBox.height / 2];
         }
-        else if (point2center[0] === 0) {
-            angel = Math.PI;
+        var a = [p[0] - c[0], p[1] - c[1]];
+        var angle = Math.atan(a[1] / a[0]) + (a[0] < 0 ? Math.PI : 0);
+        angle %= Math.PI * 2;
+        if (angle > -Math.PI / 4 && angle < Math.PI / 4) {
+            return 0;
         }
-        else if (point2center[0] === 1) {
-            angel = -Math.PI;
+        else if (angle > Math.PI / 4 && angle < Math.PI * 3 / 4) {
+            return Math.PI / 2;
+        }
+        else if (angle > Math.PI * 5 / 4 && angle < Math.PI * 7 / 4 || (angle < -Math.PI / 4)) {
+            return -Math.PI / 2;
         }
         else {
-            // arctan求角度
-            angel =
-                Math.atan((point2center[1] - 0.5) / (point2center[0] - 0.5)) +
-                    (point2center[0] - 0.5 < 0 ? Math.PI : 0);
+            return Math.PI;
         }
-        return angel || 0;
     },
     renderArrow: function (line) {
         var to = line.to;
-        var angle = 0;
-        if (to.data.y <= 0) {
-            angle = 180;
-        }
-        else if (to.data.x >= 1) {
-            angle = 270;
-        }
-        else if (to.data.x <= 0) {
-            angle = 90;
-        }
-        var pathString = "M".concat(-5, " ").concat(10, "L").concat(0, " ").concat(0, "L").concat(5, " ").concat(10, "Z");
+        var angle = this.getPointAngle(to);
+        var pathString = "M".concat(0, " ").concat(0, "L").concat(10, " ").concat(5, "L").concat(10, " ").concat(-5, "Z");
         var path = line.arrow ? line.arrow : SVGHelper.path();
         // 进行角度的中心变换
         var matrix = create();
         translate(matrix, matrix, [to.x, to.y]);
-        rotate(matrix, matrix, (angle * Math.PI) / 180);
+        rotate(matrix, matrix, angle);
         setAttrs(path, __assign({ class: "ve-line-arrow", d: pathString, fill: "rgba(178,190,205,0.7)", transform: "matrix(".concat(matrix.join(","), ")") }, line.data.arrowStyle));
         return path;
     },
@@ -16728,6 +16726,7 @@ var DefaultLine = {
         var _k = line.label, text = _k.text, textRect = _k.textRect, textBBox = _k.textBBox, oldText = _k.oldText, labelGroup = _k.labelGroup;
         var x = xPoint + (refX || 0);
         var y = yPoint + (refY || 0);
+        text.textContent = label;
         setAttrs(text, {
             text: label || "",
             fill: style.fill,
@@ -17469,8 +17468,8 @@ var AchorLine = /** @class */ (function () {
     AchorLine.prototype.check = function (x, y) {
         var _this = this;
         if (!this.hideAchorLine) {
-            var shapeBBox = this.node.shapeBBox;
-            var width = shapeBBox.width, height = shapeBBox.height;
+            this.node.shapeBBox = this.node.shapeBBox || this.node.shape.getBBox();
+            var _a = this.node.shapeBBox, width = _a.width, height = _a.height;
             var tl = { x: x, y: y };
             var tr = { x: x + width, y: y };
             var br = { x: x + width, y: y + height };

@@ -30,8 +30,8 @@ export interface InstanceNode {
 export interface InstanceNodePoint {
   x: number;
   y: number;
-  nodeId?: string;
-  index?: number;
+  nodeId: string;
+  index: number;
   local?: {
     x: number;
     y: number;
@@ -40,6 +40,7 @@ export interface InstanceNodePoint {
   data?: {
     x: number;
     y: number;
+    isPixel?: boolean;
     [key: number | string]: unknown;
   };
 }
@@ -267,6 +268,7 @@ class Node {
     node.dom.setAttribute("transform", `translate(${nodeData.x} ,${nodeData.y})`);
     node.data = nodeData;
     if (rerenderShape) {
+      node.shapeBBox = undefined;
       node.linkPoints.forEach((linkPoint) => {
         shape.renderLinkPoint(node, linkPoint);
       });
@@ -292,10 +294,10 @@ class Node {
           dom: undefined,
           x: 0,
           y: 0,
+          nodeId: node.data.uuid,
+          index
         };
         shape.renderLinkPoint(node, instancePoint);
-        instancePoint.index = index;
-        instancePoint.nodeId = node.data.uuid;
         node.linkPoints.push(instancePoint);
         setAttrs(instancePoint.dom, {
           "data-node-id": node.data.uuid,

@@ -9,8 +9,9 @@
   const { VEditor } = window.VEditor;
   const editor = new VEditor({
     dom: document.getElementById("app"),
-    mode: "view"
+    // mode: "view"
   });
+  editor.graph.line.shapes['default'].checkNewLine = () => true
   const data = {
     "nodes": [
       {
