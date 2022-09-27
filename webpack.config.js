@@ -26,7 +26,6 @@ module.exports = {
   },
   devtool: "eval-source-map",
   module: {
-
     rules: [
       {
         test: /\.(js|ts)$/,
@@ -37,18 +36,12 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [devMode ? "style-loader" : MiniCssExtractPlugin.loader, "css-loader"]
+        use: ["style-loader", "css-loader"]
       },
       {
         test: /\.less$/,
         use: [
-          devMode ? "style-loader" : MiniCssExtractPlugin.loader,
-          {
-            loader: "css-loader"
-          },
-          {
-            loader: "less-loader"
-          }
+          "style-loader", "css-loader", "less-loader"
         ]
       },
       {
@@ -62,7 +55,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.ts', '.js', '.json', '.less', '.svg', '.css',],
+    extensions: ['.ts', '.js', '.json', '.less', '.svg', '.css', '.svg'],
     alias: {
       '@': path.join(__dirname, './src/'),
     },
