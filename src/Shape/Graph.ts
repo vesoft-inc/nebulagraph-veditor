@@ -5,7 +5,7 @@ import VEditor from "../VEditor";
 import { setAttrs } from "../Utils/dom";
 import { VEditorSchema } from "../Model/Schema";
 import * as Utils from "../Utils";
-const backSvg = require("../back.svg");
+const backSvg = require("../back.svg").default;
 
 class Graph extends Utils.Event {
   editor: VEditor;
