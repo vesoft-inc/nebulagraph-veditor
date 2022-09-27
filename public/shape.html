@@ -1,0 +1,63 @@
+<html>
+
+<body>
+  <div id="demo" style="width:100%;height:400px;box-shadow:  0 0 10px 1px #123"></div>
+  <button style="margin-top:20" onclick="add()">添加</button>
+</body>
+<script src="../dist/VEditor.browser.js"></script>
+<script type="module">
+  const { VEditor, Utils: { SVGHelper, dom } } = window.VEditor;
+  let index = 0;
+  const editor = new VEditor({ dom: document.getElementById("demo") });
+  editor.graph.line.shapes['default'].checkNewLine = () => true
+  editor.graph.node.registeNode('pixel', {
+    ...editor.graph.node.shapes['default'],
+    linkPoints: [
+      { x: 0, y: 0.5 },
+      { x: 1, y: 0.5 },
+      { x: 0.5, y: 0 },
+      { x: 0.5, y: 1 },
+    ],
+    render: (instanceNode) => {
+      let node, text;
+      const { data } = instanceNode;
+      if (instanceNode.shape) {
+        instanceNode.shape.remove();
+      } else {
+        node = SVGHelper.circle(30, 30, 30);
+        text = SVGHelper.text(10, 35, data.name);
+      }
+      dom.setAttrs(node, {
+        fill: "#fff",
+        stroke: "#000",
+        rx: 5,
+        ry: 5,
+      });
+      return SVGHelper.group(node, text);
+    },
+
+  });
+  function add() {
+    editor.graph.node.addNode({
+      uuid: index,
+      type: "pixel",
+      name: "测试" + ++index,
+      x: window.innerWidth * Math.random(),
+      y: 300 * Math.random()
+    })
+  }
+  const number = 2;
+  for (let x = 0; x < number; x++) {
+    add();
+  }
+  for (let x = 0; x < number; x++) {
+    editor.graph.line.addLine({
+      from: Math.floor(number * Math.random()),
+      to: Math.floor(number * Math.random()),
+      fromPoint: 1,
+      toPoint: 0
+    })
+  }
+</script>
+
+</html>

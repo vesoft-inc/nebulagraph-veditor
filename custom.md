@@ -7,6 +7,7 @@ You can refer to src/Shape/Nodes, src/Shape/Lines to register your own shape.
 ## Registe React Node
 
 extend `VEditor.Default.Node`
+please make the left-top point as the origin point (0,0)
 
 ```javascript
 editor.graph.node.registeNode("react-svg-node", {
