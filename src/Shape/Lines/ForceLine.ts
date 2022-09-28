@@ -5,105 +5,40 @@ import { InstanceLine } from "../Line";
 import { InstanceNodePoint } from "../Node";
 import BezierLine from "../../Utils/BezierLine";
 import { mat2d } from "gl-matrix";
-import { Path } from "../../Utils";
 import { AnyMap } from "../../Utils/types";
 import { VEditorLine } from "../../Model/Schema";
-import VEditor from "../../VEditor";
-
-export interface LineRender extends AnyMap {
-  graph?: Graph;
-  adsorb?: [number, number]; //磁吸的范围
-  render?: (instanceLine: InstanceLine) => SVGElement;
-  renderArrow?: (instanceLine?: InstanceLine) => SVGElement;
-  renderArrow2?: (instanceLine?: InstanceLine) => SVGElement;
-  renderLabel?: (instanceLine?: InstanceLine) => SVGElement;
-  checkNewLine?: (lineData: VEditorLine, editor: VEditor) => boolean;
-}
-export interface LabelInstance {
-  text: SVGTextElement;
-  textRect: SVGRectElement;
-  textBBox?: DOMRect;
-  oldText?: string;
-  labelGroup: SVGGElement;
-}
-
+import DefaultLine, { LineRender } from './Line';
+import { getVectorLength, normalize } from '../../Utils/vector';
+ 
 export type Direction = "left" | "right" | "top" | "bottom";
-const DefaultLine: LineRender = {
-  arcRatio: 4,
-  selfLoopRatio: 4,
-  selfLoopRadius: 30,
-  adsorb: [20, 20],
-  startSpace: 8,
-  endSpace: 8,
-  render(line: InstanceLine) {
-    const { from, to, data } = line;
-    const pathString = this.makePath(from, to, line);
-    const shape = line.shape ? line.shape : SVGHelper.group();
-    line.shape = shape;
-    const path = line.path ? line.path : (line.path = SVGHelper.path());
-    const shadowPath = line.shadowPath
-      ? line.shadowPath
-      : (line.shadowPath = SVGHelper.path());
-    setAttrs(path, {
-      d: pathString,
-      class: "ve-line-path",
-      "stroke-dasharray": "10",
-      fill: "none",
-      "stroke-width": 2,
-      "pointer-events": "visiblepainted",
-      stroke: "rgba(178,190,205,0.7)",
-      ...((data.style as AnyMap) || {}),
-    });
-    setAttrs(shadowPath, {
-      d: pathString,
-      stroke: "transparent",
-      fill: "none",
-      "pointer-events": "visiblestroke",
-    });
-    line.pathData = new Path(pathString);
-    shadowPath.setAttribute("class", "ve-shdow-path");
-    animate(
-      10,
-      0,
-      (val) =>
-        setAttrs(path, {
-          "stroke-dasharray": `${val}`,
-        }),
-      300
-    );
-    shape.appendChild(shadowPath);
-    shape.appendChild(path);
-    this.renderLabel && this.renderLabel(line);
-    return shape;
-  },
-
+const ForceLine: LineRender = { 
+  ...DefaultLine,
+  radius: 30,// the radius of the node; notice: ForceLine only support circle node
   makePath(
     from: InstanceNodePoint,
     to: InstanceNodePoint,
     line: InstanceLine
   ) {
-    const start = { x: from.x, y: from.y, };
-    const end = { x: to.x, y: to.y, }
+    let start = { x: from.x, y: from.y, };
+    let end = { x: to.x, y: to.y, }
     let startControlPoint = { x: start.x, y: start.y };
     let endControlPoint = { x: end.x, y: end.y };
-    const startSpace = this.startSpace; // 顶部距离node节点的距离
-    const endSpace = this.endSpace; // 底部距离node节点的距离
-    const startAngle = this.getPointAngle(from);
-    const endAngle = this.getPointAngle(to);
-    start.x += startSpace * Math.cos(startAngle);
-    start.y += startSpace * Math.sin(startAngle);
-    end.x += endSpace * Math.cos(endAngle);
-    end.y += endSpace * Math.sin(endAngle);
+    const startSpace = this.startSpace;
+    const endSpace = this.endSpace; 
     let path = '';
-    const pathString = `M${from.x} ${from.y} T ${start.x} ${start.y}`;
-    const toPointString = `${end.x} ${end.y} T ${to.x} ${to.y} `;
     if (from.nodeId === to.nodeId) {
+      const startAngle = this.getPointAngle(from);
+      const endAngle = this.getPointAngle(to);
+      start.x += startSpace * Math.cos(startAngle);
+      start.y += startSpace * Math.sin(startAngle);
+      end.x += endSpace * Math.cos(endAngle);
+      end.y += endSpace * Math.sin(endAngle);
       const selfLoopIndex = this.getSelfLoopLineIndex(line);
       const angle = (from.index === to.index) ? 0 : (Math.PI / (this.selfLoopRadius / 10 + selfLoopIndex));
       const dis = Math.sqrt(Math.pow(from.x - to.x, 2) + Math.pow(from.y - to.y, 2));
       let radius = (dis / 2) / Math.sin(angle / 2);
       if (!radius) {// when from point and to point are the same
-        radius = (selfLoopIndex / this.selfLoopRatio + 1) * this.selfLoopRadius
+        radius = (selfLoopIndex / this.arcRatio + 1) * this.selfLoopRadius
         const topPos = {
           x: start.x + radius * 2 * Math.cos(startAngle),
           y: start.y + radius * 2 * Math.sin(startAngle),
@@ -113,28 +48,55 @@ const DefaultLine: LineRender = {
       } else {
         path = `M${from.x} ${from.y} A ${radius} ${radius} 0 1 0 ${end.x} ${end.y} L${to.x} ${to.y}`;
       }
-
     } else {
-      const offsetLength = Math.sqrt(Math.pow(start.x - end.y, 2) + Math.pow(start.x - end.y, 2)) / this.arcRatio; // 连接点的距离的一半作为控制点的长度
-      startControlPoint.x += Math.cos(startAngle) * offsetLength;
-      startControlPoint.y += Math.sin(startAngle) * offsetLength; // svg坐标系倒置需要给y坐标加负号
-      endControlPoint.x += Math.cos(endAngle) * offsetLength;
-      endControlPoint.y += Math.sin(endAngle) * offsetLength; // svg坐标系倒置需要给y坐标加负号
-      path = `${pathString}C${startControlPoint.x} ${startControlPoint.y} ${endControlPoint.x} ${endControlPoint.y} ${toPointString}`;
+      const graph = this.graph as Graph;
+      const nodes = graph.node.nodes
+      const angle = Math.atan((to.y - from.y) / (to.x - from.x)) + ((to.x - from.x) < 0 ? Math.PI : 0);
+      const startOffsetLength = this.radius + this.startSpace; // start offset length
+      const endOffsetLength = this.radius + this.endSpace; // end offset length
+      const startNode = nodes[from.nodeId];
+      const endNode = nodes[to.nodeId];
+      start = {
+        x: startNode.data.x + startNode.shapeBBox.width/2 + startOffsetLength * Math.cos(angle),
+        y: startNode.data.y + startNode.shapeBBox.height/2 + startOffsetLength * Math.sin(angle),
+      };
+      end = {
+        x: endNode.data.x + endNode.shapeBBox.width / 2 - endOffsetLength * Math.cos(angle),
+        y: endNode.data.y + endNode.shapeBBox.height / 2 - endOffsetLength * Math.sin(angle),
+      };
+      const start2endVec = {
+        x: end.x - start.x,
+        y: end.y - start.y,
+      }
+      const normal = normalize(start2endVec);
+      const centerPos = {
+        x: (start.x + end.x) / 2,
+        y: (start.y + end.y) / 2,
+      };
+      const centerNormal = {
+        x: -normal.y,
+        y: normal.x
+      }
+      const length = getVectorLength(start2endVec);
+      const graphIndex = line.data.graphIndex as number;
+      startControlPoint = {
+        x: start.x + centerNormal.x * length * graphIndex * this.arcRatio / 8,
+        y: start.y + centerNormal.y * length * graphIndex * this.arcRatio / 8,
+      }
+      endControlPoint = {
+        x: end.x + centerNormal.x * length * graphIndex *this.arcRatio / 8,
+        y: end.y + centerNormal.y * length * graphIndex *this.arcRatio / 8,
+      }
     }
     line.bezierData = {
       from: start,
       to: end,
       startControlPoint,
       endControlPoint,
-    };
-    line.data.fromX = from.x;
-    line.data.fromY = from.y;
-    line.data.toX = to.x;
-    line.data.toY = to.y;
+    }; 
     return path;
   },
-
+ 
   getSelfLoopLineIndex(line: InstanceLine) {
     const { from, to } = line;
     const graph = this.graph as Graph;
@@ -149,40 +111,16 @@ const DefaultLine: LineRender = {
       }
     }
     return index;
-  },
-
-  // get Angle for point in svg coordinate system 
-  getPointAngle(pointNode: InstanceNodePoint): number {
-    const graph = this.graph as Graph;
-    const node = graph.node.nodes[pointNode.nodeId];
-    const p = [pointNode.data.x, pointNode.data.y];
-    let c = [0.5, 0.5];
-    if (pointNode.data.isPixel) {
-      c = [node.shapeBBox.width / 2, node.shapeBBox.height / 2];
-    }
-    const a = [p[0] - c[0], p[1] - c[1]];
-    let angle = Math.atan(a[1] / a[0]) + (a[0] < 0 ? Math.PI : 0);
-    angle %= Math.PI * 2;
-
-    if (angle > -Math.PI / 4 && angle < Math.PI / 4) {
-      return 0;
-    } else if (angle > Math.PI / 4 && angle < Math.PI * 3 / 4) {
-      return Math.PI / 2;
-    } else if (angle > Math.PI * 5 / 4 && angle < Math.PI * 7 / 4 || (angle < -Math.PI / 4)) {
-      return -Math.PI / 2;
-    } else {
-      return Math.PI;
-    }
-  },
+  }, 
 
   renderArrow(line: InstanceLine) {
-    const { to } = line;
-    const angle = this.getPointAngle(to);
+    const { bezierData ,from,to} = line;
+    const angle = Math.atan((to.y - from.y) / (to.x - from.x)) + ((to.x - from.x) < 0 ? Math.PI : 0);
     const pathString = `M${0} ${0}L${10} ${5}L${10} ${-5}Z`;
     const path = line.arrow ? line.arrow : SVGHelper.path();
     // 进行角度的中心变换
     const matrix = mat2d.create();
-    mat2d.translate(matrix, matrix, [to.x, to.y]);
+    mat2d.translate(matrix, matrix, [bezierData.to.x, bezierData.to.y]);
     mat2d.rotate(matrix, matrix, angle);
     setAttrs(path, {
       class: "ve-line-arrow",
@@ -198,8 +136,7 @@ const DefaultLine: LineRender = {
    */
   renderLabel(line: InstanceLine) {
     let {
-      from, to,
-      bezierData: { startControlPoint, endControlPoint },
+      bezierData: { from,to,startControlPoint, endControlPoint },
       data: { label, labelCfg = {} },
     } = line;
     if (!label) {
@@ -287,11 +224,7 @@ const DefaultLine: LineRender = {
   },
 
   checkNewLine(data: VEditorLine): boolean {
-    const { from, to } = data;
-    if (from === to) {
-      return false;
-    }
     return true;
   },
 };
-export default DefaultLine;
+export default ForceLine;
