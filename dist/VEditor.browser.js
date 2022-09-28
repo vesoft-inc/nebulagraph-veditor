@@ -17765,17 +17765,32 @@ var History = /** @class */ (function () {
     };
     // 重做
     History.prototype.redo = function () {
+        if (this.index >= this.schemaList.length - 1) {
+            return false;
+        }
         this.schema.data = JSON.parse(this.schemaList[++this.index]);
         this.schema.editor.fire("change");
+        return true;
     };
     // 撤销
     History.prototype.undo = function () {
+        if (this.index < 1) {
+            return false;
+        }
         this.schema.data = JSON.parse(this.schemaList[--this.index]);
         this.schema.editor.fire("change");
+        return true;
     };
     History.prototype.clear = function () {
         this.schemaList = [];
         this.index = -1;
+    };
+    History.prototype.reset = function () {
+        if (this.schemaList.length <= 0) {
+            return;
+        }
+        this.index = 0;
+        this.schemaList = [this.schemaList[0]];
     };
     return History;
 }());
@@ -17889,8 +17904,14 @@ var Schema = /** @class */ (function () {
             "line:remove",
             "delete",
         ];
+        var editorEvents = ["autofit"];
         historyChangeEvents.forEach(function (event) {
             _this.editor.graph.on(event, function () {
+                _this.history.push(_this.makeNowDataMap());
+            }, 9999);
+        });
+        editorEvents.forEach(function (event) {
+            _this.editor.on(event, function () {
                 _this.history.push(_this.makeNowDataMap());
             }, 9999);
         });
@@ -18000,13 +18021,14 @@ var Schema = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        if (!this.history.redo()) return [3 /*break*/, 2];
                         this.editor.graph.clearGraph();
-                        this.history.redo();
                         return [4 /*yield*/, this.renderData()];
                     case 1:
                         _a.sent();
                         this.editor.fire("redo");
-                        return [2 /*return*/];
+                        _a.label = 2;
+                    case 2: return [2 /*return*/];
                 }
             });
         });
@@ -18019,13 +18041,14 @@ var Schema = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        if (!this.history.undo()) return [3 /*break*/, 2];
                         this.editor.graph.clearGraph();
-                        this.history.undo();
                         return [4 /*yield*/, this.renderData()];
                     case 1:
                         _a.sent();
                         this.editor.fire("undo");
-                        return [2 /*return*/];
+                        _a.label = 2;
+                    case 2: return [2 /*return*/];
                 }
             });
         });
