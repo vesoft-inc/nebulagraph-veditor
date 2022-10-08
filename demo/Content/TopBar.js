@@ -176,7 +176,7 @@ class TopBar extends PureComponent {
       1,
       val => {
         const { x, y, alpha } = line.pathData.getPointAtLength(val * totalLength);
-        line.arrow.setAttribute('transform', `translate(${x.toFixed(0)} ${y.toFixed(0)}) rotate(${alpha - 90})`);//同步箭头
+        line.arrow.setAttribute('transform', `translate(${x.toFixed(0)} ${y.toFixed(0)}) rotate(${alpha})`);//同步箭头
       },
       totalLength * 30,
       () => {
