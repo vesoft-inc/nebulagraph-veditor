@@ -2771,7 +2771,8 @@ function O(val) {
 
 
 var DefaultLine = {
-    arcRatio: 8,
+    arcRatio: 4,
+    selfLoopRatio: 4,
     selfLoopRadius: 30,
     adsorb: [20, 20],
     startSpace: 8,
@@ -2826,7 +2827,7 @@ var DefaultLine = {
             var dis = Math.sqrt(Math.pow(from.x - to.x, 2) + Math.pow(from.y - to.y, 2));
             var radius = (dis / 2) / Math.sin(angle / 2);
             if (!radius) { // when from point and to point are the same
-                radius = (selfLoopIndex / this.arcRatio + 1) * this.selfLoopRadius;
+                radius = (selfLoopIndex / this.selfLoopRatio + 1) * this.selfLoopRadius;
                 var topPos = {
                     x: start.x + radius * 2 * Math.cos(startAngle),
                     y: start.y + radius * 2 * Math.sin(startAngle),
