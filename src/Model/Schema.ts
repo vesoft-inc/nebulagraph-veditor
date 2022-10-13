@@ -146,8 +146,19 @@ class Schema {
       "line:remove",
       "delete",
     ];
+    const editorEvents = ["autofit"]
     historyChangeEvents.forEach((event) => {
       this.editor.graph.on(
+        event,
+        () => {
+          this.history.push(this.makeNowDataMap());
+        },
+        9999
+      );
+    });
+
+    editorEvents.forEach((event) => {
+      this.editor.on(
         event,
         () => {
           this.history.push(this.makeNowDataMap());
@@ -236,20 +247,22 @@ class Schema {
    * 重做
    */
   async redo() {
-    this.editor.graph.clearGraph();
-    this.history.redo();
-    await this.renderData();
-    this.editor.fire("redo");
+    if (this.history.redo()) {
+      this.editor.graph.clearGraph();
+      await this.renderData();
+      this.editor.fire("redo");
+    }
   }
 
   /**
    * 撤销
    */
   async undo() {
-    this.editor.graph.clearGraph();
-    this.history.undo();
-    await this.renderData();
-    this.editor.fire("undo");
+    if (this.history.undo()) {
+      this.editor.graph.clearGraph();
+      await this.renderData();
+      this.editor.fire("undo");
+    }
   }
 
   /**

@@ -34,20 +34,34 @@ class History {
   }
 
   // 重做
-  redo() {
+  redo():boolean {
+    if (this.index >= this.schemaList.length - 1) {
+      return false
+    }
     this.schema.data = JSON.parse(this.schemaList[++this.index]);
     this.schema.editor.fire("change");
+    return true;
   }
 
   // 撤销
-  undo() {
+  undo():boolean {
+    if (this.index < 1) {
+      return false
+    }
     this.schema.data = JSON.parse(this.schemaList[--this.index]);
     this.schema.editor.fire("change");
+    return true;
   }
 
   clear() {
     this.schemaList = [];
     this.index = -1;
+  }
+
+  reset() {
+    if (this.schemaList.length <= 0) { return }
+    this.index = 0;
+    this.schemaList = [this.schemaList[0]];
   }
 }
 export default History;

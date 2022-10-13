@@ -67,7 +67,7 @@ class Editor extends PureComponent {
     await this.editor.schema.setInitData(testdata);
     await this.editor.schema.format();
     await this.editor.controller.autoFit();
-
+    this.editor.schema.history.reset();
     this.addEditorEvent();
     window.mm = this.editor;
     // for (let i = 0;i < 1000;i++) {
