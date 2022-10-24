@@ -2,9 +2,10 @@
 
 NebulaGraph VEditor is a highly customizable flow chart library, with which you create flow charts, sequence diagrams, workflow, and more.
 
-![](https://user-images.githubusercontent.com/7129229/184819808-13aec715-3056-4e87-a5ee-944a3b4e1703.png)
-![](https://user-images.githubusercontent.com/7129229/184819760-615b53b7-d0c3-4e87-8ad3-d76b69db7821.png)
-![](https://user-images.githubusercontent.com/7129229/184819660-0f6da546-4d80-4c97-9fa0-2389d4122d0f.png)
+![demo](https://user-images.githubusercontent.com/7129229/184819808-13aec715-3056-4e87-a5ee-944a3b4e1703.png)
+![flowchart](https://user-images.githubusercontent.com/7129229/184819760-615b53b7-d0c3-4e87-8ad3-d76b69db7821.png)
+![react demo](https://user-images.githubusercontent.com/7129229/184819660-0f6da546-4d80-4c97-9fa0-2389d4122d0f.png)
+![force-directed graph](https://user-images.githubusercontent.com/7129229/197440901-5336f368-156e-4eef-bb06-7742159970fc.png)
 
 # Features
 - Typescript: Natively TS support

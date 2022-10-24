@@ -8,6 +8,7 @@ import { createSVGElement, setAttrs } from "../Utils/dom";
 import { VEditorLine } from "../Model/Schema";
 import Path from "../Utils/path";
 import { AnyMap, Position } from "../Utils/types";
+import ForceLine from './Lines/ForceLine';
 export interface InstanceLine extends AnyMap {
   dom: SVGElement; //wrapperDOM
   path?: SVGPathElement; //pathDOM
@@ -71,6 +72,7 @@ class Line {
     this.shapes = {
       default: DefaultLine,
       polyline: PolyLine,
+      forceLine:ForceLine
     };
     this.listenEvent();
   }

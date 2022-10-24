@@ -14089,7 +14089,8 @@ __webpack_require__.d(Utils_namespaceObject, {
   "Path": () => (Utils_path),
   "SVGHelper": () => (SVGHelper),
   "Vector2": () => (vector_namespaceObject),
-  "dom": () => (dom_namespaceObject)
+  "dom": () => (dom_namespaceObject),
+  "makeLineSort": () => (makeLineSort)
 });
 
 // NAMESPACE OBJECT: ./src/Shape/Lines/Line.ts
@@ -16381,6 +16382,58 @@ function O(val) {
 
 
 
+// makeLineSort by line's direction & rank to make the same direction be close
+function makeLineSort(links) {
+    // update link sort
+    var sourceMap = {};
+    links.forEach(function (link) {
+        var sourceId = link.from;
+        var targetId = link.to;
+        var sourceCommonId = "".concat(sourceId, "=>").concat(targetId);
+        var targetCommonId = "".concat(targetId, "=>").concat(sourceId);
+        var linkArr = sourceMap[sourceCommonId] || sourceMap[targetCommonId];
+        if (!linkArr) {
+            sourceMap[sourceCommonId] = [link];
+        }
+        else if (sourceMap[sourceCommonId]) {
+            linkArr.unshift(link);
+        }
+        else if (sourceMap[targetCommonId]) {
+            linkArr.push(link);
+        }
+    });
+    // update link's graphIndex
+    // 0 = only one line
+    // if(source!==target)
+    // -  unseem direction line
+    // +  seem direction line
+    Object.keys(sourceMap).forEach(function (key) {
+        if (sourceMap[key].length > 1) {
+            var source = sourceMap[key][0].from;
+            var status_1 = true;
+            var number = 1;
+            while (sourceMap[key].length) {
+                var link = status_1 ? sourceMap[key].pop() : sourceMap[key].shift();
+                link.graphIndex = number;
+                // check direction
+                if (link.from !== source) {
+                    link.graphIndex *= -1;
+                }
+                number++;
+                status_1 = !status_1;
+            }
+        }
+        else {
+            var link = sourceMap[key][0];
+            if (link.from === link.to) {
+                link.graphIndex = 1;
+            }
+            else {
+                link.graphIndex = 0;
+            }
+        }
+    });
+}
 
 ;// CONCATENATED MODULE: ./src/Shape/Lines/Line.ts
 
@@ -16735,7 +16788,119 @@ var PolyLine = __assign(__assign({}, Lines_Line), { gapDistance: 30, rankDir: "t
     } });
 /* harmony default export */ const Lines_PolyLine = (PolyLine);
 
+;// CONCATENATED MODULE: ./src/Shape/Lines/ForceLine.ts
+
+
+
+
+
+
+
+/**
+ * notice: only for circle node, cause the force line is render by circle-node's radius
+ */
+var ForceLine = __assign(__assign({}, Lines_Line), { endSpace: 12, startSpace: 3, selfLoopRadius: 70, curvatrueRatio: 30, radius: 30, // the radius of the node; notice: ForceLine only support circle node
+    makePath: function (from, to, line) {
+        var start = { x: from.x, y: from.y, };
+        var end = { x: to.x, y: to.y, };
+        var startControlPoint = { x: start.x, y: start.y };
+        var endControlPoint = { x: end.x, y: end.y };
+        var path = '';
+        if (from.nodeId === to.nodeId) {
+            var selfLoopIndex = this.getSelfLoopLineIndex(line);
+            var offsetLength = ((selfLoopIndex + 1) * this.selfLoopRadius + this.radius);
+            startControlPoint = {
+                x: start.x - offsetLength * Math.cos(Math.PI / 4),
+                y: start.y - offsetLength * Math.sin(Math.PI / 4),
+            };
+            endControlPoint = {
+                x: end.x + offsetLength * Math.cos(Math.PI / 4),
+                y: end.y - offsetLength * Math.sin(Math.PI / 4),
+            };
+            path = "M".concat(start.x, " ").concat(start.y, " C ").concat(startControlPoint.x, " ").concat(startControlPoint.y, " ").concat(endControlPoint.x, " ").concat(endControlPoint.y, " ").concat(end.x, " ").concat(end.y);
+        }
+        else {
+            var graph = this.graph;
+            var nodes = graph.node.nodes;
+            var startNode = nodes[from.nodeId];
+            var endNode = nodes[to.nodeId];
+            var angle = Math.atan((to.y - from.y) / (to.x - from.x)) + ((to.x - from.x) < 0 ? Math.PI : 0);
+            var startOffsetLength = this.radius + this.startSpace; // start offset length
+            var endOffsetLength = this.radius + this.endSpace; // end offset length
+            start = {
+                x: startNode.data.x + this.radius + startOffsetLength * Math.cos(angle),
+                y: startNode.data.y + this.radius + startOffsetLength * Math.sin(angle),
+            };
+            end = {
+                x: endNode.data.x + this.radius - endOffsetLength * Math.cos(angle),
+                y: endNode.data.y + this.radius - endOffsetLength * Math.sin(angle),
+            };
+            var start2endVec = {
+                x: end.x - start.x,
+                y: end.y - start.y,
+            };
+            var normal = normalize(start2endVec);
+            var centerNormal = {
+                x: -normal.y,
+                y: normal.x
+            };
+            var length_1 = getVectorLength(start2endVec);
+            var graphIndex = line.data.graphIndex || 0;
+            var direction = graphIndex % 2 === 0;
+            var curvature = (direction ? 1 : -1) * (graphIndex > 0 ? 1 : -1) * (Math.ceil(Math.abs(graphIndex) / 2));
+            if (curvature === 0) {
+                startControlPoint = __assign({}, start);
+                endControlPoint = __assign({}, end);
+            }
+            else {
+                startControlPoint = {
+                    x: (from.x + to.x) * .5 + centerNormal.x * this.curvatrueRatio * curvature,
+                    y: (from.y + to.y) * .5 + centerNormal.y * this.curvatrueRatio * curvature,
+                };
+                endControlPoint = startControlPoint;
+                var bezierLine = new Utils_path("M".concat(from.x, " ").concat(from.y, " C ").concat(startControlPoint.x, " ").concat(startControlPoint.y, " ").concat(endControlPoint.x, " ").concat(endControlPoint.y, " ").concat(to.x, " ").concat(to.y));
+                start = bezierLine.getPointAtLength(startOffsetLength);
+                end = bezierLine.getPointAtLength(bezierLine.getTotalLength() - endOffsetLength);
+            }
+            path = "M".concat(start.x, " ").concat(start.y, " Q ").concat(startControlPoint.x, " ").concat(startControlPoint.y, " ").concat(end.x, " ").concat(end.y);
+        }
+        line.bezierData = {
+            from: start,
+            to: end,
+            startControlPoint: startControlPoint,
+            endControlPoint: endControlPoint,
+        };
+        return path;
+    }, renderArrow: function (line) {
+        var bezierData = line.bezierData;
+        var from = bezierData.from, to = bezierData.to;
+        var coord, angle;
+        // self loop
+        if (line.from.nodeId === line.to.nodeId) {
+            var point = line.pathData.getPointAtLength(line.path.getTotalLength() - this.radius - 10);
+            angle = point.alpha / 180 * Math.PI;
+            coord = point;
+        }
+        else {
+            var point = line.pathData.getPointAtLength(line.path.getTotalLength());
+            angle = point.alpha / 180 * Math.PI;
+            coord = to;
+        }
+        var pathString = "M".concat(0, " ").concat(5, "L").concat(0, " ").concat(-5, "L").concat(-10, " ").concat(0, "Z");
+        var path = line.arrow ? line.arrow : SVGHelper.path();
+        // 进行角度的中心变换
+        var matrix = create();
+        translate(matrix, matrix, [coord.x, coord.y]);
+        rotate(matrix, matrix, angle);
+        setAttrs(path, __assign({ class: "ve-line-arrow", d: pathString, fill: "rgba(178,190,205,0.7)", transform: "matrix(".concat(matrix.join(","), ")") }, line.data.arrowStyle));
+        return path;
+    }, checkNewLine: function (data) {
+        return true;
+    } });
+/* harmony default export */ const Lines_ForceLine = (ForceLine);
+
 ;// CONCATENATED MODULE: ./src/Shape/Line.ts
+
 
 
 
@@ -16928,6 +17093,7 @@ var Line = /** @class */ (function () {
         this.shapes = {
             default: Lines_Line,
             polyline: Lines_PolyLine,
+            forceLine: Lines_ForceLine
         };
         this.listenEvent();
     }
