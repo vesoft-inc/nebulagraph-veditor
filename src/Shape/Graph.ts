@@ -135,6 +135,7 @@ class Graph extends Utils.Event {
     this.fire("beforeRender");
     this.data = data;
     await this.node.render(data.nodesMap);
+
     await this.line.render(data.linesMap);
     /**
      * @event Graph#render  渲染后触发

@@ -31,6 +31,8 @@ export type VEditorLine = {
   data?: AnyMap;
   label?: string;
   className?: string;
+  // the render sort of the graph
+  graphIndex?: number;
   labelCfg?: {
     refX?: number;
     refY?: number;
