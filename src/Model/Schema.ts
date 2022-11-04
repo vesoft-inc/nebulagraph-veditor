@@ -72,15 +72,11 @@ class Schema {
   }
 
   /**
-   * 格式化有向图
+   * format data with dagre
    */
-  async format() {
+  format() {
     const nodes = this.editor.graph.node.nodes;
     const lines = this.editor.graph.line.lines;
-    const res = {
-      nodes: [],
-      lines: [],
-    };
     const g = new dagre.graphlib.Graph();
     const option = Object.assign(
       {
@@ -112,11 +108,9 @@ class Schema {
       const line = lines[key];
       const data = line.data;
       g.setEdge(data.from, data.to);
-      res.lines.push(data);
     }
 
     dagre.layout(g);
-
     g.nodes().forEach(function (key) {
       const nodeData = g.node(key);
       if (center) {
@@ -128,15 +122,18 @@ class Schema {
           nodeData.x -= nodeData.width / 2;
         }
       }
-      res.nodes.push(nodeData);
+      const node = nodes[nodeData.uuid];
+      node.data.x = nodeData.x;
+      node.data.y = nodeData.y;
     });
+    
     // 触发format事件，保存历史
-    await this.setData(res);
+    this.editor.graph.update();
     /**
      * @event VEditor#format
      * @property {{data:VEditorData}} data
      */
-    this.editor.fire("format", { data: res });
+    this.editor.fire("format", { data: this.makeNowDataMap() });
   }
 
   listenEvents() {
@@ -148,7 +145,7 @@ class Schema {
       "line:remove",
       "delete",
     ];
-    const editorEvents = ["autofit"]
+    const editorEvents = ["autofit", "format"];
     historyChangeEvents.forEach((event) => {
       this.editor.graph.on(
         event,

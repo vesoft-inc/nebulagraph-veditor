@@ -28,7 +28,7 @@ class Controller extends Utils.Event {
   /**
    * 自适应,支持
    */
-  async autoFit(center = true, vertical = true) {
+  autoFit(center = true, vertical = true) {
     const data = this.editor.schema.getData();
     setAttrs(this.paper, {
       transform: setTransform(this.scale, 0, 0),
@@ -45,7 +45,7 @@ class Controller extends Utils.Event {
     this.x = (width - width * this.scale) / 2;
     this.y = (height - height * this.scale) / 2;
     this.update();
-    await this.editor.schema.setData(data);
+    this.editor.graph.update();
     this.editor.fire("autofit", { data });
     setTimeout(() => {
       this.paper.style.transition = null;
