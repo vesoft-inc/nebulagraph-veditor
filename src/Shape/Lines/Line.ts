@@ -115,7 +115,7 @@ const DefaultLine: LineRender = {
       }
 
     } else {
-      const offsetLength = Math.sqrt(Math.pow(start.x - end.y, 2) + Math.pow(start.x - end.y, 2)) / this.arcRatio; // 连接点的距离的一半作为控制点的长度
+      const offsetLength = Math.sqrt(Math.pow(start.x - end.x, 2) + Math.pow(start.y - end.y, 2)) / this.arcRatio; // 连接点的距离的一半作为控制点的长度
       startControlPoint.x += Math.cos(startAngle) * offsetLength;
       startControlPoint.y += Math.sin(startAngle) * offsetLength; // svg坐标系倒置需要给y坐标加负号
       endControlPoint.x += Math.cos(endAngle) * offsetLength;

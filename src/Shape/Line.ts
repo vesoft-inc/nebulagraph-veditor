@@ -419,7 +419,7 @@ class Line {
        */
       this.graph.fire("line:click", { line: g, event: e });
     });
-    if (this.graph.mode === "view") return;
+    if (this.graph.editor.config.mode === "view") return;
     let startX: number;
     let startY: number;
     // 箭头拖拽
@@ -505,7 +505,7 @@ class Line {
    * 节点的新增线逻辑
    */
   addLinkPointEvent = (point: InstanceNodePoint) => {
-    if (this.graph.mode === "view") return;
+    if (this.graph.editor.config.mode === "view") return;
     const { nodes } = this.graph.node;
     const node = nodes[point.nodeId];
     let startX: number;
