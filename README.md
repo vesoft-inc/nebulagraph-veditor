@@ -70,10 +70,10 @@ console.log(editor.schema.getData())
 ```
 
 # Documents
-- [Get Started](./start.md)
-- [Custom Shape](./custom.md)
-- [Event](./event.md)
-- [API](./docs)
+- [Get Started](https://vesoft-inc.github.io/nebulagraph-veditor/start)
+- [Custom Shape](https://vesoft-inc.github.io/nebulagraph-veditor/custom)
+- [Event](https://vesoft-inc.github.io/nebulagraph-veditor/event)
+- [API](https://vesoft-inc.github.io/nebulagraph-veditor/docs)
 
 # License
 

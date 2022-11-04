@@ -48,9 +48,11 @@ class TopBar extends PureComponent {
     const {
       editor: {
         schema,
+        controller
       }
     } = this.props;
     schema.format();
+    controller.autoFit();
   };
 
   run = () => {

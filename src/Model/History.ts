@@ -15,10 +15,13 @@ class History {
   /**
    */
   push(data: VEditorSchema) {
+    const json = JSON.stringify(data).trim();
+    const last = this.schemaList[this.index];
+    if (last === json) { return }
     if (this.index !== -1 && this.index < (this.schemaList.length - 1)) {// 删除后面会被覆盖的历史记录
       this.schemaList.splice(this.index + 1, this.schemaList.length - this.index - 1);
     }
-    this.schemaList.push(JSON.stringify(data).trim());
+    this.schemaList.push(json);
     this.index++;
     this.schema.editor.fire("change");
   }
