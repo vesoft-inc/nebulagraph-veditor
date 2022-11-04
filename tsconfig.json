@@ -1,5 +1,7 @@
 {
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "compileOnSave": true,
   "compilerOptions": {
     "pretty": true,
@@ -9,11 +11,11 @@
     "importHelpers": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "jsx":"react",
+    "jsx": "react",
     "outDir": "dist",
-    "module": "es6",
-    "target": "es5",
+    "module": "esnext",
+    "target": "ES2015",
     "resolveJsonModule": true,
-    "moduleResolution": "node"
+    "moduleResolution": "NodeNext"
   }
 }

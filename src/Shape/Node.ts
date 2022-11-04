@@ -176,7 +176,7 @@ class Node {
    * 删除节点
    *  @param {object} data
    */
-  deleteNode = (input: VEditorNode | string) => {
+  deleteNode = (input: VEditorNode | string, noEvent: boolean = false) => {
     const uuid = typeof input === "string" ? input : input.uuid;
     const deleteNode = this.nodes[uuid] as InstanceNode;
     const nodeRender = this.shapes[deleteNode.data.type || "default"];
@@ -185,7 +185,9 @@ class Node {
     /**
      * @event Graph#node:remove - 移除节点事件
      */
-    this.graph.fire("node:remove", { node: deleteNode, uuid });
+    if (!noEvent) {
+      this.graph.fire("node:remove", { node: deleteNode, uuid });
+    }
     deleteNode.linkPoints?.forEach((point) => {
       point.dom.remove();
       point = null;
@@ -489,7 +491,7 @@ class Node {
     const { nodes } = this;
     clearTimeout(this.timeout);
     for (let key in nodes) {
-      this.deleteNode(nodes[key].data);
+      this.deleteNode(nodes[key].data, true);
     }
   }
 }

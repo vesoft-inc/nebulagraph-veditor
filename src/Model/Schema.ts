@@ -126,7 +126,7 @@ class Schema {
       node.data.x = nodeData.x;
       node.data.y = nodeData.y;
     });
-    
+
     // 触发format事件，保存历史
     this.editor.graph.update();
     /**
@@ -183,6 +183,7 @@ class Schema {
 
   /**
    * 获取当前最新的map
+   * TODO: 数据引用有点混乱，应该去除掉nodesMap和linesMap，改为实时获取
    */
   makeNowDataMap() {
     const nodes = this.editor.graph.node.nodes;
