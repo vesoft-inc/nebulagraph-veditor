@@ -2,7 +2,7 @@ name: VEditor GitHub Pages
 on:
   push:
     branches:
-      - master 
+      - dev 
 jobs:
   package-and-deploy:
     name: Docs & demo to GitHub Pages
