@@ -1,0 +1,11 @@
+import BezierLine from "./BezierLine";
+import { Position } from "./types";
+export declare function getDOMRect(str: any, callback: any): DOMRect;
+export declare function svgWrapper(svgString: string, parent?: SVGElement): SVGElement;
+export declare function createSVGElement(name: string, parent?: SVGElement): SVGElement;
+export declare function setAttrs(dom: Element, attrs: Record<string, any>): void;
+export declare function setTransform(scale: any, translateX: any, translateY: any): string;
+export declare function animate(start: number, end: number, callback: (val: number) => void, duration: number, endCallback?: Function, easeType?: string): number;
+export declare function getEase(easeType: string): BezierLine;
+export declare function drag(node: Element, dragMove: (e: MouseEvent) => void, dragStart: (e: MouseEvent) => void, dragEnd: (e: MouseEvent) => void): () => void;
+export declare function getAngle(from: Position, to: Position): number;
