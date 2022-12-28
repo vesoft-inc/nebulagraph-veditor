@@ -17,7 +17,7 @@ jobs:
       - name: Build
         run: npm run build:all && npm run doc
       - name: Delete node_modules
-        run: rm -rf node_modules && rm -rf demo
+        run: rm -rf node_modules && rm -rf demo && rm -rf src
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
