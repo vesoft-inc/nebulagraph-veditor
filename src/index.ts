@@ -1,0 +1,16 @@
+import VEditor from './VEditor';
+export * as Utils from "./Utils";
+export * as Node from "./Shape/Node";
+export * as Line from "./Shape/Line";
+export * as Schema from "./Model/Schema";
+export * as DefaultLine from "./Shape/Lines/Line";
+export * as DefaultNode from "./Shape/Nodes/DefaultNodes";
+export * from "./VEditor";
+export * as Graph from "./Shape/Graph";
+export * as History from "./Model/History";
+export * as AnchorLine from "./Shape/AnchorLine";
+export * as Controller from "./Utils/Controller";
+export * as Minimap from "./Plugins/Minimap";
+export * as Event from "./Utils/Event";
+export { VEditor };
+export default VEditor;

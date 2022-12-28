@@ -1,0 +1,21 @@
+{
+  "include": [
+    "src/**/*"
+  ],
+  "compileOnSave": true,
+  "compilerOptions": {
+    "pretty": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "declaration": false,
+    "importHelpers": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "jsx": "react",
+    "outDir": "dist",
+    "module": "esnext",
+    "target": "ES2015",
+    "resolveJsonModule": true,
+    "moduleResolution": "NodeNext"
+  }
+}

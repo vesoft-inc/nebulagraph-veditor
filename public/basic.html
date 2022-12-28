@@ -1,0 +1,36 @@
+<html>
+
+<body>
+  <div id="demo" style="width:100%;height:400px;box-shadow:  0 0 10px 1px #123"></div>
+  <button style="margin-top:20" onclick="add()">添加</button>
+</body>
+<script src="../dist/VEditor.browser.js"></script>
+<script type="module">
+  const { VEditor } = window.VEditor;
+  let index = 0;
+  const editor = new VEditor({ dom: document.getElementById("demo") });
+  editor.graph.line.shapes['default'].checkNewLine = () => true
+  function add() {
+    editor.graph.node.addNode({
+      uuid: index,
+      type: "default",
+      name: "测试" + ++index,
+      x: window.innerWidth * Math.random(),
+      y: 300 * Math.random()
+    })
+  }
+  const number = 10;
+  for (let x = 0; x < number; x++) {
+    add();
+  }
+  for (let x = 0; x < number; x++) {
+    editor.graph.line.addLine({
+      from: Math.floor(number * Math.random()),
+      to: Math.floor(number * Math.random()),
+      fromPoint: 1,
+      toPoint: 0
+    })
+  }
+</script>
+
+</html>

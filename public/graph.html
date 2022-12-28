@@ -1,0 +1,153 @@
+<html>
+
+<body>
+  <div id="demo" style="width:100%;height:400px;box-shadow:  0 0 10px 1px #123"></div>
+</body>
+<script src="../dist/VEditor.browser.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-force" referrerpolicy="no-referrer"></script>
+<style>
+  .ve-node-wrapper {
+    user-select: none;
+    border-radius: 30px;
+    background-color: #0091ff;
+    color: #fff;
+  }
+</style>
+<script type="module">
+  const { VEditor, Utils } = window.VEditor;
+  const { forceSimulation, forceLink, forceManyBody, forceCenter, forceCollide } = d3
+  let index = 0;
+  const editor = new VEditor({ dom: document.getElementById("demo") });
+  window.editor = editor;
+  editor.graph.node.registeNode("circle-node", {
+    ...editor.graph.node.shapes.domNode,
+    linkPoints: [
+      { x: 0.5, y: 0 },// link point data
+    ],
+    renderLinkPoint(node, point) {
+      const { data } = point;
+      const box = node.shapeBBox || node.shape.getBBox();
+      point.x = data.x * box.width + node.data.x;
+      point.y = data.x * box.height + node.data.y;
+      point.dom = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      point.dom.style.display = 'none';
+      return point
+    }
+  });
+  editor.graph.on("line:beforeadd", ({ data }) => {
+    data.type = 'forceLine'
+  })
+  const nodes = [];
+  const lines = [];
+  const num = 10;
+  for (let x = 0; x < num; x++) {
+    nodes.push({
+      uuid: x,
+      type: "circle-node",
+      name: "测试" + x,
+      x: window.innerWidth * Math.random(),
+      y: 300 * Math.random(),
+      width: 60,
+      height: 60
+    });
+    lines.push({
+      from: Math.floor(Math.random() * num),
+      to: Math.floor(Math.random() * num),
+      fromPoint: 0,
+      toPoint: 0,
+      type: "forceLine"
+    })
+  }
+  lines.push(
+    {
+      to: 0,
+      toPoint: 0,
+      from: 0,
+      fromPoint: 0,
+      type: "forceLine",
+    },
+    {
+      to: 0,
+      toPoint: 0,
+      from: 0,
+      fromPoint: 0,
+      type: "forceLine"
+    },
+    {
+      to: 1,
+      toPoint: 0,
+      from: 0,
+      // graphIndex: 1,
+      fromPoint: 0,
+      type: "forceLine"
+    }, {
+    to: 1,
+    toPoint: 0,
+    from: 0,
+    // graphIndex: 0,
+    fromPoint: 0,
+    type: "forceLine"
+  },
+    {
+      to: 0,
+      toPoint: 0,
+      from: 1,
+      // graphIndex: 1,// graph index >0 means the line direction is from -> to, <0 is to -> from 
+      label: "text",
+      fromPoint: 0,
+      type: "forceLine"
+    }, {
+    to: 0,
+    toPoint: 0,
+    from: 1,
+    // graphIndex: 1,// graph index >0 means the line direction is from -> to, <0 is to -> from 
+    label: "text",
+    fromPoint: 0,
+    type: "forceLine"
+  }
+  )
+  // make line's graphIndex to make lines seem direction aside
+  Utils.makeLineSort(lines)
+  lines.forEach(each => {
+    each.source = each.from;
+    each.target = each.to;
+  })
+  nodes.map(each => {
+    each.index = each.uuid
+  })
+  await editor.schema.setInitData({
+    nodes,
+    lines
+  })
+
+  await editor.controller.autoFit();
+  const simulation = forceSimulation(nodes)
+    .force("link", forceLink(lines).distance(200))
+    .force("charge", forceManyBody())
+    // .force("center", forceCenter(window.innerWidth / 2, 200))
+    .force("col", forceCollide(30));
+
+  simulation.on("tick", () => {
+    editor.graph.update();
+  });
+
+  simulation.alpha(1).alphaMin(0.2).restart();
+  let activeNode = null;
+  editor.graph.on("node:move", ({ node }) => {
+    node.data.fx = node.data.x;
+    node.data.fy = node.data.y;
+    activeNode = node;
+    simulation.alphaTarget(0.3).restart();
+  })
+  editor.graph.on("node:change", () => {
+    if (activeNode) {
+      activeNode.data.fx = null;
+      activeNode.data.fy = null;
+      activeNode = null;
+    }
+    simulation.stop();
+  })
+</script>
+
+</html>
