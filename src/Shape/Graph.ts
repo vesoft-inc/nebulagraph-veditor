@@ -12,7 +12,6 @@ class Graph extends Utils.Event {
   node: Node;
   line: Line;
   anchorLine: AnchorLine;
-  mode: "edit" | "view";
   linkStatus: string;
   data: VEditorSchema;
   constructor(editor: VEditor) {
@@ -21,9 +20,6 @@ class Graph extends Utils.Event {
     this.node = new Node(this);
     this.line = new Line(this);
     this.anchorLine = new AnchorLine(this);
-
-    // 模式：操作、查看模式
-    this.mode = editor.config.mode;
 
     this.listenEvents();
     if (this.editor.config.showBackGrid) {
@@ -68,7 +64,7 @@ class Graph extends Utils.Event {
   onKeyDown = (e: KeyboardEvent) => {
 
     // 查看模式不能删除节点、线条；如果存在部分可操作则自己在业务中监听处理相关逻辑
-    if (this.mode === "view") {
+    if (this.editor.config.mode === "view") {
       return
     }
     if (
@@ -98,16 +94,20 @@ class Graph extends Utils.Event {
       /**
        * @event Graph#copy
        * @type {Object}
-       */
-      this.fire("copy", { event: e });
+      */
+      if (!this.editor.config.disableCopy) {
+        this.fire("copy", { event: e });
+      }
       return;
     }
     if (e.keyCode === "V".charCodeAt(0) && (e.metaKey || e.ctrlKey)) {
       /**
        * @event Graph#paste
        * @type {Object}
-       */
-      this.fire("paste", { event: e });
+      */
+      if (!this.editor.config.disableCopy) {
+        this.fire("paste", { event: e });
+      }
       return;
     }
     if (

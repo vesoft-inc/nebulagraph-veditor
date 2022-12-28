@@ -13,6 +13,7 @@ export interface VEditorOptions {
   hideAchor?: boolean;
   hideAchorLine?: boolean;
   anchorDistance?: number;
+  disableCopy?: boolean;
   showBackGrid?: boolean;
   showMiniMap?: boolean;
   mode?: "edit" | "view";
