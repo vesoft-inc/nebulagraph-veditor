@@ -17,12 +17,10 @@ jobs:
       - name: Build
         run: npm run build:all && npm run doc
       - name: Delete node_modules
-        run: rm -rf node_modules && rm -rf demo && rm -rf src
+        run:  rm -rf node_modules && rm -rf demo && rm -rf src && rm .gitignore
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./
           enable_jekyll: true
-          keep_files: true
-          force_orphan: true
