@@ -14828,13 +14828,12 @@ const DefaultNode = {
     render: (instanceNode) => {
         let node, text;
         const { data } = instanceNode;
+        // remove the old shape and create a new one every time
         if (instanceNode.shape) {
             instanceNode.shape.remove();
         }
-        else {
-            node = SVGHelper.rect(0, 0, 100, 40);
-            text = SVGHelper.text(20, 25, data.name);
-        }
+        node = SVGHelper.rect(0, 0, 100, 40);
+        text = SVGHelper.text(20, 25, data.name);
         setAttrs(node, {
             fill: "#fff",
             stroke: "#000",

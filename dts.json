@@ -1,5 +1,7 @@
 {
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "compileOnSave": true,
   "compilerOptions": {
     "sourceMap": true,
