@@ -45,8 +45,8 @@ await editor.schema.setInitData({
 ``` 
 ### Step 3: Autofit with dagre
 ```ts
-editor.graph.format();
-editor.graph.autofit();
+editor.schema.format();
+editor.controller.autoFit();
 ```
 
 ### Step 4: Get Data
