@@ -81,7 +81,7 @@ const DefaultLine: LineRender = {
     from: InstanceNodePoint,
     to: InstanceNodePoint,
     line: InstanceLine
-  ) {
+  ):string {
     const start = { x: from.x, y: from.y, };
     const end = { x: to.x, y: to.y, }
     let startControlPoint = { x: start.x, y: start.y };
@@ -199,7 +199,7 @@ const DefaultLine: LineRender = {
   renderLabel(line: InstanceLine) {
     let {
       from, to,
-      bezierData: { startControlPoint, endControlPoint },
+      pathData,
       data: { label, labelCfg = {} },
     } = line;
     if (!label) {
@@ -221,10 +221,8 @@ const DefaultLine: LineRender = {
         stroke: "#fff",
         fontSize: "12px",
       },
-    } = labelCfg || {};
-    const bezier = new BezierLine();
-    bezier.setControl(from, startControlPoint, endControlPoint, to);
-    const point = bezier.getPoint(0.5);
+    } = labelCfg || {}; 
+    const point = pathData.getPointAtLength(pathData.getTotalLength() / 2);
     let { x: xPoint, y: yPoint } = point || {};
     if (label && label.length > showNum && showNum) {
       label = label.slice(0, showNum) + "...";
