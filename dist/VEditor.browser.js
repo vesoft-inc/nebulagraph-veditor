@@ -27,7 +27,7 @@ return /******/ (() => { // webpackBootstrap
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "@keyframes dashing {\n  from {\n    stroke-dashoffset: 200;\n  }\n  to {\n    stroke-dashoffset: 0;\n  }\n}\n.ve-editor {\n  width: 100%;\n  height: 100%;\n  position: relative;\n}\n.ve-editor .ve-editor-back {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 0;\n  left: 0;\n  top: 0;\n}\n.ve-editor .ve-minimap {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n  background: #fff;\n  border: 1px solid #cecece;\n  border-radius: 5px;\n  overflow: hidden;\n  width: 160px;\n  height: 127px;\n}\n.ve-editor .ve-minimap .drag-rect {\n  position: absolute;\n  left: 0px;\n  box-sizing: content-box;\n  top: 0px;\n  border: 2px solid #08c;\n  cursor: pointer;\n  transition: all 200ms ease;\n}\n.ve-editor .ve-minimap .drag-point {\n  width: 10px;\n  height: 10px;\n  border-radius: 5px;\n  border: 2px solid #08c;\n  background: #fff;\n  position: absolute;\n  right: -5px;\n  bottom: -5px;\n  cursor: nwse-resize;\n}\n.ve-editor > .ve-editor-svg {\n  cursor: grab;\n  width: 100%;\n  height: 100%;\n  position: absolute;\n}\n.ve-editor > .ve-editor-svg svg {\n  position: absolute;\n  left: 0;\n  top: 0;\n  outline: none;\n}\n.ve-editor > .ve-editor-svg * {\n  transition: x, y, transform, cx, cy, width, stroke, height, fill 400ms;\n  outline: none;\n}\n.ve-editor > .ve-editor-svg .ve-node:hover .ve-link-points,\n.ve-editor > .ve-editor-svg .ve-node.active .ve-link-points {\n  display: block;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-link-points {\n  cursor: crosshair;\n  display: none;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-link-points:hover,\n.ve-editor > .ve-editor-svg .ve-node .ve-link-points.hover {\n  fill: #4c79ff;\n  cursor: crosshair;\n  display: block;\n}\n.ve-editor > .ve-editor-svg .ve-node.active .icon-node {\n  transition: stroke 400ms;\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape {\n  cursor: move;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape:hover > .icon-node {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape.success .icon-node {\n  stroke: green;\n  fill: #fff;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape.error .icon-node {\n  stroke: red;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape.running .icon-node {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-path {\n  transition: stroke-dasharray 300ms ease-out;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-shdow-path {\n  stroke: transparent;\n  stroke-width: 5px;\n  fill: none;\n}\n.ve-editor > .ve-editor-svg .ve-line:hover .ve-line-shape {\n  opacity: 0.5;\n}\n.ve-editor > .ve-editor-svg .ve-line:hover .ve-line-arrow {\n  opacity: 0.5;\n}\n.ve-editor > .ve-editor-svg .ve-line.active .ve-line-arrow {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-line.active path {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-line.running .ve-line-path {\n  stroke-dasharray: 5 !important;\n  animation: dashing 5s linear infinite;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-shape {\n  cursor: pointer;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-arrow {\n  cursor: crosshair;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-label text {\n  text-anchor: middle;\n}\n.ve-editor > .ve-editor-svg .anchor-line {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-paper-lineing .ve-link-points {\n  display: block;\n}\n.ve-editor > .ve-editor-html {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n}\n.ve-editor .anchor-back {\n  position: absolute;\n  top: 0;\n  left: 0;\n}\n.ve-node-wrapper {\n  border: 1px solid #08c;\n  border-radius: 8px;\n  box-sizing: border-box;\n  display: flex;\n  justify-content: center;\n  background-color: #fff;\n  align-items: center;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "@keyframes dashing {\n  from {\n    stroke-dashoffset: 200;\n  }\n  to {\n    stroke-dashoffset: 0;\n  }\n}\n.ve-editor {\n  width: 100%;\n  height: 100%;\n  position: relative;\n}\n.ve-editor .ve-editor-back {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  z-index: 0;\n  left: 0;\n  top: 0;\n}\n.ve-editor .ve-minimap {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n  background: #fff;\n  border: 1px solid #cecece;\n  border-radius: 5px;\n  overflow: hidden;\n  width: 160px;\n  height: 127px;\n}\n.ve-editor .ve-minimap .drag-rect {\n  position: absolute;\n  left: 0px;\n  box-sizing: content-box;\n  top: 0px;\n  border: 2px solid #08c;\n  cursor: pointer;\n  transition: all 200ms ease;\n}\n.ve-editor .ve-minimap .drag-point {\n  width: 10px;\n  height: 10px;\n  border-radius: 5px;\n  border: 2px solid #08c;\n  background: #fff;\n  position: absolute;\n  right: -5px;\n  bottom: -5px;\n  cursor: nwse-resize;\n}\n.ve-editor > .ve-editor-svg {\n  cursor: grab;\n  width: 100%;\n  height: 100%;\n  position: absolute;\n}\n.ve-editor > .ve-editor-svg svg {\n  position: absolute;\n  left: 0;\n  top: 0;\n  outline: none;\n}\n.ve-editor > .ve-editor-svg .ve-node:hover .ve-link-points,\n.ve-editor > .ve-editor-svg .ve-node.active .ve-link-points {\n  display: block;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-link-points {\n  cursor: crosshair;\n  display: none;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-link-points:hover,\n.ve-editor > .ve-editor-svg .ve-node .ve-link-points.hover {\n  fill: #4c79ff;\n  cursor: crosshair;\n  display: block;\n}\n.ve-editor > .ve-editor-svg .ve-node.active .icon-node {\n  transition: stroke 400ms;\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape {\n  cursor: move;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape:hover > .icon-node {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape.success .icon-node {\n  stroke: green;\n  fill: #fff;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape.error .icon-node {\n  stroke: red;\n}\n.ve-editor > .ve-editor-svg .ve-node .ve-node-shape.running .icon-node {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-path {\n  transition: stroke-dasharray 300ms ease-out;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-shdow-path {\n  stroke: transparent;\n  stroke-width: 5px;\n  fill: none;\n}\n.ve-editor > .ve-editor-svg .ve-line:hover .ve-line-shape {\n  opacity: 0.5;\n}\n.ve-editor > .ve-editor-svg .ve-line:hover .ve-line-arrow {\n  opacity: 0.5;\n}\n.ve-editor > .ve-editor-svg .ve-line.active .ve-line-arrow {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-line.active path {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-line.running .ve-line-path {\n  stroke-dasharray: 5 !important;\n  animation: dashing 5s linear infinite;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-shape {\n  cursor: pointer;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-arrow {\n  cursor: crosshair;\n}\n.ve-editor > .ve-editor-svg .ve-line .ve-line-label text {\n  text-anchor: middle;\n}\n.ve-editor > .ve-editor-svg .anchor-line {\n  stroke: #4c79ff;\n}\n.ve-editor > .ve-editor-svg .ve-paper-lineing .ve-link-points {\n  display: block;\n}\n.ve-editor > .ve-editor-html {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n}\n.ve-editor .anchor-back {\n  position: absolute;\n  top: 0;\n  left: 0;\n}\n.ve-node-wrapper {\n  border: 1px solid #08c;\n  border-radius: 8px;\n  box-sizing: border-box;\n  display: flex;\n  justify-content: center;\n  background-color: #fff;\n  align-items: center;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -16423,7 +16423,6 @@ function makeLineSort(links) {
 
 
 
-
 const DefaultLine = {
     arcRatio: 4,
     selfLoopRatio: 4,
@@ -16566,7 +16565,7 @@ const DefaultLine = {
     /** 是否渲染文字
      */
     renderLabel(line) {
-        let { from, to, bezierData: { startControlPoint, endControlPoint }, data: { label, labelCfg = {} }, } = line;
+        let { from, to, pathData, data: { label, labelCfg = {} }, } = line;
         if (!label) {
             if (line.label) {
                 line.label.labelGroup.remove();
@@ -16581,9 +16580,7 @@ const DefaultLine = {
             stroke: "#fff",
             fontSize: "12px",
         }, } = labelCfg || {};
-        const bezier = new Utils_BezierLine();
-        bezier.setControl(from, startControlPoint, endControlPoint, to);
-        const point = bezier.getPoint(0.5);
+        const point = pathData.getPointAtLength(pathData.getTotalLength() / 2);
         let { x: xPoint, y: yPoint } = point || {};
         if (label && label.length > showNum && showNum) {
             label = label.slice(0, showNum) + "...";
@@ -16651,120 +16648,81 @@ const DefaultLine = {
 /* harmony default export */ const Lines_Line = (DefaultLine);
 
 ;// CONCATENATED MODULE: ./src/Shape/Lines/PolyLine.ts
+/**
+ * @interface PolyLine
+ * @implements {DefaultLine}
+ */
 
-const PolyLine = Object.assign(Object.assign({}, Lines_Line), { gapDistance: 30, rankDir: "tb", makePath(from, to, line) {
-        // 折线
-        const fromBBox = from.dom.getBBox();
-        const toBBox = to.dom.getBBox();
-        const fromCenter = {
-            x: fromBBox.x + fromBBox.width / 2,
-            y: fromBBox.y + fromBBox.height / 2,
-        };
-        const toCenter = {
-            x: toBBox.x + toBBox.width / 2,
-            y: toBBox.y + toBBox.height / 2,
-        };
-        // 找到点的方向
-        const fromDirection = this.getDirection({ x: from.x, y: from.y }, fromBBox, fromCenter);
-        const endDiretion = this.getDirection({ x: to.x, y: to.y }, toBBox, toCenter);
-        // 对应方向的坐标要加间隔值
-        const startPos = { x: from.x, y: from.y };
-        const endPos = { x: to.x, y: to.y };
-        this.makeGap(fromDirection, startPos);
-        this.makeGap(endDiretion, endPos);
-        const paths = [startPos];
-        let centerY, centerX;
-        const directions = ["bottom", "top", "left", "right"];
-        const fromIndex = directions.indexOf(fromDirection) > 1;
-        const endIndex = directions.indexOf(endDiretion) > 1;
-        if (fromIndex === endIndex) {
-            centerY = (startPos.y + endPos.y) / 2;
-            paths.push({
-                x: startPos.x,
-                y: centerY,
+
+const PolyLine = Object.assign(Object.assign({}, Lines_Line), { startSpace: 1, arcRadius: 5, makePath(from, to, line) {
+        const start = { x: from.x, y: from.y, };
+        const end = { x: to.x, y: to.y, };
+        const startSpace = this.startSpace; // 顶部距离node节点的距离
+        const endSpace = this.endSpace; // 底部距离node节点的距离
+        const startAngle = this.getPointAngle(from);
+        const endAngle = this.getPointAngle(to);
+        start.x += startSpace * Math.cos(startAngle);
+        start.y += startSpace * Math.sin(startAngle);
+        end.x += endSpace * Math.cos(endAngle);
+        end.y += endSpace * Math.sin(endAngle);
+        const disX = end.x - start.x;
+        const disY = end.y - start.y;
+        const paths = [{
+                x: start.x + disX * .5 * Math.cos(startAngle) * (disX > 0 ? 1 : -1),
+                y: start.y + disY * .5 * Math.sin(startAngle),
+                type: "L"
             }, {
-                x: endPos.x,
-                y: centerY,
+                x: end.x + disX * .5 * Math.cos(endAngle) * (disX > 0 ? 1 : -1),
+                y: end.y + disY * .5 * Math.sin(endAngle),
+                type: "L"
+            }];
+        if (this.arcRadius !== 0 && (start.x !== end.x && start.y !== end.y)) {
+            /**
+             *   b-d----a
+             *   |
+             *   e
+             *   |
+             *   c
+             */
+            const a = Object.assign({}, paths[0]);
+            const b = Object.assign({}, paths[1]);
+            const c = Object.assign({}, end);
+            const cb = normalize({
+                x: b.x - c.x,
+                y: b.y - c.y,
             });
-        }
-        else {
-            centerX = (startPos.x + endPos.x) / 2;
-            paths.push({
-                x: centerX,
-                y: startPos.y,
-            }, {
-                x: centerX,
-                y: endPos.y,
+            const ab = normalize({
+                x: b.x - a.x,
+                y: b.y - a.y,
             });
+            const d = {
+                x: b.x - ab.x * this.arcRadius,
+                y: b.y - ab.y * this.arcRadius,
+            };
+            const e = {
+                x: b.x - cb.x * this.arcRadius,
+                y: b.y - cb.y * this.arcRadius,
+            };
+            // use cross product to determine clockwise or anti-clockwise
+            // crossProduct = cb*ab*sin(theta),  theta is the angle between cb and ab
+            const crossVal = cb.x * ab.y - cb.y * ab.x;
+            const clockwise = crossVal > 0 ? 1 : 0;
+            const arcPath = `L${d.x} ${d.y} A${this.arcRadius} ${this.arcRadius} 0 0 ${clockwise} ${e.x} ${e.y} `;
+            paths[paths.length - 1] = {
+                path: arcPath,
+            };
         }
-        paths.push(endPos);
-        let path = `M${from.x} ${from.y} `;
+        let path = `M${start.x} ${start.y} `;
         paths.map((item) => {
-            path += `L${item.x} ${item.y} `;
+            if (item.path) {
+                path += item.path;
+            }
+            else {
+                path += `L${item.x} ${item.y} `;
+            }
         });
-        path += `L${to.x} ${to.y}`;
+        path += `L${end.x} ${end.y}`;
         return path;
-    },
-    makeGap(direction, pos) {
-        if (direction === "left") {
-            pos.x -= this.gapDistance;
-        }
-        else if (direction === "right") {
-            pos.x += this.gapDistance;
-        }
-        if (direction === "top") {
-            pos.y -= this.gapDistance;
-        }
-        else if (direction === "bottom") {
-            pos.y += this.gapDistance;
-        }
-        return pos;
-    },
-    getDirection({ x, y }, bbox, center) {
-        const leftTop = { x: bbox.x, y: bbox.y };
-        const leftBottom = { x: bbox.x, y: bbox.y + bbox.height };
-        // 左上到右下的直线表达式
-        const leftTopC = function (x, y) {
-            const k = (leftTop.y - center.y) / (leftTop.x - center.x);
-            const c = center.y - center.x * k;
-            if (x || x === 0) {
-                return k * x + c;
-            }
-            else {
-                if (k === 0) {
-                    return x;
-                }
-                return (y - c) / k;
-            }
-        };
-        // 左下到右上的直线表达式
-        const leftBottomC = function (x, y) {
-            const k = (leftBottom.y - center.y) / (leftBottom.x - center.x);
-            const c = center.y - center.x * k;
-            if (x) {
-                return k * x + c;
-            }
-            else {
-                if (k === 0) {
-                    return x;
-                }
-                return (y - c) / k;
-            }
-        };
-        const ltY = leftTopC(x);
-        const lbY = leftBottomC(x);
-        if (y < ltY && y > lbY) {
-            return "left";
-        }
-        else if (y > ltY && y > lbY) {
-            return "bottom";
-        }
-        else if (y < lbY && y > ltY) {
-            return "right";
-        }
-        else {
-            return "top";
-        }
     } });
 /* harmony default export */ const Lines_PolyLine = (PolyLine);
 
@@ -17747,14 +17705,14 @@ class Controller extends Event {
         this.listenEvents();
     }
     /**
-     * 自适应,支持
+     * auto fit to screen
      */
     autoFit(center = true, vertical = true) {
         const data = this.editor.schema.getData();
         setAttrs(this.paper, {
             transform: setTransform(this.scale, 0, 0),
-            transition: "all 0.2s",
         });
+        this.paper.style.transition = "all 0.2s";
         const { width, height } = this.editor.dom.getBoundingClientRect();
         const bbox = this.paper.getBBox();
         const dx = ((width - bbox.width) / 2 - bbox.x);
@@ -17773,6 +17731,15 @@ class Controller extends Event {
         setTimeout(() => {
             this.paper.style.transition = null;
         }, 200);
+    }
+    /**
+     * auto fit to screen with scale
+     */
+    autoScale(padding = 40) {
+        const { width, height } = this.editor.dom.getBoundingClientRect();
+        const bbox = this.paper.getBBox();
+        const scale = Math.max((bbox.width + padding) / width, (bbox.height + padding) / height);
+        this.scale = 1 / Math.max(1, scale);
     }
     listenEvents() {
         this.svg.addEventListener("mousedown", this.panStart);

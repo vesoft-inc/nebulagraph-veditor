@@ -21,7 +21,7 @@ module.exports = {
       directory: path.join(__dirname, 'dist'),
     }],
     watchFiles: ['src/**/*', 'demo/**/*'],
-    open: "./index.html",
+    open: "./dev.html",
     hot: true
   },
   devtool: "eval-source-map",

@@ -21,9 +21,13 @@ declare class Controller extends Utils.Event {
     };
     constructor(editor: VEditor);
     /**
-     * 自适应,支持
+     * auto fit to screen
      */
     autoFit(center?: boolean, vertical?: boolean): void;
+    /**
+     * auto fit to screen with scale
+     */
+    autoScale(padding?: number): void;
     listenEvents(): void;
     clear(): void;
     /**
