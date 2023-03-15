@@ -26,14 +26,15 @@ class Controller extends Utils.Event {
   }
 
   /**
-   * 自适应,支持
+   * auto fit to screen
    */
   autoFit(center = true, vertical = true) {
     const data = this.editor.schema.getData();
     setAttrs(this.paper, {
       transform: setTransform(this.scale, 0, 0),
-      transition: "all 0.2s",
     });
+
+    this.paper.style.transition = "all 0.2s";
     const { width, height } = this.editor.dom.getBoundingClientRect();
     const bbox = this.paper.getBBox();
     const dx = ((width - bbox.width) / 2 - bbox.x);
@@ -50,6 +51,16 @@ class Controller extends Utils.Event {
     setTimeout(() => {
       this.paper.style.transition = null;
     }, 200);
+  }
+
+  /**
+   * auto fit to screen with scale
+   */
+  autoScale(padding = 40) {
+    const { width, height } = this.editor.dom.getBoundingClientRect();
+    const bbox = this.paper.getBBox();
+    const scale = Math.max((bbox.width + padding) / width, (bbox.height + padding) / height);
+    this.scale = 1 / Math.max(1, scale);
   }
 
   listenEvents() {
