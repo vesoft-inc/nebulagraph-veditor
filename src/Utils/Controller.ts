@@ -17,6 +17,7 @@ class Controller extends Utils.Event {
   achors: number[] = [];
   status: string;
   startPosition: { x: any; y: any };
+  disableScroll: boolean = false;
   constructor(editor: VEditor) {
     super();
     this.editor = editor;
@@ -113,15 +114,16 @@ class Controller extends Utils.Event {
     if (this.status === "disabled") {
       return;
     }
-    e.preventDefault();
 
     if (e.ctrlKey) {
       // 双指
       const newScale = Math.max(1 - e.deltaY * this.scaleRatio, 0.1);
       this.zoom(newScale, e.offsetX, e.offsetY);
     } else {
+      if (this.disableScroll) return;
       this.pan(-e.deltaX, -e.deltaY);
     }
+    e.preventDefault();
   };
 
   panStart = (ev: MouseEvent) => {

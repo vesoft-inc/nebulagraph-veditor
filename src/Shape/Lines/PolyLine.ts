@@ -11,6 +11,7 @@ const PolyLine: LineRender = {
   ...Line,
   startSpace: 1,
   arcRadius: 5,
+  lineDistance: 50,
   makePath(
     from: InstanceNodePoint,
     to: InstanceNodePoint,
@@ -28,14 +29,15 @@ const PolyLine: LineRender = {
     end.y += endSpace * Math.sin(endAngle);
     const disX = end.x - start.x;
     const disY = end.y - start.y;
-
+    const lineDistanceY = this.lineDistance || (disY * .5);
+    const lineDistanceX = this.lineDistance || (disX * .5);
     const paths: any = [{
-      x: start.x + disX * .5 * Math.cos(startAngle) * (disX > 0 ? 1 : -1),
-      y: start.y + disY * .5 * Math.sin(startAngle),
+      x: start.x + lineDistanceX * Math.cos(startAngle) * (disX > 0 ? 1 : -1),
+      y: start.y + lineDistanceY * Math.sin(startAngle),
       type: "L"
     }, {
-      x: end.x + disX * .5 * Math.cos(endAngle) * (disX > 0 ? 1 : -1),
-      y: end.y + disY * .5 * Math.sin(endAngle),
+      x: end.x + (disX - lineDistanceX) * Math.cos(endAngle) * (disX > 0 ? 1 : -1),
+      y: end.y + (disY - lineDistanceY) * Math.sin(endAngle),
       type: "L"
     }];
 
