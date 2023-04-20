@@ -19,6 +19,7 @@ declare class Controller extends Utils.Event {
         x: any;
         y: any;
     };
+    disableScroll: boolean;
     constructor(editor: VEditor);
     /**
      * auto fit to screen

@@ -16654,7 +16654,7 @@ const DefaultLine = {
  */
 
 
-const PolyLine = Object.assign(Object.assign({}, Lines_Line), { startSpace: 1, arcRadius: 5, makePath(from, to, line) {
+const PolyLine = Object.assign(Object.assign({}, Lines_Line), { startSpace: 1, arcRadius: 5, lineDistance: 50, makePath(from, to, line) {
         const start = { x: from.x, y: from.y, };
         const end = { x: to.x, y: to.y, };
         const startSpace = this.startSpace; // 顶部距离node节点的距离
@@ -16665,15 +16665,17 @@ const PolyLine = Object.assign(Object.assign({}, Lines_Line), { startSpace: 1, a
         start.y += startSpace * Math.sin(startAngle);
         end.x += endSpace * Math.cos(endAngle);
         end.y += endSpace * Math.sin(endAngle);
-        const disX = end.x - start.x;
-        const disY = end.y - start.y;
+        const disX = Math.abs(end.x - start.x);
+        const disY = Math.abs(end.y - start.y);
+        const lineDistanceY = this.lineDistance || (disY * .5);
+        const lineDistanceX = this.lineDistance || (disX * .5);
         const paths = [{
-                x: start.x + disX * .5 * Math.cos(startAngle) * (disX > 0 ? 1 : -1),
-                y: start.y + disY * .5 * Math.sin(startAngle),
+                x: start.x + lineDistanceX * Math.cos(startAngle) * (disX > 0 ? 1 : -1),
+                y: start.y + lineDistanceY * Math.sin(startAngle),
                 type: "L"
             }, {
-                x: end.x + disX * .5 * Math.cos(endAngle) * (disX > 0 ? 1 : -1),
-                y: end.y + disY * .5 * Math.sin(endAngle),
+                x: end.x + (disX - lineDistanceX) * Math.cos(endAngle) * (disX > 0 ? 1 : -1),
+                y: end.y + (disY - lineDistanceY) * Math.sin(endAngle),
                 type: "L"
             }];
         if (this.arcRadius !== 0 && (start.x !== end.x && start.y !== end.y)) {
@@ -17623,19 +17625,22 @@ class Controller extends Event {
         this.x = 0;
         this.y = 0;
         this.achors = [];
+        this.disableScroll = false;
         this.onWheel = (e) => {
             if (this.status === "disabled") {
                 return;
             }
-            e.preventDefault();
             if (e.ctrlKey) {
                 // 双指
                 const newScale = Math.max(1 - e.deltaY * this.scaleRatio, 0.1);
                 this.zoom(newScale, e.offsetX, e.offsetY);
             }
             else {
+                if (this.disableScroll)
+                    return;
                 this.pan(-e.deltaX, -e.deltaY);
             }
+            e.preventDefault();
         };
         this.panStart = (ev) => {
             if (ev.target.tagName !== "svg" ||
