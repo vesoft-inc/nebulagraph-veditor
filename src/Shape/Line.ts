@@ -20,6 +20,7 @@ export interface InstanceLine extends AnyMap {
   to: InstanceNodePoint;
   pathData: Path;
   shadowPath?: SVGPathElement;
+  width?: number;
   bezierData?: {
     from: Position;
     startControlPoint: Position;

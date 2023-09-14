@@ -14,8 +14,8 @@ export interface LineRender extends AnyMap {
   graph?: Graph;
   adsorb?: [number, number]; //磁吸的范围
   render?: (instanceLine: InstanceLine) => SVGElement;
-  renderArrow?: (instanceLine?: InstanceLine) => SVGElement;
-  renderArrow2?: (instanceLine?: InstanceLine) => SVGElement;
+  renderArrow?: (instanceLine: InstanceLine) => SVGElement;
+  renderArrow2?: (instanceLine: InstanceLine) => SVGElement;
   renderLabel?: (instanceLine?: InstanceLine) => SVGElement;
   checkNewLine?: (lineData: VEditorLine, editor: VEditor) => boolean;
 }
@@ -47,7 +47,7 @@ const DefaultLine: LineRender = {
     setAttrs(path, {
       d: pathString,
       class: "ve-line-path",
-      "stroke-dasharray": "10",
+      "stroke-dasharray": data.width||"10",
       fill: "none",
       "stroke-width": 2,
       "pointer-events": "visiblepainted",
@@ -176,9 +176,13 @@ const DefaultLine: LineRender = {
   },
 
   renderArrow(line: InstanceLine) {
-    const { to } = line;
+    const { to,data } = line;
     const angle = this.getPointAngle(to);
-    const pathString = `M${0} ${0}L${10} ${5}L${10} ${-5}Z`;
+    const width = (data.data?.arrowWidth as number) || 10;
+    const height = (data.data?.arrowHeight as number) || 10;
+    const pathString = `M${0} ${0}L${height} ${width / 2}L${height} ${
+      -width / 2
+    }Z`;
     const path = line.arrow ? line.arrow : SVGHelper.path();
     // 进行角度的中心变换
     const matrix = mat2d.create();
