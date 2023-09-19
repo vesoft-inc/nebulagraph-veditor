@@ -1,6 +1,6 @@
 {
   "name": "@vesoft-inc/veditor",
-  "version": "4.4.5",
+  "version": "4.4.6-beta.0",
   "description": "svg flow editor",
   "main": "./dist/VEditor.js",
   "types": "./types/index.d.ts",

@@ -324,8 +324,8 @@ class Line {
   /**
    * 注册线
    */
-  registeLine(type: string, data: LineRender) {
-    this.shapes[type] = Object.assign({}, this.shapes["default"], data);
+  registeLine(type: string, data: LineRender,extend="default") {
+    this.shapes[type] = Object.assign({}, this.shapes[extend], data);
   }
 
   /**

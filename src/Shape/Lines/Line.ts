@@ -250,9 +250,8 @@ const DefaultLine: LineRender = {
     setAttrs(text, {
       text: label || "",
       fill: style.fill,
-      fontSize: style.fontSize,
-      textAnchor: "middle",
-      dominantBaseline: "middle",
+      "dominant-baseline": "middle",
+      "alignment-baseline": "after-edge",
       x,
       y,
     });
@@ -268,7 +267,7 @@ const DefaultLine: LineRender = {
       height,
       stroke: "transparent",
       x: x - width * 0.5,
-      y: y - height * 0.5,
+      y: y - height,
     });
     setAttrs(labelGroup, {
       class: "ve-line-label",
