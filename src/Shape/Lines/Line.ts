@@ -9,6 +9,7 @@ import { Path } from "../../Utils";
 import { AnyMap } from "../../Utils/types";
 import { VEditorLine } from "../../Model/Schema";
 import VEditor from "../../VEditor";
+import { Utils } from '../..';
 
 export interface LineRender extends AnyMap {
   graph?: Graph;
@@ -35,6 +36,8 @@ const DefaultLine: LineRender = {
   adsorb: [20, 20],
   startSpace: 8,
   endSpace: 8,
+  startGap: 0,
+  endGap: 0,
   render(line: InstanceLine) {
     const { from, to, data } = line;
     const pathString = this.makePath(from, to, line);
@@ -81,19 +84,25 @@ const DefaultLine: LineRender = {
     from: InstanceNodePoint,
     to: InstanceNodePoint,
     line: InstanceLine
-  ):string {
+  ): string {
+    from = { ...from };
+    to = { ...to };
     const start = { x: from.x, y: from.y, };
     const end = { x: to.x, y: to.y, }
     let startControlPoint = { x: start.x, y: start.y };
     let endControlPoint = { x: end.x, y: end.y };
-    const startSpace = this.startSpace; // 顶部距离node节点的距离
-    const endSpace = this.endSpace; // 底部距离node节点的距离
     const startAngle = this.getPointAngle(from);
     const endAngle = this.getPointAngle(to);
-    start.x += startSpace * Math.cos(startAngle);
-    start.y += startSpace * Math.sin(startAngle);
-    end.x += endSpace * Math.cos(endAngle);
-    end.y += endSpace * Math.sin(endAngle);
+    from.x += this.startGap * Math.cos(startAngle);
+    from.y += this.startGap * Math.sin(startAngle);
+    to.x += this.endGap * Math.cos(endAngle);
+    to.y += this.endGap * Math.sin(endAngle);
+
+    start.x += (this.startSpace+this.startGap) * Math.cos(startAngle);
+    start.y += (this.startSpace+this.startGap) * Math.sin(startAngle);
+    end.x += (this.endSpace+this.endGap) * Math.cos(endAngle);
+    end.y += (this.endSpace + this.endGap) * Math.sin(endAngle);
+    
     let path = '';
     const pathString = `M${from.x} ${from.y} T ${start.x} ${start.y}`;
     const toPointString = `${end.x} ${end.y} T ${to.x} ${to.y} `;
@@ -176,6 +185,9 @@ const DefaultLine: LineRender = {
   },
 
   renderArrow(line: InstanceLine) {
+    if (!line) {
+          return Utils.SVGHelper.path();
+    }
     const { to,data } = line;
     const angle = this.getPointAngle(to);
     const width = (data.data?.arrowWidth as number) || 10;
@@ -191,7 +203,7 @@ const DefaultLine: LineRender = {
     setAttrs(path, {
       class: "ve-line-arrow",
       d: pathString,
-      fill: "rgba(178,190,205,0.7)",
+      fill: data.data?.arrowColor||"rgba(178,190,205,0.7)",
       transform: `matrix(${matrix.join(",")})`,
       ...(line.data.arrowStyle as AnyMap),
     });
@@ -267,12 +279,14 @@ const DefaultLine: LineRender = {
       height,
       stroke: "transparent",
       x: x - width * 0.5,
-      y: y - height,
+      y: y - height-1,
     });
     setAttrs(labelGroup, {
       class: "ve-line-label",
       "data-label": encodeURI(totalLabel),
     });
+      //fix text vertical middle
+    labelGroup.style.transform =  `translate(0px,${height/2}px)`;
     if (autoRotate) {
       // 文字顺序方向
       let angle = SVGHelper.getAngle(from, to);
