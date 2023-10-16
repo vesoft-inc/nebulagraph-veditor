@@ -223,9 +223,9 @@ class Line {
     } else {
       line = this.lines[data.uuid];
     }
+    if (!line) return; //这里有可能被删除node时的关联删除线了
     let uuid = line.data.uuid;
     const { nodes } = this.node;
-    if (!line) return; //这里有可能被删除node时的关联删除线了
     delete this.lines[uuid];
     // 删除关联线
     const { from, to } = line.data;
