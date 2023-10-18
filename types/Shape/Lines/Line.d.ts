@@ -7,8 +7,8 @@ export interface LineRender extends AnyMap {
     graph?: Graph;
     adsorb?: [number, number];
     render?: (instanceLine: InstanceLine) => SVGElement;
-    renderArrow?: (instanceLine?: InstanceLine) => SVGElement;
-    renderArrow2?: (instanceLine?: InstanceLine) => SVGElement;
+    renderArrow?: (instanceLine: InstanceLine) => SVGElement;
+    renderArrow2?: (instanceLine: InstanceLine) => SVGElement;
     renderLabel?: (instanceLine?: InstanceLine) => SVGElement;
     checkNewLine?: (lineData: VEditorLine, editor: VEditor) => boolean;
 }

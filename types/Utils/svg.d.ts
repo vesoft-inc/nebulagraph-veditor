@@ -5,7 +5,7 @@ declare const SVGHelper: {
     image: (src: string, x: number, y: number, w: number, h: number) => SVGImageElement;
     path: (d?: string) => SVGPathElement;
     group: (...others: SVGElement[]) => SVGGElement;
-    getDOMRect(str: any, callback: any): DOMRect;
+    getDOMRect(str: any): DOMRect;
     svgWrapper(svgString: string, parent?: SVGElement): SVGElement;
     createSVGElement(name: string, parent?: SVGElement): SVGElement;
     setAttrs(dom: Element, attrs: Record<string, any>): void;

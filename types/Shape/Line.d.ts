@@ -15,6 +15,7 @@ export interface InstanceLine extends AnyMap {
     to: InstanceNodePoint;
     pathData: Path;
     shadowPath?: SVGPathElement;
+    width?: number;
     bezierData?: {
         from: Position;
         startControlPoint: Position;
@@ -85,7 +86,7 @@ declare class Line {
     /**
      * 注册线
      */
-    registeLine(type: string, data: LineRender): void;
+    registeLine(type: string, data: LineRender, extend?: string): void;
     /**
      * 渲染
      */

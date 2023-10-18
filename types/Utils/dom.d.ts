@@ -1,6 +1,6 @@
 import BezierLine from "./BezierLine";
 import { Position } from "./types";
-export declare function getDOMRect(str: any, callback: any): DOMRect;
+export declare function getDOMRect(str: any): DOMRect;
 export declare function svgWrapper(svgString: string, parent?: SVGElement): SVGElement;
 export declare function createSVGElement(name: string, parent?: SVGElement): SVGElement;
 export declare function setAttrs(dom: Element, attrs: Record<string, any>): void;
