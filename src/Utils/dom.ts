@@ -1,14 +1,14 @@
 import BezierLine from "./BezierLine";
 import { Position } from "./types";
 
-export function getDOMRect(str, callback) {
+export function getDOMRect(str) {
     const div = document.createElement("div");
     div.style.position = "fixed";
     div.style.visibility = "hidden";
     div.innerHTML = str;
     document.body.appendChild(div);
     const rect = div.getBoundingClientRect();
-    // document.body.removeChild(div);
+    document.body.removeChild(div);
     return rect;
 }
 export function svgWrapper(svgString: string, parent?: SVGElement): SVGElement {

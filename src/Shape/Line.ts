@@ -20,6 +20,7 @@ export interface InstanceLine extends AnyMap {
   to: InstanceNodePoint;
   pathData: Path;
   shadowPath?: SVGPathElement;
+  width?: number;
   bezierData?: {
     from: Position;
     startControlPoint: Position;
@@ -222,9 +223,9 @@ class Line {
     } else {
       line = this.lines[data.uuid];
     }
+    if (!line) return; //这里有可能被删除node时的关联删除线了
     let uuid = line.data.uuid;
     const { nodes } = this.node;
-    if (!line) return; //这里有可能被删除node时的关联删除线了
     delete this.lines[uuid];
     // 删除关联线
     const { from, to } = line.data;
@@ -323,8 +324,8 @@ class Line {
   /**
    * 注册线
    */
-  registeLine(type: string, data: LineRender) {
-    this.shapes[type] = Object.assign({}, this.shapes["default"], data);
+  registeLine(type: string, data: LineRender,extend="default") {
+    this.shapes[type] = Object.assign({}, this.shapes[extend], data);
   }
 
   /**
