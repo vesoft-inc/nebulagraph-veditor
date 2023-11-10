@@ -50,7 +50,6 @@ class Node {
   paper: SVGGElement;
   nodeG: SVGGElement;
   actives: {};
-  shadow: SVGElement;
   shapes: {
     [key: string]: NodeRender;
   };
@@ -64,7 +63,6 @@ class Node {
     this.paper = graph.editor.paper;
     this.nodeG = createSVGElement("g", this.paper) as SVGGElement;
     this.nodeG.classList.add("ve-nodes");
-    this.initDefs();
     this.listenEvent();
     this.actives = {};
     this.shapes = {
@@ -72,28 +70,6 @@ class Node {
       iconNode: iconNode,
       domNode,
     };
-  }
-
-  initDefs() {
-    this.shadow = svgWrapper(
-      `<defs>
-			<filter id="ve-black-shadow" filterUnits="userSpaceOnUse">
-                <feGaussianBlur in="SourceAlpha" stdDeviation="4"></feGaussianBlur>
-                <feGaussianBlur stdDeviation="3" />
-                <feOffset dx="0" dy="0" result="offsetblur"></feOffset>
-                <feFlood flood-color="#333333"></feFlood>
-                <feComposite in2="offsetblur" operator="in"></feComposite>
-                <feComponentTransfer>
-                    <feFuncA type="linear" slope="0.3"></feFuncA>
-                </feComponentTransfer>
-                <feMerge>
-                <feMergeNode />
-                <feMergeNode in="SourceGraphic" />
-                </feMerge>
-            </filter>
-		</defs>`,
-      this.paper
-    );
   }
 
   // 监听事件
@@ -479,7 +455,7 @@ class Node {
 
   unActiveNode(node: InstanceNode) {
     node.dom.classList.remove("active");
-    setAttrs(node.dom, {
+    setAttrs(node.shape, {
       filter: null,
     });
   }
