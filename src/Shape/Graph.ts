@@ -2,7 +2,7 @@ import Node from "./Node";
 import Line from "./Line";
 import AnchorLine from "./AnchorLine";
 import VEditor from "../VEditor";
-import { setAttrs } from "../Utils/dom";
+import { setAttrs, svgWrapper } from "../Utils/dom";
 import { VEditorSchema } from "../Model/Schema";
 import * as Utils from "../Utils";
 const backSvg = require("../back.svg").default;
@@ -14,12 +14,15 @@ class Graph extends Utils.Event {
   anchorLine: AnchorLine;
   linkStatus: string;
   data: VEditorSchema;
+  shadow: SVGSVGElement;
+
   constructor(editor: VEditor) {
     super();
     this.editor = editor;
     this.node = new Node(this);
     this.line = new Line(this);
     this.anchorLine = new AnchorLine(this);
+    this.initDefs();
 
     this.listenEvents();
     if (this.editor.config.showBackGrid) {
@@ -150,6 +153,33 @@ class Graph extends Utils.Event {
     * @event Graph#update  渲染后触发
     */
     this.fire("update");
+  }
+
+
+
+  initDefs() {
+    if(document.getElementById("ve-svg-defs")) return;
+    this.shadow = svgWrapper(
+      `<svg id="ve-svg-defs" style="position:absolute;left:-9999px;top:-9999px;" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+			<filter id="ve-black-shadow" >
+                <feGaussianBlur in="SourceAlpha" stdDeviation="4"></feGaussianBlur>
+                <feGaussianBlur stdDeviation="3" />
+                <feOffset dx="0" dy="0" result="offsetblur"></feOffset>
+                <feFlood flood-color="#333333"></feFlood>
+                <feComposite in2="offsetblur" operator="in"></feComposite>
+                <feComponentTransfer>
+                    <feFuncA type="linear" slope="0.3"></feFuncA>
+                </feComponentTransfer>
+                <feMerge>
+                <feMergeNode />
+                <feMergeNode in="SourceGraphic" />
+                </feMerge>
+            </filter>
+		</defs>
+    </svg>`,
+    ) as SVGSVGElement;
+    document.body.appendChild(this.shadow);
   }
 
   /**

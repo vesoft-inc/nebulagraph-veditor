@@ -275,11 +275,13 @@ const DefaultLine: LineRender = {
     const { width, height } = line.label.textBBox;
     setAttrs(line.label.textRect, {
       fill: style.stroke,
-      width,
-      height,
+      width: width + 10,
+      height:height + 5,
       stroke: "transparent",
-      x: x - width * 0.5,
-      y: y - height-1,
+      x: x - width * 0.5 - 5,
+      y: y - height - 2.5,
+      rx: 5,
+      ry: 5,
     });
     setAttrs(labelGroup, {
       class: "ve-line-label",
