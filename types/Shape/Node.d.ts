@@ -41,7 +41,6 @@ declare class Node {
     paper: SVGGElement;
     nodeG: SVGGElement;
     actives: {};
-    shadow: SVGElement;
     shapes: {
         [key: string]: NodeRender;
     };
@@ -50,7 +49,6 @@ declare class Node {
     timeout: NodeJS.Timeout;
     destroyFunc: Function[];
     constructor(graph: Graph);
-    initDefs(): void;
     listenEvent(): void;
     registeNode(type: string, data: NodeRender, extend?: string): void;
     render(data?: Record<string, VEditorNode>): Promise<unknown>;

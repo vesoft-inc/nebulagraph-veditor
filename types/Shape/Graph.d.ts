@@ -11,12 +11,14 @@ declare class Graph extends Utils.Event {
     anchorLine: AnchorLine;
     linkStatus: string;
     data: VEditorSchema;
+    shadow: SVGSVGElement;
     constructor(editor: VEditor);
     addBack(): void;
     listenEvents(): void;
     onKeyDown: (e: KeyboardEvent) => boolean;
     render(data: VEditorSchema): Promise<void>;
     update(): void;
+    initDefs(): void;
     /**
      * 清空画布
      */

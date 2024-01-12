@@ -23038,6 +23038,7 @@ class Graph extends Utils.Event {
         this.node = new Node_1.default(this);
         this.line = new Line_1.default(this);
         this.anchorLine = new AnchorLine_1.default(this);
+        this.initDefs();
         this.listenEvents();
         if (this.editor.config.showBackGrid) {
             this.addBack();
@@ -23090,6 +23091,29 @@ class Graph extends Utils.Event {
         * @event Graph#update  渲染后触发
         */
         this.fire("update");
+    }
+    initDefs() {
+        if (document.getElementById("ve-svg-defs"))
+            return;
+        this.shadow = (0, dom_1.svgWrapper)(`<svg id="ve-svg-defs" style="position:absolute;left:-9999px;top:-9999px;" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+			<filter id="ve-black-shadow" >
+                <feGaussianBlur in="SourceAlpha" stdDeviation="4"></feGaussianBlur>
+                <feGaussianBlur stdDeviation="3" />
+                <feOffset dx="0" dy="0" result="offsetblur"></feOffset>
+                <feFlood flood-color="#333333"></feFlood>
+                <feComposite in2="offsetblur" operator="in"></feComposite>
+                <feComponentTransfer>
+                    <feFuncA type="linear" slope="0.3"></feFuncA>
+                </feComponentTransfer>
+                <feMerge>
+                <feMergeNode />
+                <feMergeNode in="SourceGraphic" />
+                </feMerge>
+            </filter>
+		</defs>
+    </svg>`);
+        document.body.appendChild(this.shadow);
     }
     /**
      * 清空画布
@@ -23940,11 +23964,13 @@ const DefaultLine = {
         const { width, height } = line.label.textBBox;
         (0, dom_1.setAttrs)(line.label.textRect, {
             fill: style.stroke,
-            width,
-            height,
+            width: width + 10,
+            height: height + 5,
             stroke: "transparent",
-            x: x - width * 0.5,
-            y: y - height - 1,
+            x: x - width * 0.5 - 5,
+            y: y - height - 2.5,
+            rx: 5,
+            ry: 5,
         });
         (0, dom_1.setAttrs)(labelGroup, {
             class: "ve-line-label",
@@ -24135,7 +24161,6 @@ class Node {
         this.paper = graph.editor.paper;
         this.nodeG = (0, dom_1.createSVGElement)("g", this.paper);
         this.nodeG.classList.add("ve-nodes");
-        this.initDefs();
         this.listenEvent();
         this.actives = {};
         this.shapes = {
@@ -24143,24 +24168,6 @@ class Node {
             iconNode: IconNode_1.default,
             domNode: DomNode_1.default,
         };
-    }
-    initDefs() {
-        this.shadow = (0, dom_1.svgWrapper)(`<defs>
-			<filter id="ve-black-shadow" filterUnits="userSpaceOnUse">
-                <feGaussianBlur in="SourceAlpha" stdDeviation="4"></feGaussianBlur>
-                <feGaussianBlur stdDeviation="3" />
-                <feOffset dx="0" dy="0" result="offsetblur"></feOffset>
-                <feFlood flood-color="#333333"></feFlood>
-                <feComposite in2="offsetblur" operator="in"></feComposite>
-                <feComponentTransfer>
-                    <feFuncA type="linear" slope="0.3"></feFuncA>
-                </feComponentTransfer>
-                <feMerge>
-                <feMergeNode />
-                <feMergeNode in="SourceGraphic" />
-                </feMerge>
-            </filter>
-		</defs>`, this.paper);
     }
     // 监听事件
     listenEvent() {
@@ -24462,7 +24469,7 @@ class Node {
     }
     unActiveNode(node) {
         node.dom.classList.remove("active");
-        (0, dom_1.setAttrs)(node.dom, {
+        (0, dom_1.setAttrs)(node.shape, {
             filter: null,
         });
     }
